@@ -1,0 +1,11 @@
+*.user
+*.suo
+GridBook.Console/bin
+GridBook.Console/obj
+GridBook.Domain/bin
+GridBook.Domain/obj
+GridBook.Importers/bin
+GridBook.Importers/obj
+GridBook.Test/TestResult.xml
+GridBook.Test/bin
+GridBook.Test/obj
