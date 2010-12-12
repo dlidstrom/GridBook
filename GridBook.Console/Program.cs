@@ -4,7 +4,8 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Text;
-	using GridBook.Test;
+	using GridBook.Domain.Importers;
+	using GridBook.Domain;
 
 	class Program
 	{
@@ -12,6 +13,12 @@
 		{
 			try
 			{
+				var board = Board.Start;
+
+				// Act
+				var successor = board.Play(new Move("D3"));
+				Console.WriteLine(successor.ToString());
+				return;
 				new Program().Run(args);
 			}
 			catch (Exception ex)
@@ -23,7 +30,6 @@
 		void Run(string[] args)
 		{
 			var importer = new NtestImporter(args[0]);
-			Console.WriteLine(importer.Entries[Board.Start.Play("D3")].HumanString());
 		}
 	}
 }

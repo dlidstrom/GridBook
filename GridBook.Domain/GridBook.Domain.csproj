@@ -43,6 +43,9 @@
     <Compile Include="Bits.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="BookData.cs" />
+    <Compile Include="Importers\IImporter.cs" />
+    <Compile Include="Importers\NtestImporter.cs" />
+    <Compile Include="Move.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

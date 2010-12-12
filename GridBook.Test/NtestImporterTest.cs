@@ -1,16 +1,22 @@
 ﻿namespace GridBook.Test
 {
 	using NUnit.Framework;
+	using GridBook.Domain.Importers;
+	using GridBook.Domain;
+	using System.Collections.Generic;
+	using System.Linq;
 
 	[TestFixture]
 	public class NtestImporterTest
 	{
-		private NtestImporter importer;
+		private IImporter importer;
+		private List<KeyValuePair<Board, BookData>> entries;
 
 		[SetUp]
 		public void SetUp()
 		{
 			importer = new NtestImporter("Data/JA_s12.book");
+			entries = new List<KeyValuePair<Board, BookData>>(importer.Import());
 		}
 
 		[Test]
@@ -28,13 +34,15 @@
 		[Test]
 		public void ReadsAllEntries()
 		{
-			Assert.AreEqual(91, importer.Entries.Count);
+			Assert.AreEqual(91, entries.Count);
 		}
 
 		[Test]
 		public void VerifyOpeningPositionValues()
 		{
-			var entry = importer.Entries[new Board(18446743970226896895, 34628698112)];
+			var entry = (from bd in entries
+						 where bd.Key.Empty == 18446743970226896895 && bd.Key.Mover==34628698112
+						 select bd.Value).Single();
 			Assert.AreEqual(12, entry.Height);
 			Assert.AreEqual(4, entry.Prune);
 			Assert.IsFalse(entry.WLD);

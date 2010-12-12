@@ -51,10 +51,6 @@
       <Project>{F61E4F89-4CA5-4560-BD60-68772F2C1B42}</Project>
       <Name>GridBook.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GridBook.Importers\GridBook.Importers.csproj">
-      <Project>{BBD2EC68-A44F-4544-90D2-89E652BF079C}</Project>
-      <Name>GridBook.Importers</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

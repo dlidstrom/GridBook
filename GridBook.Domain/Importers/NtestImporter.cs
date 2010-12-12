@@ -1,42 +1,64 @@
-﻿namespace GridBook.Test
+﻿namespace GridBook.Domain.Importers
 {
 	using System.IO;
 	using System.Linq;
 	using System.Collections.Generic;
 	using GridBook.Domain;
 
-	public class NtestImporter
+	public class NtestImporter : IImporter
 	{
+		private string filename;
+
 		public NtestImporter(string filename)
 		{
-			Entries = new Dictionary<Board, BookData>();
+			this.filename = filename;
+		}
 
+		public IEnumerable<KeyValuePair<Board, BookData>> Import()
+		{
 			using (var reader = new BinaryReader(File.OpenRead(filename)))
 			{
+				// 4
 				Version = reader.ReadInt32();
+				// 4
 				Positions = reader.ReadInt32();
 				foreach (var i in Enumerable.Range(0, Positions))
 				{
-					var empty = reader.ReadUInt64();
-					var mover = reader.ReadUInt64();
-					var board = new Board(empty, mover);
+					// 16
+					var board = new Board(reader.ReadUInt64(), reader.ReadUInt64(), Color.Black);
+					// 20
 					var height = reader.ReadInt32();
+					// 24
 					var prune = reader.ReadInt32();
+					// 25
 					var wld = reader.ReadBoolean();
+					// 26
 					var knownSolve = reader.ReadBoolean();
+					// 28
 					var fillOut = reader.ReadInt16();
+					// 30
 					var cutoff = reader.ReadInt16();
+					// 32
 					var heuristic = reader.ReadInt16();
+					// 34
 					var black = reader.ReadInt16();
+					// 36
 					var white = reader.ReadInt16();
+					// 37
 					var set = reader.ReadBoolean();
+					// 38
 					var assigned = reader.ReadBoolean();
+					// 39
 					var wldSolved = reader.ReadBoolean();
+					// 40
 					var fill2 = reader.ReadByte();
+					// 48
 					var games = new int[] { reader.ReadInt32(), reader.ReadInt32() };
+					// 49
 					var root = reader.ReadBoolean();
+					// 52
 					var fill3 = reader.ReadBytes(3);
-					Entries[board] = new BookData()
+					yield return new KeyValuePair<Board, BookData>(board, new BookData()
 					{
 						Height = height,
 						Prune = prune,
@@ -47,7 +69,7 @@
 						BlackValue = black,
 						WhiteValue = white,
 						Games = games
-					};
+					});
 				}
 			}
 		}
@@ -59,12 +81,6 @@
 		}
 
 		public int Positions
-		{
-			get;
-			private set;
-		}
-
-		public IDictionary<Board, BookData> Entries
 		{
 			get;
 			private set;
