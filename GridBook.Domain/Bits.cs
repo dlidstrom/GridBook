@@ -11,28 +11,29 @@
 		{
 			for (int i = 0; i <= ushort.MaxValue; i++)
 			{
-				bitcount[i] = count(i);
+				int c = 0;
+				int j = i;
+				while (j != 0)
+				{
+					j = j & (j - 1);
+					c++;
+				}
+
+				bitcount[i] = c;
 			}
 		}
 
+		/// <summary>
+		/// Calculates the number of bits in a 64-bit long.
+		/// </summary>
+		/// <param name="l"></param>
+		/// <returns></returns>
 		public static int Count(ulong l)
 		{
 			return bitcount[(ushort)l]
 				+ bitcount[(ushort)(l >> 16)]
 				+ bitcount[(ushort)(l >> 32)]
 				+ bitcount[(ushort)(l >> 48)];
-		}
-
-		private static int count(int i)
-		{
-			int c = 0;
-			while (i != 0)
-			{
-				i = i & (i - 1);
-				c++;
-			}
-
-			return c;
 		}
 	}
 }

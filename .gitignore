@@ -4,8 +4,11 @@ GridBook.Console/bin
 GridBook.Console/obj
 GridBook.Domain/bin
 GridBook.Domain/obj
-GridBook.Importers/bin
-GridBook.Importers/obj
+GridBook.Domain/GridBook.Domain.csproj.VisualState.xml
+GridBook.Domain.Mapping/bin
+GridBook.Domain.Mapping/obj
+GridBook.Test/GridBook.TestResult.xml
 GridBook.Test/TestResult.xml
+GridBook.Test/GridBook.Test.VisualState.xml
 GridBook.Test/bin
 GridBook.Test/obj

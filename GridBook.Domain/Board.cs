@@ -3,37 +3,24 @@
 	using System;
 	using System.Text;
 
-	public enum Color
-	{
-		Black,
-		White
-	}
-
-	public static class ColorExtensions
-	{
-		public static Color Opponent(this Color color)
-		{
-			if (color == Color.White)
-			{
-				return Color.Black;
-			}
-
-			return Color.White;
-		}
-
-		public static string Char(this Color color)
-		{
-			if (color == Color.White)
-			{
-				return "O";
-			}
-
-			return "*";
-		}
-	}
-
 	public class Board
 	{
+		/// <summary>
+		/// Gets a board representing the starting position.
+		/// </summary>
+		public static Board Start
+		{
+			get
+			{
+				return new Board(18446743970227683327, 34628173824, Color.Black);
+			}
+		}
+
+		public Board()
+			: this(18446743970227683327, 34628173824, Color.Black)
+		{
+		}
+
 		public Board(ulong empty, ulong mover, Color color)
 		{
 			this.Empty = empty;
@@ -45,15 +32,7 @@
 			}
 		}
 
-		public static Board Start
-		{
-			get
-			{
-				return new Board(18446743970227683327, 34628173824, Color.Black);
-			}
-		}
-
-		public Board Play(Move move)
+		public virtual Board Play(Move move)
 		{
 			int pos = move.Pos;
 			ulong opponent = ~(Empty | Mover);
@@ -94,7 +73,10 @@
 			return new Board(newEmpty, mover, this.Color.Opponent());
 		}
 
-		public int Empties
+		/// <summary>
+		/// Gets the number of empty positions.
+		/// </summary>
+		public virtual int Empties
 		{
 			get
 			{
@@ -102,39 +84,25 @@
 			}
 		}
 
-		private ulong scanDirection(int pos, int dir, ulong opponent, Func<int, bool> cond)
-		{
-			ulong cumulativeChange = 0;
-			pos += dir;
-			if (((1UL << pos) & opponent) != 0)
-			{
-				ulong change = 1UL << pos;
-				for (pos += dir; cond(pos) && ((1UL << pos) & opponent) != 0; pos += dir)
-				{
-					change |= 1UL << pos;
-				}
-				if (cond(pos) && (1UL << pos & Mover) != 0)
-				{
-					cumulativeChange = change;
-				}
-			}
-
-			return cumulativeChange;
-		}
-
-		private Color Color
-		{
-			get;
-			set;
-		}
-
-		public ulong Empty
+		/// <summary>
+		/// Gets a 64-bit long integer representing the empty squares.
+		/// </summary>
+		public virtual ulong Empty
 		{
 			get;
 			private set;
 		}
 
-		public ulong Mover
+		/// <summary>
+		/// Gets a 64-bit long integer representing the squares of the player to move.
+		/// </summary>
+		public virtual ulong Mover
+		{
+			get;
+			private set;
+		}
+
+		public virtual int Id
 		{
 			get;
 			private set;
@@ -142,10 +110,11 @@
 
 		public override int GetHashCode()
 		{
-			int hashCode = 0x61E04917;
-			hashCode = (hashCode << 5) + Empty.GetHashCode();
-			hashCode = (hashCode << 5) + Mover.GetHashCode();
-			return hashCode;
+			int seed = (int)(Empty >> 32);
+			seed ^= (int)Empty + (seed << 6) + (seed >> 2);
+			seed ^= (int)(Mover >> 32) + (seed << 6) + (seed >> 2);
+			seed ^= (int)Mover + (seed << 6) + (seed >> 2);
+			return seed;
 		}
 
 		public override bool Equals(object obj)
@@ -182,6 +151,32 @@
 			builder.Append(" " + Color.Char());
 
 			return builder.ToString();
+		}
+
+		private ulong scanDirection(int pos, int dir, ulong opponent, Func<int, bool> cond)
+		{
+			ulong cumulativeChange = 0;
+			pos += dir;
+			if (((1UL << pos) & opponent) != 0)
+			{
+				ulong change = 1UL << pos;
+				for (pos += dir; cond(pos) && ((1UL << pos) & opponent) != 0; pos += dir)
+				{
+					change |= 1UL << pos;
+				}
+				if (cond(pos) && (1UL << pos & Mover) != 0)
+				{
+					cumulativeChange = change;
+				}
+			}
+
+			return cumulativeChange;
+		}
+
+		private Color Color
+		{
+			get;
+			set;
 		}
 	}
 }
