@@ -10,8 +10,7 @@
 			Id(x => x.Id);
 			Map(x => x.Name);
 			HasMany(x => x.Positions)
-				//.Cascade.All()
-				.Table("BookPositions")
+				.Cascade.All()
 				;
 		}
 	}

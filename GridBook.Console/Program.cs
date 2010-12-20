@@ -1,23 +1,16 @@
 ﻿namespace GridBook.Console
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using GridBook.Domain.Importers;
-	using GridBook.Domain;
-	using Infrastructure.Data.Repository;
-	using Infrastructure.Data.EntityFramework;
-	using System.Data.Entity;
-	using System.Data.Entity.ModelConfiguration;
-	using NHibernate;
-	using NHibernate.Cfg;
-	using FluentNHibernate.Cfg;
-	using FluentNHibernate.Cfg.Db;
-	using System.IO;
-	using GridBook.Domain.Mapping;
-	using NHibernate.Tool.hbm2ddl;
-	using NDesk.Options;
+    using System;
+    using System.IO;
+    using FluentNHibernate.Cfg;
+    using FluentNHibernate.Cfg.Db;
+    using GridBook.Domain;
+    using GridBook.Domain.Importers;
+    using GridBook.Domain.Mapping;
+    using NDesk.Options;
+    using NHibernate;
+    using NHibernate.Cfg;
+    using NHibernate.Tool.hbm2ddl;
 
 	class Program
 	{
@@ -59,13 +52,11 @@
 					foreach (var item in importer.Import())
 					{
 						var board = item.Key;
-						session.SaveOrUpdate(board);
 						book.Positions.Add(board);
 						//Console.WriteLine("Added {0}", board);
 					}
 
 					session.SaveOrUpdate(book);
-
 					transaction.Commit();
 				}
 			}

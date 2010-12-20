@@ -8,8 +8,8 @@
 		public BoardMap()
 		{
 			Id(x => x.Id);
-			Map(x => x.Empty);
-			Map(x => x.Mover);
-		}
+            Map(x => x.Empty).Index("idx_board_empty");
+            Map(x => x.Mover).Index("idx_board_mover");
+        }
 	}
 }
