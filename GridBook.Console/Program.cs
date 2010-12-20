@@ -12,6 +12,20 @@
     using NHibernate.Cfg;
     using NHibernate.Tool.hbm2ddl;
 
+	class OptionSetException : Exception
+	{
+		public OptionSetException(OptionSet set)
+		{
+			this.OptionSet = set;
+		}
+
+		public OptionSet OptionSet
+		{
+			get;
+			set;
+		}
+	}
+
 	class Program
 	{
 		static void Main(string[] args)
@@ -19,14 +33,22 @@
 			try
 			{
 				string file = string.Empty;
-				var p = new OptionSet() { { "i=|import=", v => file = v } };
+				var p = new OptionSet() { { "i=|import=", "Imports a book file into GridBook database.", v => file = v } };
 				p.Parse(args);
 				if (string.IsNullOrWhiteSpace(file))
 				{
-					throw new ArgumentException("Usage: GridBook.Console.exe i|import <file>");
+					throw new OptionSetException(p);
 				}
 
 				new Program().Run(file);
+			}
+			catch (OptionSetException ex)
+			{
+				var writer = new StringWriter();
+				ex.OptionSet.WriteOptionDescriptions(writer);
+				Console.WriteLine("Usage: GridBook.Console.exe <option>");
+				Console.WriteLine("Options:");
+				Console.WriteLine(writer);
 			}
 			catch (Exception ex)
 			{
@@ -69,7 +91,7 @@
 			return Fluently.Configure(cfg)
 				.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
 				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BookMap>())
-				.ExposeConfiguration(c => new SchemaExport(c).Create(true, true))
+				//.ExposeConfiguration(c => new SchemaExport(c).Create(true, true))
 				.BuildSessionFactory();
 		}
 	}

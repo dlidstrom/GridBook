@@ -10,5 +10,6 @@ GridBook.Domain.Mapping/obj
 GridBook.Test/GridBook.TestResult.xml
 GridBook.Test/TestResult.xml
 GridBook.Test/GridBook.Test.VisualState.xml
+GridBook.Test/GridBook.Test.csproj.VisualState.xml
 GridBook.Test/bin
 GridBook.Test/obj
