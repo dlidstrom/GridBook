@@ -60,7 +60,7 @@
 		{
 			var sessionFactory = CreateSessionFactory("DbConnection");
 
-			using (var session = sessionFactory.OpenSession())
+			using (var session = sessionFactory.OpenStatelessSession())
 			{
 				using (var transaction = session.BeginTransaction())
 				{
@@ -78,7 +78,7 @@
 						//Console.WriteLine("Added {0}", board);
 					}
 
-					session.SaveOrUpdate(book);
+					session.Insert(book);
 					transaction.Commit();
 				}
 			}

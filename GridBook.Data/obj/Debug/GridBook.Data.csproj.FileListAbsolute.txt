@@ -1,0 +1,5 @@
+C:\Users\Daniel\Programming\GridBook\GridBook.Data\bin\Debug\GridBook.Data.dll
+C:\Users\Daniel\Programming\GridBook\GridBook.Data\bin\Debug\GridBook.Data.pdb
+C:\Users\Daniel\Programming\GridBook\GridBook.Data\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Daniel\Programming\GridBook\GridBook.Data\obj\Debug\GridBook.Data.dll
+C:\Users\Daniel\Programming\GridBook\GridBook.Data\obj\Debug\GridBook.Data.pdb
