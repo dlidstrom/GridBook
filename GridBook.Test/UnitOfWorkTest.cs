@@ -13,13 +13,16 @@
 		{
 			// Arrange
 			var factory = new Mock<IUnitOfWorkFactory>();
+			var work = new Mock<IUnitOfWork>();
+			factory.Setup(f => f.Create()).Returns(work.Object);
 			UnitOfWork.Initialize(factory.Object);
 
 			// Act
-			IUnitOfWork work = UnitOfWork.Start();
+			var w = UnitOfWork.Start();
 
 			// Assert
-			factory.Verify();
+			Assert.AreSame(work.Object, w);
+			factory.VerifyAll();
 		}
 	}
 }
