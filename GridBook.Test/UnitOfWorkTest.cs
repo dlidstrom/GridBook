@@ -12,17 +12,14 @@
 		public void CanStartUnitOfWork()
 		{
 			// Arrange
-			var factory = new Mock<IUnitOfWorkFactory>();
-			var work = new Mock<IUnitOfWork>();
-			factory.Setup(f => f.Create()).Returns(work.Object);
-			UnitOfWork.Initialize(factory.Object);
+			var work = Mock.Of<IUnitOfWork>();
+			var factory = Mock.Of<IUnitOfWorkFactory>(f => f.Create() == work);
 
 			// Act
-			var w = UnitOfWork.Start();
+			UnitOfWork.Initialize(factory);
 
 			// Assert
-			factory.VerifyAll();
-			Assert.AreSame(work.Object, w);
+			Assert.AreSame(work, UnitOfWork.Start());
 		}
 	}
 }
