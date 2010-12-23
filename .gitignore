@@ -2,6 +2,8 @@
 *.suo
 GridBook.Console/bin
 GridBook.Console/obj
+GridBook.Data/bin
+GridBook.Data/obj
 GridBook.Domain/bin
 GridBook.Domain/obj
 GridBook.Domain/GridBook.Domain.csproj.VisualState.xml
