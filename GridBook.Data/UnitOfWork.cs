@@ -13,7 +13,7 @@
 
 		public static IUnitOfWork Start()
 		{
-			return null;
+			return factory.Create();
 		}
 
 		public static IUnitOfWork Current

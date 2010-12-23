@@ -21,8 +21,8 @@
 			var w = UnitOfWork.Start();
 
 			// Assert
-			Assert.AreSame(work.Object, w);
 			factory.VerifyAll();
+			Assert.AreSame(work.Object, w);
 		}
 	}
 }
