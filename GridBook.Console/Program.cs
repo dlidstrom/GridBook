@@ -33,14 +33,19 @@
 			try
 			{
 				string file = string.Empty;
-				var p = new OptionSet() { { "i=|import=", "Imports a book file into GridBook database.", v => file = v } };
+				bool createSchema = false;
+				var p = new OptionSet()
+				{
+					{ "i=|import=", "Imports a book file into GridBook database.", v => file = v },
+					{ "create-schema", "Create database schema. This will drop any existing data!", v => createSchema = true }
+				};
 				p.Parse(args);
 				if (string.IsNullOrWhiteSpace(file))
 				{
 					throw new OptionSetException(p);
 				}
 
-				new Program().Run(file);
+				new Program().Run(file, createSchema);
 			}
 			catch (OptionSetException ex)
 			{
@@ -56,9 +61,9 @@
 			}
 		}
 
-		void Run(string file)
+		void Run(string file, bool createSchema)
 		{
-			var sessionFactory = CreateSessionFactory("DbConnection");
+			var sessionFactory = CreateSessionFactory("DbConnection", createSchema);
 
 			using (var session = sessionFactory.OpenStatelessSession())
 			{
@@ -74,6 +79,7 @@
 					foreach (var item in importer.Import())
 					{
 						var board = item.Key;
+						session.Insert(board);
 						book.Positions.Add(board);
 						//Console.WriteLine("Added {0}", board);
 					}
@@ -84,15 +90,20 @@
 			}
 		}
 
-		private static ISessionFactory CreateSessionFactory(string connectionString)
+		private static ISessionFactory CreateSessionFactory(string connectionString, bool createSchema)
 		{
 			var cfg = new Configuration();
 			cfg.Properties.Add("show_sql", "true");
-			return Fluently.Configure(cfg)
+			var builder = Fluently.Configure(cfg)
 				.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
-				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BookMap>())
+				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BookMap>());
 				//.ExposeConfiguration(c => new SchemaExport(c).Create(true, true))
-				.BuildSessionFactory();
+			if (createSchema)
+			{
+				return builder.ExposeConfiguration(c => new SchemaExport(c).Create(true, true)).BuildSessionFactory();
+			}
+
+			return builder.BuildSessionFactory();
 		}
 	}
 }

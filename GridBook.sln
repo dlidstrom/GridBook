@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridBook.Domain.Mapping", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridBook.Data", "GridBook.Data\GridBook.Data.csproj", "{62826EEC-A46E-4D2B-AAA0-3C33548231AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernateLayer", "NHibernateLayer\NHibernateLayer.csproj", "{3A1B4CB9-7F27-4D44-AE86-9796EDD6A1C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,16 @@ Global
 		{62826EEC-A46E-4D2B-AAA0-3C33548231AF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{62826EEC-A46E-4D2B-AAA0-3C33548231AF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{62826EEC-A46E-4D2B-AAA0-3C33548231AF}.Release|x86.ActiveCfg = Release|Any CPU
+		{3A1B4CB9-7F27-4D44-AE86-9796EDD6A1C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A1B4CB9-7F27-4D44-AE86-9796EDD6A1C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A1B4CB9-7F27-4D44-AE86-9796EDD6A1C9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3A1B4CB9-7F27-4D44-AE86-9796EDD6A1C9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3A1B4CB9-7F27-4D44-AE86-9796EDD6A1C9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3A1B4CB9-7F27-4D44-AE86-9796EDD6A1C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A1B4CB9-7F27-4D44-AE86-9796EDD6A1C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A1B4CB9-7F27-4D44-AE86-9796EDD6A1C9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3A1B4CB9-7F27-4D44-AE86-9796EDD6A1C9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3A1B4CB9-7F27-4D44-AE86-9796EDD6A1C9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

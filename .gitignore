@@ -15,3 +15,5 @@ GridBook.Test/GridBook.Test.VisualState.xml
 GridBook.Test/GridBook.Test.csproj.VisualState.xml
 GridBook.Test/bin
 GridBook.Test/obj
+NHibernateLayer/bin
+NHibernateLayer/obj

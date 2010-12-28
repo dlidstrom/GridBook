@@ -21,7 +21,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;LINQ</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -30,7 +30,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;LINQ</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -38,15 +38,6 @@
     <Reference Include="EntityFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
     <Reference Include="FluentNHibernate">
       <HintPath>..\Tools\FluentNHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="Infrastructure.Data">
-      <HintPath>..\Tools\Infrastructure.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Infrastructure.Data.EntityFramework">
-      <HintPath>..\Tools\Infrastructure.Data.EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Infrastructure.Model">
-      <HintPath>..\Tools\Infrastructure.Model.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.3.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -73,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProgressBar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +80,7 @@
   <ItemGroup>
     <None Include="app.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,6 +5,7 @@
 	public static class UnitOfWork
 	{
 		private static IUnitOfWorkFactory factory;
+		private static IUnitOfWork innerUnitOfWork;
 
 		public static void Initialize(IUnitOfWorkFactory factory)
 		{
@@ -13,7 +14,13 @@
 
 		public static IUnitOfWork Start()
 		{
-			return factory.Create();
+			if (innerUnitOfWork != null)
+			{
+				throw new InvalidOperationException("You can only have one unit of work at the same time.");
+			}
+
+			innerUnitOfWork = factory.Create();
+			return innerUnitOfWork;
 		}
 
 		public static IUnitOfWork Current
