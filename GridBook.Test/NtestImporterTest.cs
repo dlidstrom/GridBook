@@ -1,12 +1,12 @@
 ﻿namespace GridBook.Test
 {
-	using NUnit.Framework;
-	using GridBook.Domain.Importers;
-	using GridBook.Domain;
 	using System.Collections.Generic;
 	using System.Linq;
+	using GridBook.Domain;
+	using GridBook.Domain.Importers;
+	using NUnit.Framework;
 
-	[TestFixture]
+	[TestFixture, Unit]
 	public class NtestImporterTest
 	{
 		private IImporter importer;

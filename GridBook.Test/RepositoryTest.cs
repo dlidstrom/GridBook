@@ -1,28 +1,32 @@
-﻿namespace NHibernateLayer.Test
+﻿namespace GridBook.Test
 {
-	using System;
-	using NUnit.Framework;
 	using GridBook.Domain;
-	using FluentNHibernate.Testing;
+	using NHibernateLayer;
+	using NUnit.Framework;
 
-	[TestFixture]
+	[TestFixture, Database]
 	public class RepositoryTest
 	{
 		[Test]
-		public void CountBoardsInDB()
+		public void CanAddBoards()
 		{
 			// Arrange
 			NHibernateHelper helper = new NHibernateHelper("DbTest", true);
-			var uow = new UnitOfWork(helper.SessionFactory);
-
-			// Act
-			new PersistenceSpecification<Board>(uow.Session)
-				.CheckProperty(b => b.Id, 1)
-				.CheckProperty(b => b.Empty, 10UL)
-				.CheckProperty(b => b.Mover, 20UL)
-				.VerifyTheMappings();
+			using (var uow = new UnitOfWork(helper.SessionFactory))
+			{
+				// Act
+				var repo = new Repository<Board>(uow.Session);
+				repo.Add(Board.Start);
+				uow.Commit();
+			}
 
 			// Assert
+			using (var uow = new UnitOfWork(helper.SessionFactory))
+			{
+				var repo2 = new Repository<Board>(uow.Session);
+				var board = repo2.FindBy(1);
+				Assert.AreEqual(Board.Start, board);
+			}
 		}
 	}
 }

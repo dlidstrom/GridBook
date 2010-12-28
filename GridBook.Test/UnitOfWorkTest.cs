@@ -1,14 +1,12 @@
 ﻿namespace GridBook.Test
 {
 	using System;
-	using NUnit.Framework;
-	using Moq;
 	using GridBook.Data;
+	using Moq;
+	using NUnit.Framework;
 
-	[TestFixture]
 	public class UnitOfWorkTest
 	{
-		[Test]
 		public void CanStartUnitOfWork()
 		{
 			// Arrange
@@ -22,7 +20,6 @@
 			Assert.AreSame(work, UnitOfWork.Start());
 		}
 
-		[Test]
 		public void StartingWhenStartedThrows()
 		{
 			// Arrange

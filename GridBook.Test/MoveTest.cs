@@ -4,7 +4,7 @@
 	using NUnit.Framework;
 	using GridBook.Domain;
 
-	[TestFixture]
+	[TestFixture, Unit]
 	public class MoveTest
 	{
 		[Test]
