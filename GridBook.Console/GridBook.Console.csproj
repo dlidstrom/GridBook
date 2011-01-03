@@ -68,20 +68,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GridBook.Domain.Mapping\GridBook.Domain.Mapping.csproj">
-      <Project>{C785D9A7-A415-42A1-BD5F-2BD05B4C1E8D}</Project>
-      <Name>GridBook.Domain.Mapping</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GridBook.Domain\GridBook.Domain.csproj">
-      <Project>{F61E4F89-4CA5-4560-BD60-68772F2C1B42}</Project>
-      <Name>GridBook.Domain</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GridBook\GridBook.csproj">
+      <Project>{F61E4F89-4CA5-4560-BD60-68772F2C1B42}</Project>
+      <Name>GridBook</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

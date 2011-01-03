@@ -8,8 +8,8 @@
     <ProjectGuid>{F61E4F89-4CA5-4560-BD60-68772F2C1B42}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GridBook.Domain</RootNamespace>
-    <AssemblyName>GridBook.Domain</AssemblyName>
+    <RootNamespace>GridBook</RootNamespace>
+    <AssemblyName>GridBook</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\Tools\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\Tools\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,15 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bits.cs" />
-    <Compile Include="Board.cs" />
-    <Compile Include="Book.cs" />
-    <Compile Include="BookData.cs" />
-    <Compile Include="Color.cs" />
-    <Compile Include="ColorExtensions.cs" />
+    <Compile Include="Data\IKeyedRepository.cs" />
+    <Compile Include="Data\IReadOnlyRepository.cs" />
+    <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\IUnitOfWork.cs" />
+    <Compile Include="Data\IUnitOfWorkFactory.cs" />
+    <Compile Include="Data\UnitOfWork.cs" />
+    <Compile Include="Domain\Bits.cs" />
+    <Compile Include="Domain\Board.cs" />
+    <Compile Include="Domain\Book.cs" />
+    <Compile Include="Domain\BookData.cs" />
+    <Compile Include="Domain\Color.cs" />
+    <Compile Include="Domain\ColorExtensions.cs" />
     <Compile Include="Importers\IImporter.cs" />
     <Compile Include="Importers\NtestImporter.cs" />
-    <Compile Include="Move.cs" />
+    <Compile Include="Domain\Move.cs" />
+    <Compile Include="Mapping\BoardMap.cs" />
+    <Compile Include="Mapping\BookMap.cs" />
+    <Compile Include="NHibernateLayer\IUnitOfWork.cs" />
+    <Compile Include="NHibernateLayer\NHibernateHelper.cs" />
+    <Compile Include="NHibernateLayer\Repository.cs" />
+    <Compile Include="NHibernateLayer\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

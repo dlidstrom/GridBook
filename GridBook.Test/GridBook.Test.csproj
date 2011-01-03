@@ -124,21 +124,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GridBook.Data\GridBook.Data.csproj">
-      <Project>{62826EEC-A46E-4D2B-AAA0-3C33548231AF}</Project>
-      <Name>GridBook.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GridBook.Domain.Mapping\GridBook.Domain.Mapping.csproj">
-      <Project>{C785D9A7-A415-42A1-BD5F-2BD05B4C1E8D}</Project>
-      <Name>GridBook.Domain.Mapping</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GridBook.Domain\GridBook.Domain.csproj">
+    <ProjectReference Include="..\GridBook\GridBook.csproj">
       <Project>{F61E4F89-4CA5-4560-BD60-68772F2C1B42}</Project>
-      <Name>GridBook.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NHibernateLayer\NHibernateLayer.csproj">
-      <Project>{3A1B4CB9-7F27-4D44-AE86-9796EDD6A1C9}</Project>
-      <Name>NHibernateLayer</Name>
+      <Name>GridBook</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
