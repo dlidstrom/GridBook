@@ -13,7 +13,10 @@
 			Assert.AreEqual(0, Bits.Count(0));
 			Assert.AreEqual(8, Bits.Count(255));
 			Assert.AreEqual(32, Bits.Count(0xFFFFFFFF));
-			Assert.AreEqual(64, Bits.Count(0xFFFFFFFFFFFFFFFF));
+			unchecked
+			{
+				Assert.AreEqual(64, Bits.Count((long)(0xFFFFFFFFFFFFFFFF)));
+			}
 		}
 	}
 }

@@ -6,18 +6,17 @@
 	using NUnit.Framework;
 
 	[TestFixture, Database]
-	public class MappingsTest
+	public class MappingsTest : DatabaseTest
 	{
 		[Test]
 		public void VerifyBoardMappings()
 		{
-			NHibernateHelper helper = new NHibernateHelper("DbTest", true);
-			var uow = new UnitOfWork(helper.SessionFactory);
+			var uow = new UnitOfWork(CreateSession());
 
 			new PersistenceSpecification<Board>(uow.Session)
 				.CheckProperty(b => b.Id, 1)
-				.CheckProperty(b => b.Empty, 10UL)
-				.CheckProperty(b => b.Mover, 20UL)
+				.CheckProperty(b => b.Empty, 10L)
+				.CheckProperty(b => b.Mover, 20L)
 				.VerifyTheMappings();
 		}
 	}

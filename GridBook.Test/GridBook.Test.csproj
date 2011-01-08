@@ -76,6 +76,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\..\..\..\Program Files (x86)\SQLite.NET\bin\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -85,7 +88,9 @@
   <ItemGroup>
     <Compile Include="BitsTest.cs" />
     <Compile Include="BoardTest.cs" />
+    <Compile Include="BookServiceTest.cs" />
     <Compile Include="Categories.cs" />
+    <Compile Include="DatabaseTest.cs" />
     <Compile Include="MappingsTest.cs" />
     <Compile Include="NtestImporterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

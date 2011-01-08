@@ -27,7 +27,7 @@
 		/// </summary>
 		/// <param name="l"></param>
 		/// <returns></returns>
-		public static int Count(ulong l)
+		public static int Count(long l)
 		{
 			return bitcount[(ushort)l]
 				+ bitcount[(ushort)(l >> 16)]

@@ -1,6 +1,5 @@
 ﻿namespace GridBook.Domain.Mapping
 {
-	using System;
 	using FluentNHibernate.Mapping;
 
 	public class BoardMap : ClassMap<Board>

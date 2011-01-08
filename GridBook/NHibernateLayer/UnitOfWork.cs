@@ -6,13 +6,11 @@
 
 	public class UnitOfWork : IUnitOfWork
 	{
-		private readonly ISessionFactory sessionFactory;
 		private readonly ITransaction transaction;
 
-		public UnitOfWork(ISessionFactory sessionFactory)
+		public UnitOfWork(ISession session)
 		{
-			this.sessionFactory = sessionFactory;
-			Session = sessionFactory.OpenSession();
+			Session = session;
 			Session.FlushMode = FlushMode.Auto;
 			transaction = Session.BeginTransaction(IsolationLevel.ReadCommitted);
 		}

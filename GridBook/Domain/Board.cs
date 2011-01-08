@@ -23,8 +23,8 @@
 
 		public Board(ulong empty, ulong mover, Color color)
 		{
-			this.Empty = empty;
-			this.Mover = mover;
+			this.Empty = empty.ToInt64();
+			this.Mover = mover.ToInt64();
 			this.Color = color;
 			if (((Empty | Mover) ^ Mover) != Empty)
 			{
@@ -35,8 +35,8 @@
 		public virtual Board Play(Move move)
 		{
 			int pos = move.Pos;
-			ulong opponent = ~(Empty | Mover);
-			ulong cumulativeChange = 0;
+			long opponent = ~(Empty | Mover);
+			long cumulativeChange = 0;
 
 			// up
 			cumulativeChange |= scanDirection(pos, 8, opponent, p => p <= 63);
@@ -67,10 +67,10 @@
 				throw new ArgumentException("Invalid move", "move");
 			}
 
-			ulong newEmpty = Empty ^ (1UL << move.Pos);
-			ulong mover = opponent ^ cumulativeChange;
+			long newEmpty = Empty ^ (1L << move.Pos);
+			long mover = opponent ^ cumulativeChange;
 
-			return new Board(newEmpty, mover, this.Color.Opponent());
+			return new Board(newEmpty.ToUInt64(), mover.ToUInt64(), this.Color.Opponent());
 		}
 
 		/// <summary>
@@ -87,7 +87,7 @@
 		/// <summary>
 		/// Gets a 64-bit long integer representing the empty squares.
 		/// </summary>
-		public virtual ulong Empty
+		public virtual long Empty
 		{
 			get;
 			private set;
@@ -96,7 +96,7 @@
 		/// <summary>
 		/// Gets a 64-bit long integer representing the squares of the player to move.
 		/// </summary>
-		public virtual ulong Mover
+		public virtual long Mover
 		{
 			get;
 			private set;
@@ -133,7 +133,7 @@
 			var builder = new StringBuilder();
 			for (int i = 63; i >= 0; i--)
 			{
-				ulong mask = (1UL << i);
+				long mask = (1L << i);
 				if ((Empty & mask) != 0)
 				{
 					builder.Append("-");
@@ -153,18 +153,18 @@
 			return builder.ToString();
 		}
 
-		private ulong scanDirection(int pos, int dir, ulong opponent, Func<int, bool> cond)
+		private long scanDirection(int pos, int dir, long opponent, Func<int, bool> cond)
 		{
-			ulong cumulativeChange = 0;
+			long cumulativeChange = 0;
 			pos += dir;
-			if (((1UL << pos) & opponent) != 0)
+			if (((1L << pos) & opponent) != 0)
 			{
-				ulong change = 1UL << pos;
-				for (pos += dir; cond(pos) && ((1UL << pos) & opponent) != 0; pos += dir)
+				long change = 1L << pos;
+				for (pos += dir; cond(pos) && ((1L << pos) & opponent) != 0; pos += dir)
 				{
-					change |= 1UL << pos;
+					change |= 1L << pos;
 				}
-				if (cond(pos) && (1UL << pos & Mover) != 0)
+				if (cond(pos) && (1L << pos & Mover) != 0)
 				{
 					cumulativeChange = change;
 				}

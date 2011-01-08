@@ -5,6 +5,7 @@
 	using GridBook.Domain;
 	using GridBook.Domain.Importers;
 	using NUnit.Framework;
+	using System;
 
 	[TestFixture, Unit]
 	public class NtestImporterTest
@@ -41,7 +42,7 @@
 		public void VerifyOpeningPositionValues()
 		{
 			var entry = (from bd in entries
-						 where bd.Key.Empty == 18446743970226896895 && bd.Key.Mover==34628698112
+						 where bd.Key.Empty == 18446743970226896895.ToInt64() && bd.Key.Mover==34628698112
 						 select bd.Value).Single();
 			Assert.AreEqual(12, entry.Height);
 			Assert.AreEqual(4, entry.Prune);
