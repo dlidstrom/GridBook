@@ -108,6 +108,101 @@
 			private set;
 		}
 
+		public virtual Board MinimalReflection()
+		{
+			Board temp = new Board(this.Empty.ToUInt64(), this.Mover.ToUInt64(), this.Color);
+			Board result = new Board(this.Empty.ToUInt64(), this.Mover.ToUInt64(), this.Color);
+
+			for (int i = 0; i < 2; i++)
+			{
+				for (int j = 0; j < 2; j++)
+				{
+					for (int k = 0; k < 2; k++)
+					{
+						if (temp < result)
+							result = temp;
+
+						temp = temp.FlipVertical();
+					}
+
+					temp = temp.FlipHorizontal();
+				}
+
+				temp = temp.FlipDiagonal();
+			}
+
+			return result;
+		}
+
+		public static Board FromString(string s)
+		{
+			if (s.Length != 66 || (s[65] != '*' && s[65] != 'O'))
+			{
+				throw new ArgumentException("Invalid board");
+			}
+
+			ulong empty = 0;
+			ulong mover = 0;
+
+			// assume black is mover
+			for (int i = 0; i < 64; i++)
+			{
+				ulong mask = 1UL << (63 - i);
+
+				if (s[i] == '*')
+				{
+					mover |= mask;
+				}
+				else if (s[i] == '-')
+				{
+					empty |= mask;
+				}
+				else if (s[i] != 'O')
+				{
+					throw new ArgumentException("Invalid board");
+				}
+			}
+
+			Color color = s[65] == '*' ? Color.Black : Color.White;
+
+			return color == Color.Black ? new Board(empty, mover, color) : new Board(empty, ~(empty | mover), color);
+		}
+
+		public static bool operator <(Board left, Board right)
+		{
+			if (left.Mover == right.Mover)
+			{
+				return left.Empty < right.Empty;
+			}
+
+			return left.Mover < right.Mover;
+		}
+
+		public static bool operator >(Board left, Board right)
+		{
+			if (left.Mover == right.Mover)
+			{
+				return left.Empty > right.Empty;
+			}
+
+			return left.Mover > right.Mover;
+		}
+
+		private Board FlipDiagonal()
+		{
+			return new Board(this.Empty.FlipDiagonal(), this.Mover.FlipDiagonal(), this.Color);
+		}
+
+		private Board FlipHorizontal()
+		{
+			return new Board(this.Empty.FlipHorizontal(), this.Mover.FlipHorizontal(), this.Color);
+		}
+
+		private Board FlipVertical()
+		{
+			return new Board(this.Empty.FlipVertical(), this.Mover.FlipVertical(), this.Color);
+		}
+
 		public override int GetHashCode()
 		{
 			int seed = (int)(Empty >> 32);

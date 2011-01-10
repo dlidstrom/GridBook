@@ -90,5 +90,27 @@
 			}
 		}
 
+		[Test]
+		public void FromStringFactoryMethod()
+		{
+			// Act
+			var board = Board.FromString("---------------------------O*------*O--------------------------- *");
+
+			// Assert
+			Assert.AreEqual(Board.Start, board);
+		}
+
+		[Test]
+		public void FromStringAfterC4()
+		{
+			// Arrange
+			var afterC4 = Board.Start.Play(new Move("C4"));
+
+			// Act
+			var board = Board.FromString("--------------------------***------*O--------------------------- O");
+
+			// Assert
+			Assert.AreEqual(afterC4, board);
+		}
 	}
 }
