@@ -38,7 +38,17 @@
 			var b8 = Board.FromString("----------*------O**------***O----****-----O-------------------- O");
 
 			// Act
-			var h = new HashSet<Board>() { b1.MinimalReflection(), b2.MinimalReflection(), b3.MinimalReflection(), b4.MinimalReflection() };
+			var h = new HashSet<Board>()
+			{
+				b1.MinimalReflection(),
+				b2.MinimalReflection(),
+				b3.MinimalReflection(),
+				b4.MinimalReflection(),
+				b5.MinimalReflection(),
+				b6.MinimalReflection(),
+				b7.MinimalReflection(),
+				b8.MinimalReflection()
+			};
 
 			// Assert
 			Assert.AreEqual(1, h.Count);
