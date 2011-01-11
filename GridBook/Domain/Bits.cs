@@ -35,81 +35,43 @@
 				+ bitcount[(ushort)(l >> 48)];
 		}
 
-		public static ulong FlipVertical(this long l)
+		public static ulong FlipHorizontal(this ulong x)
 		{
-			//int i;
-			//u1 temp;
+			const ulong k1 = 0x5555555555555555;
+			const ulong k2 = 0x3333333333333333;
+			const ulong k4 = 0x0f0f0f0f0f0f0f0f;
+			x = ((x >> 1) & k1) | ((x & k1) << 1);
+			x = ((x >> 2) & k2) | ((x & k2) << 2);
+			x = ((x >> 4) & k4) | ((x & k4) << 4);
 
-			//for (i = 0; i < 4; i++)
-			//{
-			//    temp = u1s[i];
-			//    u1s[i] = u1s[7 - i];
-			//    u1s[7 - i] = temp;
-			//}
-
-			return l.ToUInt64();
+			return x;
 		}
 
-		public static ulong FlipDiagonal(this long l)
+		public static ulong FlipVertical(this ulong x)
 		{
-			//const u4 dflipmask4L = 0xF0F0F0F0;
-			//const u4 dflipmask4R = 0x0F0F0F0F;
-			//const u4 dflipmask2L = 0x0000CCCC;
-			//const u4 dflipmask2R = 0x33330000;
-			//const u4 dflipmask1L = 0x00AA00AA;
-			//const u4 dflipmask1R = 0x55005500;
-
-			//void CBitBoardBlock::FlipDiagonal32(u4& rows) {
-			//   u4 templ, tempr;
-
-			//   templ=dflipmask2L&rows;
-			//   tempr=dflipmask2R&rows;
-			//   rows^=(templ|tempr);
-			//   rows|=(templ<<14)|(tempr>>14);
-
-			//   templ=dflipmask1L&rows;
-			//   tempr=dflipmask1R&rows;
-			//   rows^=(templ|tempr);
-			//   rows|=(templ<<7)|(tempr>>7);
-			//}
-
-			//u4 templ, tempr;
-
-			//templ = dflipmask4L & u4s[0];
-			//tempr = dflipmask4R & u4s[1];
-			//u4s[0] ^= templ;
-			//u4s[1] ^= tempr;
-			//u4s[0] |= tempr << 4;
-			//u4s[1] |= templ >> 4;
-			//FlipDiagonal32(u4s[0]);
-			//FlipDiagonal32(u4s[1]);
-			return l.ToUInt64();
+			return (x << 56)
+				| ((x << 40) & (0x00ff000000000000))
+				| ((x << 24) & (0x0000ff0000000000))
+				| ((x << 8) & (0x000000ff00000000))
+				| ((x >> 8) & (0x00000000ff000000))
+				| ((x >> 24) & (0x0000000000ff0000))
+				| ((x >> 40) & (0x000000000000ff00))
+				| ((x >> 56));
 		}
 
-		public static ulong FlipHorizontal(this long l)
+		public static ulong FlipDiagonal(this ulong x)
 		{
-			//const u4 hflipmask4 = 0x0F0F0F0F;
-			//const u4 hflipmask2 = 0x33333333;
-			//const u4 hflipmask1 = 0x55555555;
+			const ulong k1 = 0xaa00aa00aa00aa00;
+			const ulong k2 = 0xcccc0000cccc0000;
+			const ulong k4 = 0xf0f0f0f00f0f0f0f;
+			ulong t = x ^ (x << 36);
+			x ^= k4 & (t ^ (x >> 36));
+			t = k2 & (x ^ (x << 18));
+			x ^= t ^ (t >> 18);
+			t = k1 & (x ^ (x << 9));
+			x ^= t ^ (t >> 9);
 
-			//u4 templ, tempr;
-
-			//templ = rows & hflipmask4;
-			//tempr = rows & ~hflipmask4;
-			//rows = (templ << 4) | (tempr >> 4);
-
-			//templ = rows & hflipmask2;
-			//tempr = rows & ~hflipmask2;
-			//rows = (templ << 2) | (tempr >> 2);
-
-			//templ = rows & hflipmask1;
-			//tempr = rows & ~hflipmask1;
-			//rows = (templ << 1) | (tempr >> 1);
-
-			//FlipHorizontal32(u4s[0]);
-			//FlipHorizontal32(u4s[1]);
-
-			return l.ToUInt64();
+			return x;
 		}
 	}
 }

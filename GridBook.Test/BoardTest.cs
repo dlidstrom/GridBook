@@ -10,7 +10,7 @@
 		[Test]
 		public void EmptiesAtStart()
 		{
-			Assert.AreEqual(60, Board.Start.Empties);
+			Assert.AreEqual(60, Board.Start.GetEmpties());
 		}
 
 		[Test]
@@ -111,6 +111,20 @@
 
 			// Assert
 			Assert.AreEqual(afterC4, board);
+		}
+
+		[Test]
+		public void RoundTripString()
+		{
+			// Arrange
+			var afterC4 = Board.Start.Play(new Move("C4"));
+
+			// Act
+			var stringRepresentation = afterC4.ToString();
+			var roundTripped = Board.FromString(stringRepresentation);
+
+			// Assert
+			Assert.AreEqual(afterC4, roundTripped);
 		}
 	}
 }

@@ -16,11 +16,20 @@
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the Board class.
+		/// </summary>
 		public Board()
 			: this(18446743970227683327, 34628173824, Color.Black)
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the Board class.
+		/// </summary>
+		/// <param name="empty">Bits representing the empty squares.</param>
+		/// <param name="mover">Bits representing the squares of the mover.</param>
+		/// <param name="color">Color of the player to move.</param>
 		public Board(ulong empty, ulong mover, Color color)
 		{
 			this.Empty = empty.ToInt64();
@@ -32,6 +41,23 @@
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the Board class.
+		/// </summary>
+		/// <param name="empty">Bits representing the empty squares.</param>
+		/// <param name="mover">Bits representing the squares of the mover.</param>
+		/// <param name="color">Color of the player to move.</param>
+		public Board(long empty, long mover, Color color)
+			: this(empty.ToUInt64(), mover.ToUInt64(), color)
+		{
+		}
+
+		/// <summary>
+		/// Play a move.
+		/// </summary>
+		/// <param name="move">Move to play.</param>
+		/// <returns>Board result after move has been played.</returns>
+		/// <exception cref="ArgumentException">If move is invalid.</exception>
 		public virtual Board Play(Move move)
 		{
 			int pos = move.Pos;
@@ -76,12 +102,9 @@
 		/// <summary>
 		/// Gets the number of empty positions.
 		/// </summary>
-		public virtual int Empties
+		public virtual int GetEmpties()
 		{
-			get
-			{
-				return Bits.Count(Empty);
-			}
+			return Bits.Count(Empty);
 		}
 
 		/// <summary>
@@ -102,12 +125,28 @@
 			private set;
 		}
 
+		/// <summary>
+		/// Database id.
+		/// </summary>
 		public virtual int Id
 		{
 			get;
 			private set;
 		}
 
+		/// <summary>
+		/// Gets or sets the player to move.
+		/// </summary>
+		private Color Color
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Calculates a minimal reflection.
+		/// </summary>
+		/// <returns>Minimal reflection of this board state.</returns>
 		public virtual Board MinimalReflection()
 		{
 			Board temp = new Board(this.Empty.ToUInt64(), this.Mover.ToUInt64(), this.Color);
@@ -134,6 +173,12 @@
 			return result;
 		}
 
+		/// <summary>
+		/// Construct a board from a string representation.
+		/// </summary>
+		/// <param name="s">String representation.</param>
+		/// <returns>Board instance.</returns>
+		/// <exception cref="ArgumentException">If string content is invalid.</exception>
 		public static Board FromString(string s)
 		{
 			if (s.Length != 66 || (s[65] != '*' && s[65] != 'O'))
@@ -168,6 +213,12 @@
 			return color == Color.Black ? new Board(empty, mover, color) : new Board(empty, ~(empty | mover), color);
 		}
 
+		/// <summary>
+		/// Less-than operator.
+		/// </summary>
+		/// <param name="left">Left side.</param>
+		/// <param name="right">Right side.</param>
+		/// <returns>True if left &lt; right, otherwise false.</returns>
 		public static bool operator <(Board left, Board right)
 		{
 			if (left.Mover == right.Mover)
@@ -178,6 +229,12 @@
 			return left.Mover < right.Mover;
 		}
 
+		/// <summary>
+		/// Greater-than operator.
+		/// </summary>
+		/// <param name="left">Left side.</param>
+		/// <param name="right">Right side.</param>
+		/// <returns>True if left &gt; right, otherwise false.</returns>
 		public static bool operator >(Board left, Board right)
 		{
 			if (left.Mover == right.Mover)
@@ -188,21 +245,37 @@
 			return left.Mover > right.Mover;
 		}
 
+		/// <summary>
+		/// Flip board on the A8-H1 diagonal.
+		/// </summary>
+		/// <returns>Flipped board.</returns>
 		private Board FlipDiagonal()
 		{
-			return new Board(this.Empty.FlipDiagonal(), this.Mover.FlipDiagonal(), this.Color);
+			return new Board(this.Empty.ToUInt64().FlipDiagonal(), this.Mover.ToUInt64().FlipDiagonal(), this.Color);
 		}
 
+		/// <summary>
+		/// Flip board horizontally.
+		/// </summary>
+		/// <returns>Flipped board.</returns>
 		private Board FlipHorizontal()
 		{
-			return new Board(this.Empty.FlipHorizontal(), this.Mover.FlipHorizontal(), this.Color);
+			return new Board(this.Empty.ToUInt64().FlipHorizontal(), this.Mover.ToUInt64().FlipHorizontal(), this.Color);
 		}
 
+		/// <summary>
+		/// Flip board vertically.
+		/// </summary>
+		/// <returns>Flipped board.</returns>
 		private Board FlipVertical()
 		{
-			return new Board(this.Empty.FlipVertical(), this.Mover.FlipVertical(), this.Color);
+			return new Board(this.Empty.ToUInt64().FlipVertical(), this.Mover.ToUInt64().FlipVertical(), this.Color);
 		}
 
+		/// <summary>
+		/// Calculate a hash code for the board. This allows boards to be put inside hashtable-based dictionaries.
+		/// </summary>
+		/// <returns>Board hash code.</returns>
 		public override int GetHashCode()
 		{
 			int seed = (int)(Empty >> 32);
@@ -212,6 +285,11 @@
 			return seed;
 		}
 
+		/// <summary>
+		/// Determines whether this board is equal to another board.
+		/// </summary>
+		/// <param name="obj">Other board.</param>
+		/// <returns>True if boards are equal, false otherwise.</returns>
 		public override bool Equals(object obj)
 		{
 			var board = obj as Board;
@@ -223,6 +301,10 @@
 			return board.Empty == Empty && board.Mover == Mover;
 		}
 
+		/// <summary>
+		/// Returns a string representation of this board.
+		/// </summary>
+		/// <returns>String representation.</returns>
 		public override string ToString()
 		{
 			var builder = new StringBuilder();
@@ -248,6 +330,14 @@
 			return builder.ToString();
 		}
 
+		/// <summary>
+		/// Scan along a direction.
+		/// </summary>
+		/// <param name="pos"></param>
+		/// <param name="dir"></param>
+		/// <param name="opponent"></param>
+		/// <param name="cond"></param>
+		/// <returns></returns>
 		private long scanDirection(int pos, int dir, long opponent, Func<int, bool> cond)
 		{
 			long cumulativeChange = 0;
@@ -266,12 +356,6 @@
 			}
 
 			return cumulativeChange;
-		}
-
-		private Color Color
-		{
-			get;
-			set;
 		}
 	}
 }
