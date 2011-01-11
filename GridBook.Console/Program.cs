@@ -1,16 +1,16 @@
 ﻿namespace GridBook.Console
 {
-    using System;
-    using System.IO;
-    using FluentNHibernate.Cfg;
-    using FluentNHibernate.Cfg.Db;
-    using GridBook.Domain;
-    using GridBook.Domain.Importers;
-    using GridBook.Domain.Mapping;
-    using NDesk.Options;
-    using NHibernate;
-    using NHibernate.Cfg;
-    using NHibernate.Tool.hbm2ddl;
+	using System;
+	using System.IO;
+	using FluentNHibernate.Cfg;
+	using FluentNHibernate.Cfg.Db;
+	using GridBook.Domain;
+	using GridBook.Domain.Importers;
+	using GridBook.Domain.Mapping;
+	using NDesk.Options;
+	using NHibernate;
+	using NHibernate.Cfg;
+	using NHibernate.Tool.hbm2ddl;
 
 	class OptionSetException : Exception
 	{
@@ -97,7 +97,7 @@
 			var builder = Fluently.Configure(cfg)
 				.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
 				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BookMap>());
-				//.ExposeConfiguration(c => new SchemaExport(c).Create(true, true))
+			//.ExposeConfiguration(c => new SchemaExport(c).Create(true, true))
 			if (createSchema)
 			{
 				return builder.ExposeConfiguration(c => new SchemaExport(c).Create(true, true)).BuildSessionFactory();
