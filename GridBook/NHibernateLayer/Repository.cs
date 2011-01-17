@@ -7,8 +7,9 @@
 	using GridBook.Data;
 	using NHibernate;
 	using NHibernate.Linq;
+	using GridBook.Domain;
 
-	public class Repository<T> : IKeyedRepository<T> where T : class
+	public class Repository<T, TId> : IKeyedRepository<T, TId> where T : Entity<TId>
 	{
 		private readonly ISession session;
 
@@ -17,64 +18,109 @@
 			this.session = session;
 		}
 
-		public T FindBy(int id)
+		public T FindBy(TId id)
 		{
-			return session.Get<T>(id);
+			return Transact(() => session.Get<T>(id));
 		}
 
-		public bool Add(T entity)
+		public TId Add(T entity)
 		{
-			session.Save(entity);
-			return true;
+			return Transact(() => (TId)session.Save(entity));
 		}
 
 		public bool Add(IEnumerable<T> items)
 		{
-			foreach (var item in items)
+			return Transact(() =>
 			{
-				Add(item);
-			}
+				foreach (var item in items)
+				{
+					Add(item);
+				}
 
-			return true;
+				return true;
+			});
 		}
 
 		public bool Update(T entity)
 		{
-			session.Update(entity);
+			return Transact(() =>
+			{
+				session.Update(entity);
 
-			return true;
+				return true;
+			});
 		}
 
 		public bool Delete(T entity)
 		{
-			session.Delete(entity);
+			return Transact(() =>
+			{
+				session.Delete(entity);
 
-			return true;
+				return true;
+			});
 		}
 
 		public bool Delete(IEnumerable<T> entities)
 		{
-			foreach (var item in entities)
+			return Transact(() =>
 			{
-				Delete(item);
-			}
+				foreach (var item in entities)
+				{
+					Delete(item);
+				}
 
-			return true;
+				return true;
+			});
 		}
 
 		public IQueryable<T> All()
 		{
-			return session.Query<T>();
+			return Transact(() => session.Query<T>());
 		}
 
 		public T FindBy(Expression<Func<T, bool>> expression)
 		{
-			return FilterBy(expression).Single();
+			return Transact(() => FilterBy(expression).Single());
 		}
 
 		public IQueryable<T> FilterBy(Expression<Func<T, bool>> expression)
 		{
-			return All().Where(expression);
+			return Transact(() => All().Where(expression));
+		}
+
+		private TResult Transact<TResult>(Func<TResult> func)
+		{
+			if (session.Transaction.IsActive)
+			{
+				return func.Invoke();
+			}
+
+			TResult result = default(TResult);
+			using (var tx = session.BeginTransaction())
+			{
+				result = func.Invoke();
+				tx.Commit();
+			}
+
+			return result;
+		}
+
+		private void Transact(Action action)
+		{
+			Transact<bool>(() =>
+			{
+				action.Invoke();
+				return false;
+			});
+		}
+	}
+
+	public class Repository<T> : Repository<T, Guid> where T : Entity<Guid>
+	{
+		public Repository(ISession session)
+			: base(session)
+		{
 		}
 	}
 }

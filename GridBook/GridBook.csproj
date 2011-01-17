@@ -58,6 +58,7 @@
     <Compile Include="Domain\BookData.cs" />
     <Compile Include="Domain\Color.cs" />
     <Compile Include="Domain\ColorExtensions.cs" />
+    <Compile Include="Domain\Entity.cs" />
     <Compile Include="Domain\Extensions.cs" />
     <Compile Include="Importers\IImporter.cs" />
     <Compile Include="Importers\NtestImporter.cs" />

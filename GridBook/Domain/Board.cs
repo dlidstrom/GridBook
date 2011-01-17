@@ -3,7 +3,7 @@
 	using System;
 	using System.Text;
 
-	public class Board
+	public class Board : Entity
 	{
 		/// <summary>
 		/// Gets a board representing the starting position.
@@ -120,15 +120,6 @@
 		/// Gets a 64-bit long integer representing the squares of the player to move.
 		/// </summary>
 		public virtual long Mover
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// Database id.
-		/// </summary>
-		public virtual int Id
 		{
 			get;
 			private set;

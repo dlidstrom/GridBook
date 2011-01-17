@@ -1,5 +1,6 @@
 ﻿namespace GridBook.Test
 {
+	using System.Linq;
 	using GridBook.Domain;
 	using NHibernateLayer;
 	using NUnit.Framework;
@@ -13,15 +14,16 @@
 		{
 			// Arrange
 			ISession session = CreateSession();
+
 			// Act
 			var repo = new Repository<Board>(session);
-			repo.Add(Board.Start);
+			var id = repo.Add(Board.Start);
 
 			session.Clear();
 
 			// Assert
 			var repo2 = new Repository<Board>(session);
-			var board = repo2.FindBy(1);
+			var board = repo2.FindBy(id);
 			Assert.AreEqual(Board.Start, board);
 		}
 	}
