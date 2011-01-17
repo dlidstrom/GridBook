@@ -19,12 +19,12 @@
 
 			// Act
 			var successor = Board.Start.Play(new Move("D3"));
-			bs.Add(successor);
+			Transact(() => bs.Add(successor));
 			session.Clear();
 
 			// Assert
-			var found = (from b in session.Query<Board>() /*where b == successor*/
-						 select b).Single();
+			var found = Transact(() => (from b in session.Query<Board>()
+										select b).Single());
 			Assert.AreEqual(successor, found);
 		}
 	}

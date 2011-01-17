@@ -89,6 +89,7 @@
     <Compile Include="BitsTest.cs" />
     <Compile Include="BoardTest.cs" />
     <Compile Include="BookServiceTest.cs" />
+    <Compile Include="BookTest.cs" />
     <Compile Include="Categories.cs" />
     <Compile Include="DatabaseTest.cs" />
     <Compile Include="MappingsTest.cs" />

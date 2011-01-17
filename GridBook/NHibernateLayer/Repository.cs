@@ -5,9 +5,9 @@
 	using System.Linq;
 	using System.Linq.Expressions;
 	using GridBook.Data;
+	using GridBook.Domain;
 	using NHibernate;
 	using NHibernate.Linq;
-	using GridBook.Domain;
 
 	public class Repository<T, TId> : IKeyedRepository<T, TId> where T : Entity<TId>
 	{

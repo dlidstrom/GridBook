@@ -1,10 +1,10 @@
 ﻿namespace GridBook.Test
 {
-	using System.Linq;
+	using System;
 	using GridBook.Domain;
+	using NHibernate;
 	using NHibernateLayer;
 	using NUnit.Framework;
-	using NHibernate;
 
 	[TestFixture, Database]
 	public class RepositoryTest : DatabaseTest
@@ -22,8 +22,8 @@
 			session.Clear();
 
 			// Assert
-			var repo2 = new Repository<Board>(session);
-			var board = repo2.FindBy(id);
+			Assert.AreNotEqual(Guid.Empty, id);
+			var board = repo.FindBy(id);
 			Assert.AreEqual(Board.Start, board);
 		}
 	}

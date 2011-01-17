@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Text;
+	using System.Collections.Generic;
 
 	public class Board : Entity
 	{
@@ -347,6 +348,30 @@
 			}
 
 			return cumulativeChange;
+		}
+
+		/// <summary>
+		/// Get the successors of this position.
+		/// </summary>
+		/// <returns>Successors of this position.</returns>
+		public virtual IList<Board> Successors()
+		{
+			ulong empty = this.Empty.ToUInt64();
+			var successors = new List<Board>();
+			while (empty != 0)
+			{
+				try
+				{
+					successors.Add(Play(Move.FromPos(empty.LSB())));
+				}
+				catch (ArgumentException)
+				{
+				}
+
+				empty = empty & (empty - 1);
+			}
+
+			return successors;
 		}
 	}
 }

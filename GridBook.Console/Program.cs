@@ -65,7 +65,7 @@
 		{
 			var sessionFactory = CreateSessionFactory("DbConnection", createSchema);
 
-			using (var session = sessionFactory.OpenStatelessSession())
+			using (var session = sessionFactory.OpenSession())
 			{
 				using (var transaction = session.BeginTransaction())
 				{
@@ -79,12 +79,10 @@
 					foreach (var item in importer.Import())
 					{
 						var board = item.Key;
-						session.Insert(board);
 						book.Positions.Add(board);
-						//Console.WriteLine("Added {0}", board);
 					}
 
-					session.Insert(book);
+					session.Save(book);
 					transaction.Commit();
 				}
 			}

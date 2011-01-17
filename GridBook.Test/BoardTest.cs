@@ -126,5 +126,18 @@
 			// Assert
 			Assert.AreEqual(afterC4, roundTripped);
 		}
+
+		[Test]
+		public void CanGetSuccessors()
+		{
+			// Arrange
+			var board = Board.Start;
+
+			// Act
+			var successors = board.Successors();
+
+			// Assert
+			Assert.AreEqual(4, successors.Count);
+		}
 	}
 }

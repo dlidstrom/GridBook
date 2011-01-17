@@ -12,9 +12,9 @@
 		[Test]
 		public void VerifyBoardMappings()
 		{
-			var uow = new UnitOfWork(CreateSession());
+			var uow = CreateSession();
 
-			new PersistenceSpecification<Board>(uow.Session)
+			new PersistenceSpecification<Board>(uow)
 				//.CheckProperty(b => b.Id, Guid.Empty)
 				.CheckProperty(b => b.Empty, 10L)
 				.CheckProperty(b => b.Mover, 20L)

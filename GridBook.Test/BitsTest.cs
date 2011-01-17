@@ -57,5 +57,44 @@
 			// Assert
 			Assert.AreEqual(0x00000000000000FF, x);
 		}
+
+		[Test]
+		public void LSBFor0()
+		{
+			try
+			{
+				// Arrange
+				ulong x = 0;
+
+				// Act
+				x.LSB();
+
+				// Assert
+				Assert.Fail("Should not allow 0.LSB()");
+			}
+			catch (InvalidOperationException)
+			{
+			}
+		}
+
+		[Test]
+		public void LSBFor1()
+		{
+			// Arrange
+			ulong x = 7;
+
+			// Assert
+			Assert.AreEqual(0, x.LSB());
+		}
+
+		[Test]
+		public void LSBFor2()
+		{
+			// Arrange
+			ulong x = 6;
+
+			// Assert
+			Assert.AreEqual(1, x.LSB());
+		}
 	}
 }
