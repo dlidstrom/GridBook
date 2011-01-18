@@ -8,8 +8,13 @@
 	using NHibernate.Tool.hbm2ddl;
 	using System;
 
-	public class SessionFactory
+	public static class SessionFactory
 	{
+#if true
+		/// <summary>
+		/// Creates SQLite session factory.
+		/// </summary>
+		/// <returns></returns>
 		public static ISessionFactory CreateSessionFactory()
 		{
 			return
@@ -20,7 +25,6 @@
 					.ExposeConfiguration((c) => SavedConfig = c)
 					.BuildSessionFactory();
 		}
-
 		private static Configuration SavedConfig;
 
 		public static void BuildSchema(ISession session)
@@ -28,6 +32,26 @@
 			var export = new SchemaExport(SavedConfig);
 			export.Execute(true, true, false, session.Connection, null);
 		}
+#else
+		/// <summary>
+		/// Creates MySql session factory.
+		/// </summary>
+		/// <returns></returns>
+		public static ISessionFactory CreateSessionFactory()
+		{
+			return
+				Fluently
+					.Configure()
+					.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey("DbTest")).ShowSql())
+					.ExposeConfiguration(c => new SchemaExport(c).Create(true, true))
+					.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BookMap>())
+					.BuildSessionFactory();
+		}
+
+		public static void BuildSchema(ISession session)
+		{
+		}
+#endif
 	}
 
 	public class DatabaseTest
