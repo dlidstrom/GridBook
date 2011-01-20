@@ -36,6 +36,7 @@
 			this.Empty = empty.ToInt64();
 			this.Mover = mover.ToInt64();
 			this.Color = color;
+			this.KnownParents = new HashSet<Board>();
 			if (((Empty | Mover) ^ Mover) != Empty)
 			{
 				throw new ArgumentException(string.Format("Empty and Mover overlap. Empty: 0x{0:X} Mover: 0x{1:X}", Empty, Mover));
@@ -129,7 +130,7 @@
 		/// <summary>
 		/// Gets or sets the player to move.
 		/// </summary>
-		private Color Color
+		public Color Color
 		{
 			get;
 			set;
@@ -350,19 +351,59 @@
 			return cumulativeChange;
 		}
 
+		private ISet<Board> successors;
+
 		/// <summary>
-		/// Get the successors of this position.
+		/// Gets the successors of this position.
+		/// </summary>
+		public virtual ISet<Board> Successors
+		{
+			get
+			{
+				if (successors == null)
+				{
+					successors = calculateSuccessors(true);
+				}
+
+				return successors;
+			}
+		}
+
+		/// <summary>
+		/// Gets the known parents of this position.
+		/// </summary>
+		public virtual ISet<Board> KnownParents
+		{
+			get;
+			set;
+		}
+
+		public virtual void AddParent(Board parent)
+		{
+			KnownParents.Add(parent);
+		}
+
+		public virtual ISet<Board> CalculateSuccessors()
+		{
+			return calculateSuccessors(false);
+		}
+
+		/// <summary>
+		/// Calculates the successors of this position.
 		/// </summary>
 		/// <returns>Successors of this position.</returns>
-		public virtual IList<Board> Successors()
+		private ISet<Board> calculateSuccessors(bool minimal)
 		{
 			ulong empty = this.Empty.ToUInt64();
-			var successors = new List<Board>();
+			var successors = new HashSet<Board>();
 			while (empty != 0)
 			{
 				try
 				{
-					successors.Add(Play(Move.FromPos(empty.LSB())));
+					var successor = Play(Move.FromPos(empty.LSB()));
+					var toAdd = minimal ? successor.MinimalReflection() : successor;
+					toAdd.KnownParents.Add(this.MinimalReflection());
+					successors.Add(toAdd);
 				}
 				catch (ArgumentException)
 				{

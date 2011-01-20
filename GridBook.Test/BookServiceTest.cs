@@ -7,14 +7,14 @@
 	using NHibernate.Linq;
 	using NUnit.Framework;
 
-	[TestFixture, Unit]
+	[TestFixture, Database]
 	public class BookServiceTest : DatabaseTest
 	{
 		[Test]
 		public void CanAddPosition()
 		{
 			// Arrange
-			ISession session = CreateSession();
+			ISession session = CurrentSession();
 			var bs = new BookService(session);
 
 			// Act

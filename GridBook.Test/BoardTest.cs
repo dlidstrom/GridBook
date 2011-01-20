@@ -134,10 +134,24 @@
 			var board = Board.Start;
 
 			// Act
-			var successors = board.Successors();
+			var successors = board.CalculateSuccessors();
 
 			// Assert
 			Assert.AreEqual(4, successors.Count);
+		}
+
+		[Test]
+		public void CanPlayD3C3()
+		{
+			// Arrange
+			var pos = Board.Start;
+
+			// Act
+			pos = pos.Play(new Move("D3"));
+			Assert.AreEqual(string.Empty, pos.ToString());
+			Assert.AreEqual(Color.White, pos.Color);
+			pos = pos.Play(new Move("C3"));
+			Assert.AreEqual(Color.Black, pos.Color);
 		}
 	}
 }

@@ -13,7 +13,7 @@
 		public void CanAddBoards()
 		{
 			// Arrange
-			ISession session = CreateSession();
+			ISession session = CurrentSession();
 
 			// Act
 			var repo = new Repository<Board>(session);

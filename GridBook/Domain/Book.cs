@@ -1,6 +1,5 @@
 ﻿namespace GridBook.Domain
 {
-	using System;
 	using System.Collections.Generic;
 
 	public class Book
@@ -26,20 +25,6 @@
 		{
 			get;
 			set;
-		}
-
-		public virtual void Add(Board position)
-		{
-			Positions.Add(position.MinimalReflection());
-			foreach (var successor in position.Successors())
-			{
-				Positions.Add(successor.MinimalReflection());
-			}
-		}
-
-		public virtual bool Contains(Board position)
-		{
-			return Positions.Contains(position);
 		}
 	}
 }

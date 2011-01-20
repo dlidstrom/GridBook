@@ -7,6 +7,7 @@
 	using NHibernate.Cfg;
 	using NHibernate.Tool.hbm2ddl;
 	using System;
+	using NUnit.Framework;
 
 	public static class SessionFactory
 	{
@@ -58,7 +59,7 @@
 	{
 		private ISession session;
 
-		public ISession CreateSession()
+		public ISession CurrentSession()
 		{
 			if (session == null)
 			{

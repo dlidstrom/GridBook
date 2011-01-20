@@ -12,7 +12,7 @@
 		[Test]
 		public void VerifyBoardMappings()
 		{
-			var uow = CreateSession();
+			var uow = CurrentSession();
 
 			new PersistenceSpecification<Board>(uow)
 				//.CheckProperty(b => b.Id, Guid.Empty)

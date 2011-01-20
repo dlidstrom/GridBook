@@ -1,6 +1,6 @@
 ﻿namespace GridBook.Service
 {
-	using System.Data;
+	using System;
 	using GridBook.Domain;
 	using NHibernate;
 
@@ -13,9 +13,25 @@
 			this.session = session;
 		}
 
-		public void Add(Board board)
+		public void Add(Board position)
 		{
-			session.Save(board);
+			var minimal = position.MinimalReflection();
+			foreach (var successor in position.Successors)
+			{
+				successor.AddParent(minimal);
+			}
+
+			session.Save(minimal);
+		}
+
+		public bool Contains(Board position)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Board Find(Board position)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
