@@ -37,6 +37,13 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Tools\NHibernate\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.NLog">
+      <HintPath>..\Tools\NHibernate\Common.Logging.NLog.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\Tools\NHibernate\FluentNHibernate.dll</HintPath>
     </Reference>
@@ -50,6 +57,12 @@
     </Reference>
     <Reference Include="NHibernate.ByteCode.Castle">
       <HintPath>..\Tools\NHibernate\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Logging.CommonLogging">
+      <HintPath>..\Tools\NHibernate\NHibernate.Logging.CommonLogging.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\Tools\NHibernate\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
