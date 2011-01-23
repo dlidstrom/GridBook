@@ -85,18 +85,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseFixture.cs" />
     <Compile Include="BitsTest.cs" />
     <Compile Include="BoardTest.cs" />
     <Compile Include="BookServiceTest.cs" />
     <Compile Include="BookTest.cs" />
-    <Compile Include="Categories.cs" />
     <Compile Include="DatabaseTest.cs" />
     <Compile Include="MappingsTest.cs" />
     <Compile Include="MinimalReflectionTest.cs" />
+    <Compile Include="NHConfigurator.cs" />
+    <Compile Include="NHibernateFixture.cs" />
     <Compile Include="NtestImporterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MoveTest.cs" />
     <Compile Include="RepositoryTest.cs" />
+    <Compile Include="TestConnectionProvider.cs" />
     <Compile Include="UnitOfWorkTest.cs" />
   </ItemGroup>
   <ItemGroup>

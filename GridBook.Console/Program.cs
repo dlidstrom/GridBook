@@ -11,6 +11,7 @@
 	using NHibernate;
 	using NHibernate.Cfg;
 	using NHibernate.Tool.hbm2ddl;
+	using GridBook.Service;
 
 	class OptionSetException : Exception
 	{
@@ -32,6 +33,7 @@
 		{
 			try
 			{
+				// begin
 				string file = string.Empty;
 				bool createSchema = false;
 				var p = new OptionSet()
@@ -64,6 +66,14 @@
 		void Run(string file, bool createSchema)
 		{
 			var sessionFactory = CreateSessionFactory("DbConnection", createSchema);
+
+
+			// Act
+			using (var session = sessionFactory.OpenSession())
+			{
+				var book = new BookService(session);
+				book.Add(Board.Start);
+			}
 
 			using (var session = sessionFactory.OpenSession())
 			{

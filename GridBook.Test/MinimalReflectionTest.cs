@@ -5,7 +5,7 @@
 	using GridBook.Domain;
 	using System.Collections.Generic;
 
-	[TestFixture, Unit]
+	[TestFixture]
 	public class MinimalReflectionTest
 	{
 		[Test]

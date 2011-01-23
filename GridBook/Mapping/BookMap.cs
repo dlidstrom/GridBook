@@ -9,9 +9,9 @@
 		{
 			Id(x => x.Id);
 			Map(x => x.Name);
-			HasMany(x => x.Positions)
-				.Cascade.All()
-				;
+			//HasMany(x => x.Positions)
+			//    .Cascade.All()
+			//    ;
 		}
 	}
 }

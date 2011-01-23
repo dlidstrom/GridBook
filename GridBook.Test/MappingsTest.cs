@@ -2,23 +2,22 @@
 {
 	using FluentNHibernate.Testing;
 	using GridBook.Domain;
-	using NHibernateLayer;
 	using NUnit.Framework;
-	using System;
 
-	[TestFixture, Database]
-	public class MappingsTest : DatabaseTest
+	[TestFixture]
+	public class MappingsTest : NHibernateFixture
 	{
 		[Test]
 		public void VerifyBoardMappings()
 		{
-			var uow = CurrentSession();
-
-			new PersistenceSpecification<Board>(uow)
-				//.CheckProperty(b => b.Id, Guid.Empty)
-				.CheckProperty(b => b.Empty, 10L)
-				.CheckProperty(b => b.Mover, 20L)
-				.VerifyTheMappings();
+			using (var session = SessionFactory.OpenSession())
+			{
+				new PersistenceSpecification<Board>(session)
+					//.CheckProperty(b => b.Id, Guid.Empty)
+					.CheckProperty(b => b.Empty, 10L)
+					.CheckProperty(b => b.Mover, 20L)
+					.VerifyTheMappings();
+			}
 		}
 	}
 }

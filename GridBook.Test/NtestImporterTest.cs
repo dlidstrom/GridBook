@@ -7,7 +7,7 @@
 	using NUnit.Framework;
 	using System;
 
-	[TestFixture, Unit]
+	[TestFixture]
 	public class NtestImporterTest
 	{
 		private IImporter importer;

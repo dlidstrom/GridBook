@@ -1,11 +1,15 @@
 ﻿namespace GridBook.Domain
 {
 	using System;
+	using System.Linq;
 	using System.Text;
 	using System.Collections.Generic;
 
 	public class Board : Entity
 	{
+		private ISet<Board> successors = new HashSet<Board>();
+		private ISet<Board> parents = new HashSet<Board>();
+
 		/// <summary>
 		/// Gets a board representing the starting position.
 		/// </summary>
@@ -36,7 +40,6 @@
 			this.Empty = empty.ToInt64();
 			this.Mover = mover.ToInt64();
 			this.Color = color;
-			this.KnownParents = new HashSet<Board>();
 			if (((Empty | Mover) ^ Mover) != Empty)
 			{
 				throw new ArgumentException(string.Format("Empty and Mover overlap. Empty: 0x{0:X} Mover: 0x{1:X}", Empty, Mover));
@@ -85,10 +88,10 @@
 			cumulativeChange |= scanDirection(pos, 7, opponent, p => p <= 63 && ((p + 1) % 8 != 0));
 
 			// down-right
-			cumulativeChange |= scanDirection(pos, 8, opponent, p => p >= 0 && ((p + 1) % 8) != 0);
+			cumulativeChange |= scanDirection(pos, -9, opponent, p => p >= 0 && ((p + 1) % 8) != 0);
 
 			// down-left
-			cumulativeChange |= scanDirection(pos, 8, opponent, p => p >= 0 && (p % 8) != 0);
+			cumulativeChange |= scanDirection(pos, -7, opponent, p => p >= 0 && (p % 8) != 0);
 
 			if (cumulativeChange == 0)
 			{
@@ -130,10 +133,10 @@
 		/// <summary>
 		/// Gets or sets the player to move.
 		/// </summary>
-		public Color Color
+		public virtual Color Color
 		{
 			get;
-			set;
+			private set;
 		}
 
 		/// <summary>
@@ -351,68 +354,80 @@
 			return cumulativeChange;
 		}
 
-		private ISet<Board> successors;
+		/// <summary>
+		/// Gets the parents of this position.
+		/// </summary>
+		public virtual IEnumerable<Board> Parents
+		{
+			get
+			{
+				return parents;
+			}
+		}
+
+		/// <summary>
+		/// Adds a parent to this position.
+		/// </summary>
+		/// <param name="parent"></param>
+		public virtual void AddParent(Board parent)
+		{
+			parents.Add(parent);
+		}
 
 		/// <summary>
 		/// Gets the successors of this position.
 		/// </summary>
-		public virtual ISet<Board> Successors
+		public virtual IEnumerable<Board> Successors
 		{
 			get
 			{
-				if (successors == null)
-				{
-					successors = calculateSuccessors(true);
-				}
-
 				return successors;
 			}
 		}
 
 		/// <summary>
-		/// Gets the known parents of this position.
+		/// Adds a successor to this position.
 		/// </summary>
-		public virtual ISet<Board> KnownParents
+		/// <param name="successor"></param>
+		public virtual void AddSuccessor(Board successor)
 		{
-			get;
-			set;
-		}
-
-		public virtual void AddParent(Board parent)
-		{
-			KnownParents.Add(parent);
-		}
-
-		public virtual ISet<Board> CalculateSuccessors()
-		{
-			return calculateSuccessors(false);
+			successors.Add(successor);
 		}
 
 		/// <summary>
 		/// Calculates the successors of this position.
 		/// </summary>
 		/// <returns>Successors of this position.</returns>
-		private ISet<Board> calculateSuccessors(bool minimal)
+		public virtual IEnumerable<Board> CalculateSuccessors()
 		{
 			ulong empty = this.Empty.ToUInt64();
-			var successors = new HashSet<Board>();
 			while (empty != 0)
 			{
+				Board successor = null;
 				try
 				{
-					var successor = Play(Move.FromPos(empty.LSB()));
-					var toAdd = minimal ? successor.MinimalReflection() : successor;
-					toAdd.KnownParents.Add(this.MinimalReflection());
-					successors.Add(toAdd);
+					successor = Play(Move.FromPos(empty.LSB()));
 				}
 				catch (ArgumentException)
 				{
 				}
 
+				if (successor != null)
+				{
+					yield return successor;
+				}
+
 				empty = empty & (empty - 1);
 			}
+		}
 
-			return successors;
+		/// <summary>
+		/// Calculates the minimal successors of this position.
+		/// </summary>
+		/// <returns>Minimal successors of this position.</returns>
+		public virtual IEnumerable<Board> CalculateMinimalSuccessors()
+		{
+			return new HashSet<Board>(from b in CalculateSuccessors() select b.MinimalReflection());
 		}
 	}
 }

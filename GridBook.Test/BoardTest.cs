@@ -1,10 +1,11 @@
 ﻿namespace GridBook.Test
 {
 	using System;
+	using System.Linq;
 	using NUnit.Framework;
 	using GridBook.Domain;
 
-	[TestFixture, Unit]
+	[TestFixture]
 	public class BoardTest
 	{
 		[Test]
@@ -137,7 +138,7 @@
 			var successors = board.CalculateSuccessors();
 
 			// Assert
-			Assert.AreEqual(4, successors.Count);
+			Assert.AreEqual(4, successors.Count());
 		}
 
 		[Test]
@@ -148,10 +149,21 @@
 
 			// Act
 			pos = pos.Play(new Move("D3"));
-			Assert.AreEqual(string.Empty, pos.ToString());
+			Assert.AreEqual("-------------------*-------**------*O--------------------------- O", pos.ToString());
 			Assert.AreEqual(Color.White, pos.Color);
 			pos = pos.Play(new Move("C3"));
 			Assert.AreEqual(Color.Black, pos.Color);
+			Assert.AreEqual("------------------O*-------O*------*O--------------------------- *", pos.ToString());
+		}
+
+		[Test]
+		public void CanGetMinimalSuccessors()
+		{
+			// Arrange
+			var pos = Board.Start;
+
+			// Assert
+			Assert.AreEqual(1, pos.CalculateMinimalSuccessors().Count());
 		}
 	}
 }
