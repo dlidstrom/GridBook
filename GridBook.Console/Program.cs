@@ -67,34 +67,12 @@
 		{
 			var sessionFactory = CreateSessionFactory("DbConnection", createSchema);
 
-
-			// Act
 			using (var session = sessionFactory.OpenSession())
 			{
-				var book = new BookService(session);
-				book.Add(Board.Start);
-			}
-
-			using (var session = sessionFactory.OpenSession())
-			{
-				using (var transaction = session.BeginTransaction())
-				{
-					var name = Path.GetFileNameWithoutExtension(file);
-					var importer = new NtestImporter(file);
-					var book = new Book()
-					{
-						Name = name
-					};
-
-					foreach (var item in importer.Import())
-					{
-						var board = item.Key;
-						book.Positions.Add(board);
-					}
-
-					session.Save(book);
-					transaction.Commit();
-				}
+				var name = Path.GetFileNameWithoutExtension(file);
+				var importer = new NtestImporter(file);
+				var bookService = new BookService(session);
+				bookService.AddRange(importer.Import());
 			}
 		}
 

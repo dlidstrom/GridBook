@@ -1,6 +1,7 @@
 ﻿namespace GridBook.Service
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Linq;
 	using GridBook.Domain;
 	using NHibernate;
@@ -13,6 +14,34 @@
 		public BookService(ISession session)
 		{
 			this.session = session;
+		}
+
+		/// <summary>
+		/// Adds a collection of positions to the book.
+		/// </summary>
+		/// <param name="positions">Collection of positions.</param>
+		public void AddRange(IEnumerable<KeyValuePair<Board, BookData>> positions)
+		{
+			foreach (var data in positions)
+			{
+				Transact(() =>
+				{
+					var parent = data.Key;
+					// get minimal reflection from store, if it exists
+					var minimalParent = parent.MinimalReflection();
+					minimalParent = Find(minimalParent) ?? minimalParent;
+
+					foreach (var successor in parent.CalculateMinimalSuccessors())
+					{
+						var minimalSuccessor = successor.MinimalReflection();
+						minimalSuccessor = Find(minimalSuccessor) ?? minimalSuccessor;
+						minimalSuccessor.AddParent(minimalParent);
+						minimalParent.AddSuccessor(minimalSuccessor);
+					}
+
+					session.Save(parent);
+				});
+			}
 		}
 
 		/// <summary>

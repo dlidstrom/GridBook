@@ -7,6 +7,7 @@
 	using NHibernate.Linq;
 	using NUnit.Framework;
 	using System;
+	using GridBook.Domain.Importers;
 
 	[TestFixture]
 	public class BookServiceTest : NHibernateFixture
@@ -40,12 +41,10 @@
 
 			// Assert
 			using (var session = SessionFactory.OpenSession())
-			using (var tx = session.BeginTransaction())
 			{
 				var found = (from b in session.Query<Board>()
 							 select b).ToList();
 				Assert.AreEqual(2, found.Count());
-				tx.Commit();
 			}
 		}
 
@@ -72,13 +71,11 @@
 			}
 
 			using (var session = SessionFactory.OpenSession())
-			using (var tx = session.BeginTransaction())
 			{
 				var found = session.Get<Board>(pos.Id);
 				Assert.IsNotNull(found);
 				Assert.AreEqual(1, found.Successors.Count());
 				Assert.That(found.Successors.First().Parents.Contains(found));
-				tx.Commit();
 			}
 		}
 
@@ -127,6 +124,21 @@
 				Assert.IsNotNull(found);
 				Assert.AreEqual(Board.Start, found);
 			}
+		}
+
+		[Test]
+		public void CanImportFromAnImporter()
+		{
+			// Arrange
+			using (var session = SessionFactory.OpenSession())
+			{
+				var book = new BookService(session);
+				book.AddRange(new NtestImporter("Data/JA_s12.book").Import());
+			}
+
+			// Act
+
+			// Assert
 		}
 
 		//[Test]
