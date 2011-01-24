@@ -1,12 +1,18 @@
 ﻿namespace GridBook.Domain
 {
-	using System.Linq;
 	using System;
+	using System.Linq;
 
+	/// <summary>
+	/// Class with bit manipulation methods.
+	/// </summary>
 	public static class Bits
 	{
 		private static int[] bitcount = Enumerable.Repeat(0, ushort.MaxValue + 1).ToArray();
 
+		/// <summary>
+		/// Initializes static members of the Bits class.
+		/// </summary>
 		static Bits()
 		{
 			for (int i = 0; i <= ushort.MaxValue; i++)
@@ -24,10 +30,10 @@
 		}
 
 		/// <summary>
-		/// Calculates the number of bits in a 64-bit long.
+		/// Calculates the number of bits set in a 64-bit long.
 		/// </summary>
-		/// <param name="l"></param>
-		/// <returns></returns>
+		/// <param name="l">64-bit integer.</param>
+		/// <returns>Number of bits set.</returns>
 		public static int Count(long l)
 		{
 			return bitcount[(ushort)l]
@@ -36,6 +42,11 @@
 				+ bitcount[(ushort)(l >> 48)];
 		}
 
+		/// <summary>
+		/// Flips horizontally.
+		/// </summary>
+		/// <param name="x">64-bit integer.</param>
+		/// <returns>Result after flip.</returns>
 		public static ulong FlipHorizontal(this ulong x)
 		{
 			const ulong k1 = 0x5555555555555555;
@@ -48,6 +59,11 @@
 			return x;
 		}
 
+		/// <summary>
+		/// Flips vertically.
+		/// </summary>
+		/// <param name="x">64-bit integer.</param>
+		/// <returns>Result after flip.</returns>
 		public static ulong FlipVertical(this ulong x)
 		{
 			return (x << 56)
@@ -60,6 +76,11 @@
 				| ((x >> 56));
 		}
 
+		/// <summary>
+		/// Flips diagonally (A8-H1).
+		/// </summary>
+		/// <param name="x">64-bit integer.</param>
+		/// <returns>Result after flip.</returns>
 		public static ulong FlipDiagonal(this ulong x)
 		{
 			const ulong k1 = 0xaa00aa00aa00aa00;
@@ -75,6 +96,11 @@
 			return x;
 		}
 
+		/// <summary>
+		/// Calculates the least-significant bit set.
+		/// </summary>
+		/// <param name="x">64-bit integer.</param>
+		/// <returns>Least-significant bit set.</returns>
 		public static int LSB(this ulong x)
 		{
 			if (x == 0)
