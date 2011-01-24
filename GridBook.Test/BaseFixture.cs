@@ -1,9 +1,8 @@
 ﻿namespace GridBook.Test
 {
-	using System;
-using NUnit.Framework;
+	using NUnit.Framework;
 
-	public class BaseFixture
+	public abstract class BaseFixture
 	{
 		protected virtual void OnFixtureSetup()
 		{

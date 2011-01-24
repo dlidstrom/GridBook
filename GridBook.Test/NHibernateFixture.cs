@@ -29,6 +29,12 @@
 			base.OnSetup();
 		}
 
+		protected override void OnTearDown()
+		{
+			TearDownNHibernateSession();
+			base.OnTearDown();
+		}
+
 		protected void SetupNHibernateSession()
 		{
 			TestConnectionProvider.CloseDatabase();

@@ -2,16 +2,20 @@
 {
 	using System.Data;
 	using NHibernate.Connection;
+	using System;
 
 	public class TestConnectionProvider : DriverConnectionProvider
 	{
+		[ThreadStatic]
 		private static IDbConnection connection;
 
 		public override IDbConnection GetConnection()
 		{
 			if (connection == null)
 			{
-				connection = base.GetConnection();
+				connection = Driver.CreateConnection();
+				connection.ConnectionString = ConnectionString;
+				connection.Open();
 			}
 
 			return connection;
