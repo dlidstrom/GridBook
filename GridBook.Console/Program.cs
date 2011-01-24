@@ -82,11 +82,10 @@
 			cfg.Properties.Add("show_sql", "true");
 			var builder = Fluently.Configure(cfg)
 				.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
-				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BookMap>());
-			//.ExposeConfiguration(c => new SchemaExport(c).Create(true, true))
+				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BoardMap>());
 			if (createSchema)
 			{
-				return builder.ExposeConfiguration(c => new SchemaExport(c).Create(true, true)).BuildSessionFactory();
+				builder.ExposeConfiguration(c => new SchemaExport(c).Create(true, true));
 			}
 
 			return builder.BuildSessionFactory();
