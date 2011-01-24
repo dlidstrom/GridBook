@@ -34,7 +34,7 @@
 		}
 
 		/// <summary>
-		/// Updates the progress bar with the secified percent.
+		/// Updates the progress bar with the specified percent.
 		/// </summary>
 		/// <param name="percent">The percent.</param>
 		public void Update(double percent)
