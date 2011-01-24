@@ -29,7 +29,7 @@
 		/// <param name="maximumWidth">The maximum width of the progress bar.</param>
 		public ProgressBar(int maximumWidth)
 		{
-			this.maximumWidth = maximumWidth;
+			this.maximumWidth = Math.Min(maximumWidth, 8 * Console.WindowWidth / 10);
 			this.Show(" [ ");
 		}
 
@@ -42,11 +42,10 @@
 			// Generate new state
 			int width = (int)(percent / 100 * this.maximumWidth);
 			int fill = this.maximumWidth - width;
-			string output = string.Format(CultureInfo.InvariantCulture,
-				"{0}{1} ] {2}%",
+			string output = string.Format("{0}{1} ] {2}%",
 				string.Empty.PadLeft(width, '#'),
 				string.Empty.PadLeft(fill, ' '),
-				percent.ToString("0.0"));
+				percent.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat));
 			if (this.lastOutput != output)
 			{
 				// Remove the last state
