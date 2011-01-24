@@ -37,12 +37,11 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Tools\NHibernate\Common.Logging.dll</HintPath>
+    <Reference Include="Common.Logging">
+      <HintPath>..\Tools\Logging\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging.NLog">
-      <HintPath>..\Tools\NHibernate\Common.Logging.NLog.dll</HintPath>
+      <HintPath>..\Tools\Logging\Common.Logging.NLog.dll</HintPath>
     </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\Tools\NHibernate\FluentNHibernate.dll</HintPath>
@@ -61,8 +60,9 @@
     <Reference Include="NHibernate.Logging.CommonLogging">
       <HintPath>..\Tools\NHibernate\NHibernate.Logging.CommonLogging.dll</HintPath>
     </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\Tools\NHibernate\NLog.dll</HintPath>
+    <Reference Include="NLog, Version=1.0.0.505, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Tools\Logging\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

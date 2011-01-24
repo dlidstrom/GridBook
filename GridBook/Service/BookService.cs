@@ -3,12 +3,14 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using Common.Logging;
 	using GridBook.Domain;
 	using NHibernate;
 	using NHibernate.Linq;
 
 	public class BookService
 	{
+		private static ILog log = LogManager.GetCurrentClassLogger();
 		private ISession session;
 
 		public BookService(ISession session)
@@ -27,6 +29,8 @@
 				Transact(() =>
 				{
 					var parent = data.Key;
+					log.InfoFormat("Adding {0}", parent);
+
 					// get minimal reflection from store, if it exists
 					var minimalParent = parent.MinimalReflection();
 					minimalParent = Find(minimalParent) ?? minimalParent;
