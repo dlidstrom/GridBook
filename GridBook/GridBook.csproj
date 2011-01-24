@@ -57,7 +57,6 @@
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Domain\Bits.cs" />
     <Compile Include="Domain\Board.cs" />
-    <Compile Include="Domain\Book.cs" />
     <Compile Include="Domain\BookData.cs" />
     <Compile Include="Domain\Color.cs" />
     <Compile Include="Domain\ColorExtensions.cs" />
@@ -67,7 +66,6 @@
     <Compile Include="Importers\NtestImporter.cs" />
     <Compile Include="Domain\Move.cs" />
     <Compile Include="Mapping\BoardMap.cs" />
-    <Compile Include="Mapping\BookMap.cs" />
     <Compile Include="NHibernateLayer\NHibernateHelper.cs" />
     <Compile Include="NHibernateLayer\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
