@@ -24,12 +24,13 @@
 		/// <param name="positions">Collection of positions.</param>
 		public void AddRange(IEnumerable<KeyValuePair<Board, BookData>> positions)
 		{
-			foreach (var data in positions)
+			Transact(() =>
 			{
-				Transact(() =>
+				int currentPosition = 1;
+				foreach (var data in positions)
 				{
 					var parent = data.Key;
-					log.InfoFormat("Adding {0}", parent);
+					log.InfoFormat("Adding {0}: {1}", currentPosition++, parent);
 
 					// get minimal reflection from store, if it exists
 					var minimalParent = parent.MinimalReflection();
@@ -44,8 +45,8 @@
 					}
 
 					session.Save(parent);
-				});
-			}
+				}
+			});
 		}
 
 		/// <summary>
