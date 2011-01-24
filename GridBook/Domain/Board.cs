@@ -140,6 +140,83 @@
 		}
 
 		/// <summary>
+		/// Gets the parents of this position.
+		/// </summary>
+		public virtual IEnumerable<Board> Parents
+		{
+			get
+			{
+				return parents;
+			}
+		}
+
+		/// <summary>
+		/// Adds a parent to this position.
+		/// </summary>
+		/// <param name="parent"></param>
+		public virtual void AddParent(Board parent)
+		{
+			parents.Add(parent);
+		}
+
+		/// <summary>
+		/// Gets the successors of this position.
+		/// </summary>
+		public virtual IEnumerable<Board> Successors
+		{
+			get
+			{
+				return successors;
+			}
+		}
+
+		/// <summary>
+		/// Adds a successor to this position.
+		/// </summary>
+		/// <param name="successor"></param>
+		public virtual void AddSuccessor(Board successor)
+		{
+			successors.Add(successor);
+		}
+
+		/// <summary>
+		/// Calculates the successors of this position.
+		/// </summary>
+		/// <returns>Successors of this position.</returns>
+		public virtual IEnumerable<Board> CalculateSuccessors()
+		{
+			ulong empty = this.Empty.ToUInt64();
+			while (empty != 0)
+			{
+				Board successor = null;
+				try
+				{
+					successor = Play(Move.FromPos(empty.LSB()));
+				}
+				catch (ArgumentException)
+				{
+				}
+
+				if (successor != null)
+				{
+					yield return successor;
+				}
+
+				empty = empty & (empty - 1);
+			}
+		}
+
+		/// <summary>
+		/// Calculates the minimal successors of this position.
+		/// </summary>
+		/// <returns>Minimal successors of this position.</returns>
+		public virtual IEnumerable<Board> CalculateMinimalSuccessors()
+		{
+			return new HashSet<Board>(from b in CalculateSuccessors()
+									  select b.MinimalReflection());
+		}
+
+		/// <summary>
 		/// Calculates a minimal reflection.
 		/// </summary>
 		/// <returns>Minimal reflection of this board state.</returns>
@@ -352,82 +429,6 @@
 			}
 
 			return cumulativeChange;
-		}
-
-		/// <summary>
-		/// Gets the parents of this position.
-		/// </summary>
-		public virtual IEnumerable<Board> Parents
-		{
-			get
-			{
-				return parents;
-			}
-		}
-
-		/// <summary>
-		/// Adds a parent to this position.
-		/// </summary>
-		/// <param name="parent"></param>
-		public virtual void AddParent(Board parent)
-		{
-			parents.Add(parent);
-		}
-
-		/// <summary>
-		/// Gets the successors of this position.
-		/// </summary>
-		public virtual IEnumerable<Board> Successors
-		{
-			get
-			{
-				return successors;
-			}
-		}
-
-		/// <summary>
-		/// Adds a successor to this position.
-		/// </summary>
-		/// <param name="successor"></param>
-		public virtual void AddSuccessor(Board successor)
-		{
-			successors.Add(successor);
-		}
-
-		/// <summary>
-		/// Calculates the successors of this position.
-		/// </summary>
-		/// <returns>Successors of this position.</returns>
-		public virtual IEnumerable<Board> CalculateSuccessors()
-		{
-			ulong empty = this.Empty.ToUInt64();
-			while (empty != 0)
-			{
-				Board successor = null;
-				try
-				{
-					successor = Play(Move.FromPos(empty.LSB()));
-				}
-				catch (ArgumentException)
-				{
-				}
-
-				if (successor != null)
-				{
-					yield return successor;
-				}
-
-				empty = empty & (empty - 1);
-			}
-		}
-
-		/// <summary>
-		/// Calculates the minimal successors of this position.
-		/// </summary>
-		/// <returns>Minimal successors of this position.</returns>
-		public virtual IEnumerable<Board> CalculateMinimalSuccessors()
-		{
-			return new HashSet<Board>(from b in CalculateSuccessors() select b.MinimalReflection());
 		}
 	}
 }

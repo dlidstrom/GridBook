@@ -1,16 +1,22 @@
-﻿namespace GridBook.Console
+﻿namespace GridBook.Service
 {
 	using System;
+	using System.Globalization;
+
+	public interface IProgressBar
+	{
+		void Update(double percent);
+	}
 
 	/// <summary>
 	/// Class to create a console progress bar
 	/// </summary>
-	public class ProgressBar
+	public class ProgressBar : IProgressBar
 	{
 		/// <summary>
-		/// The length of the last output
+		/// The last output
 		/// </summary>
-		private int lastOutputLength;
+		private string lastOutput = string.Empty;
 
 		/// <summary>
 		/// The maximum length of the progress bar
@@ -33,22 +39,22 @@
 		/// <param name="percent">The percent.</param>
 		public void Update(double percent)
 		{
-			// Remove the last state
-			string clear = string.Empty.PadRight(
-				this.lastOutputLength,
-				'\b');
-			this.Show(clear);
-
 			// Generate new state
 			int width = (int)(percent / 100 * this.maximumWidth);
 			int fill = this.maximumWidth - width;
-			string output = string.Format(
+			string output = string.Format(CultureInfo.InvariantCulture,
 				"{0}{1} ] {2}%",
-				string.Empty.PadLeft(width, '='),
+				string.Empty.PadLeft(width, '#'),
 				string.Empty.PadLeft(fill, ' '),
 				percent.ToString("0.0"));
-			this.Show(output);
-			this.lastOutputLength = output.Length;
+			if (this.lastOutput != output)
+			{
+				// Remove the last state
+				string clear = string.Empty.PadRight(this.lastOutput.Length, '\b');
+				this.Show(clear);
+				this.Show(output);
+				this.lastOutput = output;
+			}
 		}
 
 		/// <summary>
@@ -57,7 +63,14 @@
 		/// <param name="value">The value.</param>
 		private void Show(string value)
 		{
-			System.Console.Write(value);
+			Console.Write(value);
+		}
+	}
+
+	public class NullProgressBar : IProgressBar
+	{
+		public void Update(double percent)
+		{
 		}
 	}
 }

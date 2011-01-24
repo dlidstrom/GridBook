@@ -133,7 +133,7 @@
 			using (var session = SessionFactory.OpenSession())
 			{
 				var book = new BookService(session);
-				book.AddRange(new NtestImporter("Data/JA_s12.book").Import());
+				book.AddRange(new NtestImporter("Data/JA_s12.book"));
 			}
 
 			// Act

@@ -2,16 +2,16 @@
 {
 	using System;
 	using System.IO;
+	using Common.Logging;
 	using FluentNHibernate.Cfg;
 	using FluentNHibernate.Cfg.Db;
-	using GridBook.Domain;
 	using GridBook.Domain.Importers;
 	using GridBook.Domain.Mapping;
+	using GridBook.Service;
 	using NDesk.Options;
 	using NHibernate;
 	using NHibernate.Cfg;
 	using NHibernate.Tool.hbm2ddl;
-	using GridBook.Service;
 
 	class OptionSetException : Exception
 	{
@@ -29,6 +29,8 @@
 
 	class Program
 	{
+		private static ILog log = LogManager.GetCurrentClassLogger();
+
 		static void Main(string[] args)
 		{
 			try
@@ -59,7 +61,7 @@
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex);
+				log.Error(ex.Message);
 			}
 		}
 
@@ -70,9 +72,9 @@
 			using (var session = sessionFactory.OpenSession())
 			{
 				var name = Path.GetFileNameWithoutExtension(file);
-				var importer = new NtestImporter(file);
 				var bookService = new BookService(session);
-				bookService.AddRange(importer.Import());
+				bookService.AddRange(new NtestImporter(file), new ProgressBar(100));
+				Console.WriteLine();
 			}
 		}
 
