@@ -73,7 +73,7 @@
 			{
 				var name = Path.GetFileNameWithoutExtension(file);
 				var bookService = new BookService(session);
-				bookService.AddRange(new NtestImporter(file), new ProgressBar(100));
+				bookService.AddRange(new NtestImporter(file), new ProgressBar());
 				Console.WriteLine();
 			}
 		}
