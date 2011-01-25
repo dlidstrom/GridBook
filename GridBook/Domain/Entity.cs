@@ -61,6 +61,9 @@
 		}
 	}
 
+	/// <summary>
+	/// An entity with guid.comb id generator.
+	/// </summary>
 	public abstract class Entity : Entity<Guid>
 	{
 	}

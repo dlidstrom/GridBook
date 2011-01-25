@@ -23,12 +23,12 @@
 		/// Adds a collection of positions to the book.
 		/// </summary>
 		/// <param name="positions">Collection of positions.</param>
-		public void AddRange(IImporter importer)
+		public void AddRangeStateless(IImporter importer)
 		{
-			AddRange(importer, new NullProgressBar());
+			AddRangeStateless(importer, new NullProgressBar());
 		}
 
-		public void AddRange(IImporter importer, IProgressBar progressBar)
+		public void AddRangeStateless(IImporter importer, IProgressBar progressBar)
 		{
 			var stateless = session.SessionFactory.OpenStatelessSession();
 			Transact(stateless, () =>
@@ -59,6 +59,53 @@
 					}
 
 					currentPosition++;
+				}
+			});
+		}
+
+		public void AddRangeStatefull(IImporter importer, IProgressBar progressBar)
+		{
+			Transact(() =>
+			{
+				var start = Board.Start;
+
+				int currentPosition = 1;
+				progressBar.Update(0);
+				foreach (var data in importer.Import())
+				{
+					progressBar.Update(100.0 * currentPosition / importer.Positions);
+					var parent = data.Key;
+					var minimalParent = parent.MinimalReflection();
+					//if (Find(minimalParent) == null)
+					{
+						log.DebugFormat("Adding {0}: {1}", currentPosition, parent);
+						minimalParent.AddParent(start);
+						start.AddSuccessor(minimalParent);
+
+						//session.Save(minimalParent);
+						//foreach (var successor in parent.CalculateMinimalSuccessors())
+						//{
+						//    var minimalSuccessor = successor.MinimalReflection();
+						//    minimalSuccessor = Find(minimalSuccessor) ?? minimalSuccessor;
+						//    minimalSuccessor.AddParent(minimalParent);
+						//    minimalParent.AddSuccessor(minimalSuccessor);
+						//    session.SaveOrUpdate(minimalSuccessor);
+						//}
+
+						//session.Save(parent);
+					}
+					//else
+					//{
+					//    log.InfoFormat("Existing {0}: {1}", currentPosition, parent);
+					//}
+
+					currentPosition++;
+					if (currentPosition > 10)
+					{
+						break;
+					}
+
+					session.Save(start);
 				}
 			});
 		}

@@ -13,16 +13,16 @@
 				.Access.ReadOnlyPropertyThroughLowerCaseField()
 				.ParentKeyColumn("ParentId")
 				.ChildKeyColumn("ChildId")
-				.Cascade.SaveUpdate()
-				.AsSet(SortType.Unsorted)
+				.Cascade.All()
+				.AsSet()
 				.Table("Successors");
 			HasManyToMany(x => x.Parents)
-				.Access.ReadOnlyPropertyThroughLowerCaseField()
-				.ParentKeyColumn("ParentId")
-				.ChildKeyColumn("ChildId")
-				.Cascade.SaveUpdate()
-				.AsSet(SortType.Unsorted)
-				.Table("Parents");
+			    .Access.ReadOnlyPropertyThroughLowerCaseField()
+			    .ParentKeyColumn("ChildId")
+			    .ChildKeyColumn("ParentId")
+				.Cascade.All() // test
+			    .AsSet()
+			    .Table("Parents");
 		}
 	}
 }

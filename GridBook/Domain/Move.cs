@@ -7,6 +7,11 @@
 	/// </summary>
 	public class Move
 	{
+		public static readonly Move D3 = new Move("D3");
+		public static readonly Move C4 = new Move("C4");
+		public static readonly Move F5 = new Move("F5");
+		public static readonly Move E6 = new Move("E6");
+
 		/// <summary>
 		/// Initializes a new instance of the Move class.
 		/// </summary>
