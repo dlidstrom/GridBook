@@ -310,7 +310,7 @@
 			using (var session = SessionFactory.OpenSession())
 			{
 				var book = new BookService(session);
-				book.AddRangeStateless(new NtestImporter("Data/JA_s12.book"));
+				book.AddRange(new NtestImporter("Data/JA_s12.book"), new NullProgressBar());
 			}
 
 			// Act

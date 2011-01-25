@@ -19,93 +19,17 @@
 			this.session = session;
 		}
 
-		/// <summary>
-		/// Adds a collection of positions to the book.
-		/// </summary>
-		/// <param name="positions">Collection of positions.</param>
-		public void AddRangeStateless(IImporter importer)
-		{
-			AddRangeStateless(importer, new NullProgressBar());
-		}
-
-		public void AddRangeStateless(IImporter importer, IProgressBar progressBar)
-		{
-			var stateless = session.SessionFactory.OpenStatelessSession();
-			Transact(stateless, () =>
-			{
-				int currentPosition = 1;
-				progressBar.Update(0);
-				foreach (var data in importer.Import())
-				{
-					progressBar.Update(100.0 * currentPosition / importer.Positions);
-					var parent = data.Key;
-					var minimalParent = parent.MinimalReflection();
-					if (Find(stateless, minimalParent) == null)
-					{
-						log.DebugFormat("Adding {0}: {1}", currentPosition, parent);
-						//foreach (var successor in parent.CalculateMinimalSuccessors())
-						//{
-						//    var minimalSuccessor = successor.MinimalReflection();
-						//    minimalSuccessor = Find(minimalSuccessor) ?? minimalSuccessor;
-						//    minimalSuccessor.AddParent(minimalParent);
-						//    minimalParent.AddSuccessor(minimalSuccessor);
-						//}
-
-						stateless.Insert(parent);
-					}
-					else
-					{
-						log.InfoFormat("Existing {0}: {1}", currentPosition, parent);
-					}
-
-					currentPosition++;
-				}
-			});
-		}
-
-		public void AddRangeStatefull(IImporter importer, IProgressBar progressBar)
+		public void AddRange(IImporter importer, IProgressBar progressBar)
 		{
 			Transact(() =>
 			{
-				var start = Board.Start;
-
 				int currentPosition = 1;
 				progressBar.Update(0);
 				foreach (var data in importer.Import())
 				{
-					progressBar.Update(100.0 * currentPosition / importer.Positions);
+					progressBar.Update(100.0 * currentPosition++ / importer.Positions);
 					var parent = data.Key;
-					var minimalParent = parent.MinimalReflection();
-					//if (Find(minimalParent) == null)
-					{
-						log.DebugFormat("Adding {0}: {1}", currentPosition, parent);
-						minimalParent.AddParent(start);
-						start.AddSuccessor(minimalParent);
-
-						//session.Save(minimalParent);
-						//foreach (var successor in parent.CalculateMinimalSuccessors())
-						//{
-						//    var minimalSuccessor = successor.MinimalReflection();
-						//    minimalSuccessor = Find(minimalSuccessor) ?? minimalSuccessor;
-						//    minimalSuccessor.AddParent(minimalParent);
-						//    minimalParent.AddSuccessor(minimalSuccessor);
-						//    session.SaveOrUpdate(minimalSuccessor);
-						//}
-
-						//session.Save(parent);
-					}
-					//else
-					//{
-					//    log.InfoFormat("Existing {0}: {1}", currentPosition, parent);
-					//}
-
-					currentPosition++;
-					if (currentPosition > 10)
-					{
-						break;
-					}
-
-					session.Save(start);
+					Add(parent);
 				}
 			});
 		}
@@ -119,19 +43,21 @@
 		{
 			Transact(() =>
 			{
-				// get minimal reflection from store, if it exists
 				var minimalParent = parent.MinimalReflection();
-				minimalParent = Find(minimalParent) ?? minimalParent;
-
-				foreach (var successor in parent.CalculateMinimalSuccessors())
+				// only add if not already in store
+				if (Find(minimalParent) == null)
 				{
-					var minimalSuccessor = successor.MinimalReflection();
-					minimalSuccessor = Find(minimalSuccessor) ?? minimalSuccessor;
-					minimalSuccessor.AddParent(minimalParent);
-					minimalParent.AddSuccessor(minimalSuccessor);
-				}
+					foreach (var successor in parent.CalculateMinimalSuccessors())
+					{
+						var minimalSuccessor = successor.MinimalReflection();
+						// add successor from store, if it exists
+						minimalSuccessor = Find(minimalSuccessor) ?? minimalSuccessor;
+						minimalParent.AddSuccessor(minimalSuccessor);
+						minimalSuccessor.AddParent(minimalParent);
+					}
 
-				session.Save(minimalParent);
+					session.Save(minimalParent);
+				}
 			});
 		}
 
@@ -157,38 +83,6 @@
 								  select b).SingleOrDefault();
 		}
 
-		public Board Find(IStatelessSession session, Board item)
-		{
-			return Transact(() => session.CreateQuery("select b from Board b where b.Empty = :empty and b.Mover = :mover")
-				.SetInt64("empty", item.Empty)
-				.SetInt64("mover", item.Mover)
-				.UniqueResult<Board>());
-		}
-
-		/// <summary>
-		/// Applies function within current transaction. Will start new transaction if there is none.
-		/// </summary>
-		/// <typeparam name="TResult">Result type of function.</typeparam>
-		/// <param name="session">Stateless session.</param>
-		/// <param name="func">Function that will be applied.</param>
-		/// <returns>Result of function.</returns>
-		private TResult Transact<TResult>(IStatelessSession session, Func<TResult> func)
-		{
-			if (session.Transaction.IsActive)
-			{
-				return func.Invoke();
-			}
-
-			TResult result = default(TResult);
-			using (var tx = session.BeginTransaction())
-			{
-				result = func.Invoke();
-				tx.Commit();
-			}
-
-			return result;
-		}
-
 		/// <summary>
 		/// Applies function within current transaction. Will start new transaction if there is none.
 		/// </summary>
@@ -210,15 +104,6 @@
 			}
 
 			return result;
-		}
-
-		private void Transact(IStatelessSession session, Action action)
-		{
-			Transact<bool>(session, () =>
-			{
-				action.Invoke();
-				return false;
-			});
 		}
 
 		/// <summary>

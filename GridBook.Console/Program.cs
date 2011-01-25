@@ -73,8 +73,7 @@
 			{
 				var name = Path.GetFileNameWithoutExtension(file);
 				var bookService = new BookService(session);
-				//bookService.AddRangeStateless(new NtestImporter(file), new ProgressBar());
-				bookService.AddRangeStatefull(new NtestImporter(file), new ProgressBar());
+				bookService.AddRange(new NtestImporter(file), new ProgressBar());
 				Console.WriteLine();
 			}
 		}
@@ -84,7 +83,8 @@
 			var cfg = new Configuration();
 			cfg.Properties.Add("show_sql", "true");
 			var builder = Fluently.Configure(cfg)
-				.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
+				//.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
+				.Database(SQLiteConfiguration.Standard.UsingFile("positions.db"))
 				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BoardMap>());
 			if (createSchema)
 			{
