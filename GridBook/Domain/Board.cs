@@ -3,12 +3,12 @@
 	using System;
 	using System.Linq;
 	using System.Text;
-	using System.Collections.Generic;
+	using Iesi.Collections.Generic;
 
 	public class Board : Entity
 	{
-		private ISet<Board> successors = new HashSet<Board>();
-		private ISet<Board> parents = new HashSet<Board>();
+		private ISet<Board> successors = new HashedSet<Board>();
+		private ISet<Board> parents = new HashedSet<Board>();
 
 		/// <summary>
 		/// Gets a board representing the starting position.
@@ -142,7 +142,7 @@
 		/// <summary>
 		/// Gets the parents of this position.
 		/// </summary>
-		public virtual IEnumerable<Board> Parents
+		public virtual System.Collections.Generic.IEnumerable<Board> Parents
 		{
 			get
 			{
@@ -162,7 +162,7 @@
 		/// <summary>
 		/// Gets the successors of this position.
 		/// </summary>
-		public virtual IEnumerable<Board> Successors
+		public virtual System.Collections.Generic.IEnumerable<Board> Successors
 		{
 			get
 			{
@@ -183,7 +183,7 @@
 		/// Calculates the successors of this position.
 		/// </summary>
 		/// <returns>Successors of this position.</returns>
-		public virtual IEnumerable<Board> CalculateSuccessors()
+		public virtual System.Collections.Generic.IEnumerable<Board> CalculateSuccessors()
 		{
 			ulong empty = this.Empty.ToUInt64();
 			while (empty != 0)
@@ -210,10 +210,10 @@
 		/// Calculates the minimal successors of this position.
 		/// </summary>
 		/// <returns>Minimal successors of this position.</returns>
-		public virtual IEnumerable<Board> CalculateMinimalSuccessors()
+		public virtual System.Collections.Generic.IEnumerable<Board> CalculateMinimalSuccessors()
 		{
-			return new HashSet<Board>(from b in CalculateSuccessors()
-									  select b.MinimalReflection());
+			return new System.Collections.Generic.HashSet<Board>(from b in CalculateSuccessors()
+																 select b.MinimalReflection());
 		}
 
 		/// <summary>

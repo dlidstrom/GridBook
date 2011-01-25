@@ -165,13 +165,14 @@
 			using (var session = SessionFactory.OpenSession())
 			using (var tx = session.BeginTransaction())
 			{
+				// grab successor from store
 				var q = from b in session.Query<Board>()
 						where b.Empty == successor.Empty && b.Mover == successor.Mover
 						select b;
 				Assert.AreEqual(1, q.Count());
 				var persistentSuccessor = q.Single();
 				start.AddSuccessor(persistentSuccessor);
-				//successor.AddParent(start);
+				persistentSuccessor.AddParent(start);
 				id = (Guid)session.Save(start);
 				tx.Commit();
 			}
