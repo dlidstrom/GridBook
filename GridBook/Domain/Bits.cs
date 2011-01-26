@@ -47,7 +47,7 @@
 		/// </summary>
 		/// <param name="x">64-bit integer.</param>
 		/// <returns>Result after flip.</returns>
-		public static ulong FlipHorizontal(this ulong x)
+		public static ulong FlipHorizontal(ulong x)
 		{
 			const ulong k1 = 0x5555555555555555;
 			const ulong k2 = 0x3333333333333333;
@@ -64,7 +64,7 @@
 		/// </summary>
 		/// <param name="x">64-bit integer.</param>
 		/// <returns>Result after flip.</returns>
-		public static ulong FlipVertical(this ulong x)
+		public static ulong FlipVertical(ulong x)
 		{
 			return (x << 56)
 				| ((x << 40) & (0x00ff000000000000))
@@ -81,7 +81,7 @@
 		/// </summary>
 		/// <param name="x">64-bit integer.</param>
 		/// <returns>Result after flip.</returns>
-		public static ulong FlipDiagonal(this ulong x)
+		public static ulong FlipDiagonal(ulong x)
 		{
 			const ulong k1 = 0xaa00aa00aa00aa00;
 			const ulong k2 = 0xcccc0000cccc0000;
@@ -101,7 +101,7 @@
 		/// </summary>
 		/// <param name="x">64-bit integer.</param>
 		/// <returns>Least-significant bit set.</returns>
-		public static int LSB(this ulong x)
+		public static int LSB(ulong x)
 		{
 			if (x == 0)
 			{
