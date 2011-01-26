@@ -53,12 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\IKeyedRepository.cs" />
-    <Compile Include="Data\IReadOnlyRepository.cs" />
-    <Compile Include="Data\IRepository.cs" />
-    <Compile Include="Data\IUnitOfWork.cs" />
-    <Compile Include="Data\IUnitOfWorkFactory.cs" />
-    <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Domain\Bits.cs" />
     <Compile Include="Domain\Board.cs" />
     <Compile Include="Domain\BookData.cs" />
