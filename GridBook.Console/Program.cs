@@ -1,6 +1,7 @@
 ﻿namespace GridBook.Console
 {
 	using System;
+	using System.Configuration;
 	using System.IO;
 	using Common.Logging;
 	using FluentNHibernate.Cfg;
@@ -10,7 +11,6 @@
 	using GridBook.Service;
 	using NDesk.Options;
 	using NHibernate;
-	using NHibernate.Cfg;
 	using NHibernate.Tool.hbm2ddl;
 
 	class OptionSetException : Exception
@@ -80,16 +80,23 @@
 
 		private static ISessionFactory CreateSessionFactory(string connectionString, bool createSchema)
 		{
-			var cfg = new Configuration();
+			log.DebugFormat("Creating session '{0}'", ConfigurationManager.ConnectionStrings["DbConnection"]);
+
+			var cfg = new NHibernate.Cfg.Configuration();
 			cfg.Properties.Add("show_sql", "true");
 			var builder = Fluently.Configure(cfg)
-				//.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
-				.Database(SQLiteConfiguration.Standard.UsingFile("positions.db"))
-				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BoardMap>());
-			if (createSchema)
-			{
-				builder.ExposeConfiguration(c => new SchemaExport(c).Create(true, true));
-			}
+				.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
+				//.Database(SQLiteConfiguration.Standard.UsingFile("positions.db"))
+				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BoardMap>())
+				.ExposeConfiguration(c =>
+				{
+					if (createSchema)
+					{
+						if (File.Exists("positions.db"))
+							File.Delete("positions.db");
+						new SchemaExport(c).Create(true, true);
+					}
+				});
 
 			return builder.BuildSessionFactory();
 		}
