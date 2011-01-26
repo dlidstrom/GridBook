@@ -1,24 +1,41 @@
 ﻿namespace GridBook.Service
 {
 	using System;
-	using System.Collections.Generic;
 	using System.Linq;
 	using Common.Logging;
 	using GridBook.Domain;
+	using GridBook.Domain.Importers;
 	using NHibernate;
 	using NHibernate.Linq;
-	using GridBook.Domain.Importers;
 
 	public class BookService
 	{
+		/// <summary>
+		/// Class logger.
+		/// </summary>
 		private static ILog log = LogManager.GetCurrentClassLogger();
+
+		/// <summary>
+		/// Database session.
+		/// </summary>
 		private ISession session;
 
+		/// <summary>
+		/// Initializes a new instance of the BookService class
+		/// with an open session.
+		/// </summary>
+		/// <param name="session">Database session.</param>
 		public BookService(ISession session)
 		{
 			this.session = session;
 		}
 
+		/// <summary>
+		/// Add a range of positions to the store. This will also add all successors,
+		/// if they have not already been added. It will also create parent-child relationships.
+		/// </summary>
+		/// <param name="importer">Importer with new positions.</param>
+		/// <param name="progressBar">Progress bar.</param>
 		public void AddRange(IImporter importer, IProgressBar progressBar)
 		{
 			Transact(() =>
