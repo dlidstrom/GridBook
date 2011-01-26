@@ -64,12 +64,11 @@
     <Compile Include="Importers\NtestImporter.cs" />
     <Compile Include="Domain\Move.cs" />
     <Compile Include="Mapping\BoardMap.cs" />
-    <Compile Include="NHibernateLayer\NHibernateHelper.cs" />
-    <Compile Include="NHibernateLayer\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\BookService.cs" />
     <Compile Include="Service\ProgressBar.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
