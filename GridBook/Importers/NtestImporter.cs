@@ -1,10 +1,9 @@
 ﻿namespace GridBook.Domain.Importers
 {
+	using System.Collections.Generic;
 	using System.IO;
 	using System.Linq;
-	using System.Collections.Generic;
 	using GridBook.Domain;
-	using System;
 
 	public class NtestImporter : IImporter
 	{
@@ -13,6 +12,13 @@
 		public NtestImporter(string filename)
 		{
 			this.filename = filename;
+			using (var reader = new BinaryReader(File.OpenRead(filename)))
+			{
+				// 4
+				Version = reader.ReadInt32();
+				// 4
+				Positions = reader.ReadInt32();
+			}
 		}
 
 		public IEnumerable<KeyValuePair<Board, BookData>> Import()

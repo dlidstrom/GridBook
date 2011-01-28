@@ -73,18 +73,18 @@
 			{
 				var name = Path.GetFileNameWithoutExtension(file);
 				var bookService = new BookService(session);
-				bookService.AddRange(new NtestImporter(file), new ProgressBar());
+				var importer = new NtestImporter(file);
+				log.DebugFormat("Importing {0} positions", importer.Positions);
+				bookService.AddRange(importer, 1000);
 				Console.WriteLine();
 			}
 		}
 
 		private static ISessionFactory CreateSessionFactory(string connectionString, bool createSchema)
 		{
-			log.DebugFormat("Creating session '{0}'", ConfigurationManager.ConnectionStrings["DbConnection"]);
+			log.DebugFormat("Creating session");
 
-			var cfg = new NHibernate.Cfg.Configuration();
-			cfg.Properties.Add("show_sql", "true");
-			var builder = Fluently.Configure(cfg)
+			var builder = Fluently.Configure()
 				.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
 				//.Database(SQLiteConfiguration.Standard.UsingFile("positions.db"))
 				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BoardMap>())

@@ -6,6 +6,7 @@
 	public interface IProgressBar
 	{
 		void Update(double percent);
+		void Update(double percent, string message);
 	}
 
 	/// <summary>
@@ -47,6 +48,16 @@
 		/// <param name="percent">The percent.</param>
 		public void Update(double percent)
 		{
+			Update(percent, string.Empty);
+		}
+
+		/// <summary>
+		/// Updates the progress bar with the specified percent.
+		/// </summary>
+		/// <param name="percent">The percent.</param>
+		/// <param name="message">Message to display.</param>
+		public void Update(double percent, string message)
+		{
 			// Generate new state
 			int width = (int)(percent / 100 * this.maximumWidth);
 			int fill = this.maximumWidth - width;
@@ -54,13 +65,14 @@
 				string.Empty.PadLeft(width, '#'),
 				string.Empty.PadLeft(fill, ' '),
 				percent.ToString("0.0", CultureInfo.InvariantCulture.NumberFormat));
-			if (this.lastOutput != output)
+			if (this.lastOutput != output || !string.IsNullOrWhiteSpace(message))
 			{
 				// Remove the last state
 				string clear = string.Empty.PadRight(this.lastOutput.Length, '\b');
 				this.Show(clear);
-				this.Show(output);
-				this.lastOutput = output;
+				var s = output + " " + message;
+				this.Show(s);
+				this.lastOutput = s;
 			}
 		}
 
@@ -77,6 +89,10 @@
 	public class NullProgressBar : IProgressBar
 	{
 		public void Update(double percent)
+		{
+		}
+
+		public void Update(double percent, string message)
 		{
 		}
 	}

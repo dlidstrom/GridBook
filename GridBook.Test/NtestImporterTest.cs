@@ -5,7 +5,6 @@
 	using GridBook.Domain;
 	using GridBook.Domain.Importers;
 	using NUnit.Framework;
-	using System;
 
 	[TestFixture]
 	public class NtestImporterTest
