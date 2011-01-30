@@ -69,6 +69,7 @@
     <Compile Include="Mapping\BoardMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\BookService.cs" />
+    <Compile Include="Service\Dumper.cs" />
     <Compile Include="Service\ProgressBar.cs" />
   </ItemGroup>
   <ItemGroup />
