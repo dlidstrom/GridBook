@@ -181,29 +181,22 @@
 
 		/// <summary>
 		/// Calculates the successors of this position.
+		/// If a pass is required then the position after pass will be returned.
 		/// </summary>
 		/// <returns>Successors of this position.</returns>
-		public virtual System.Collections.Generic.IEnumerable<Board> CalculateSuccessors()
+		public virtual System.Collections.Generic.IList<Board> CalculateSuccessors()
 		{
-			ulong empty = this.Empty.ToUInt64();
-			while (empty != 0)
+			var successors = calculateSuccessors();
+			if (successors.Count == 0)
 			{
-				Board successor = null;
-				try
+				var passed = pass();
+				if (passed.calculateSuccessors().Count > 0)
 				{
-					successor = Play(Move.FromPos(empty.LSB()));
+					successors.Add(passed);
 				}
-				catch (ArgumentException)
-				{
-				}
-
-				if (successor != null)
-				{
-					yield return successor;
-				}
-
-				empty = empty & (empty - 1);
 			}
+
+			return successors;
 		}
 
 		/// <summary>
@@ -319,6 +312,42 @@
 		}
 
 		/// <summary>
+		/// Calculate successors to this position. Does not handle passing.
+		/// </summary>
+		/// <returns>Successors of this position.</returns>
+		private System.Collections.Generic.IList<Board> calculateSuccessors()
+		{
+			var successors = new System.Collections.Generic.List<Board>();
+			for (int i = 0; successors.Count == 0 && i < 2; i++)
+			{
+				ulong empty = this.Empty.ToUInt64();
+				while (empty != 0)
+				{
+					try
+					{
+						successors.Add(Play(Move.FromPos(empty.LSB())));
+					}
+					catch (ArgumentException)
+					{
+					}
+
+					empty = empty & (empty - 1);
+				}
+			}
+
+			return successors;
+		}
+
+		/// <summary>
+		/// Pass to the other player.
+		/// </summary>
+		private Board pass()
+		{
+			long opponent = ~(Empty | Mover);
+			return new Board(Empty, opponent, Color.Opponent());
+		}
+
+		/// <summary>
 		/// Flip board on the A8-H1 diagonal.
 		/// </summary>
 		/// <returns>Flipped board.</returns>
@@ -414,18 +443,15 @@
 		private long scanDirection(int pos, int dir, long opponent, Func<int, bool> cond)
 		{
 			long cumulativeChange = 0;
-			pos += dir;
-			if (((1L << pos) & opponent) != 0)
+			long change = 0;
+			for (pos += dir; cond(pos) && ((1L << pos) & opponent) != 0; pos += dir)
 			{
-				long change = 1L << pos;
-				for (pos += dir; cond(pos) && ((1L << pos) & opponent) != 0; pos += dir)
-				{
-					change |= 1L << pos;
-				}
-				if (cond(pos) && (1L << pos & Mover) != 0)
-				{
-					cumulativeChange = change;
-				}
+				change |= 1L << pos;
+			}
+
+			if (cond(pos) && (1L << pos & Mover) != 0)
+			{
+				cumulativeChange = change;
 			}
 
 			return cumulativeChange;

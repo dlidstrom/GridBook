@@ -2,8 +2,8 @@
 {
 	using System;
 	using System.Linq;
-	using NUnit.Framework;
 	using GridBook.Domain;
+	using NUnit.Framework;
 
 	[TestFixture]
 	public class BoardTest
@@ -164,6 +164,33 @@
 
 			// Assert
 			Assert.AreEqual(1, pos.CalculateMinimalSuccessors().Count());
+		}
+
+		[Test]
+		public void CanPass()
+		{
+			// Arrange
+			var pos = Board.FromString("O*OOOOO*OOOOOOO*OOOOOO**O*OOOO*-O******OO****-----*-------*----- *");
+
+			// Act
+			var successors = pos.CalculateSuccessors();
+
+			// Assert
+			Assert.AreEqual(1, successors.Count);
+			Assert.AreEqual("O*OOOOO*OOOOOOO*OOOOOO**O*OOOO*-O******OO****-----*-------*----- O", successors.First().ToString());
+		}
+
+		[Test]
+		public void HasNoSuccessorsAtEnd()
+		{
+			// Arrange
+			var pos = Board.FromString("O*OOOOO*OOOOOOO*OOOOOOO*OOOOOOO*O*OOOOO*O*OOOOO*OO**OOO*OOOOOOO* *");
+
+			// Act
+			var successors = pos.CalculateSuccessors();
+
+			// Assert
+			Assert.AreEqual(0, successors.Count);
 		}
 	}
 }

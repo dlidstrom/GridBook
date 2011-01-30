@@ -2,13 +2,16 @@
 {
 	using System;
 	using GridBook.Domain;
+	using System.Collections.Generic;
 
 	public class Program
 	{
 		static void Main(string[] args)
 		{
-			var board = new Board(-4711394422865021, 4588872671356, Color.Black);
-			Console.WriteLine(board);
+			var pos = Board.FromString("O*OOOOO*OOOOOOO*OOOOOO**O*OOOO*-O******OO****-----*-------*----- *");
+
+			// Act
+			var successors = pos.CalculateSuccessors();
 		}
 	}
 }
