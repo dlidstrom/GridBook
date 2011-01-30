@@ -7,8 +7,8 @@
 
 	public class Board : Entity
 	{
-		private ISet<Board> successors = new HashedSet<Board>();
-		private ISet<Board> parents = new HashedSet<Board>();
+		private readonly ISet<Board> successors = new HashedSet<Board>();
+		private readonly ISet<Board> parents = new HashedSet<Board>();
 
 		/// <summary>
 		/// Gets a board representing the starting position.
@@ -40,6 +40,7 @@
 			this.Empty = empty.ToInt64();
 			this.Mover = mover.ToInt64();
 			this.Color = color;
+			this.Ply = 60 - Bits.Count(this.Empty);
 			if (((Empty | Mover) ^ Mover) != Empty)
 			{
 				throw new ArgumentException(string.Format("Empty and Mover overlap. Empty: 0x{0:X} Mover: 0x{1:X}", Empty, Mover));
@@ -55,53 +56,6 @@
 		public Board(long empty, long mover, Color color)
 			: this(empty.ToUInt64(), mover.ToUInt64(), color)
 		{
-		}
-
-		/// <summary>
-		/// Play a move.
-		/// </summary>
-		/// <param name="move">Move to play.</param>
-		/// <returns>Board result after move has been played.</returns>
-		/// <exception cref="ArgumentException">If move is invalid.</exception>
-		public virtual Board Play(Move move)
-		{
-			int pos = move.Pos;
-			long opponent = ~(Empty | Mover);
-			long cumulativeChange = 0;
-
-			// up
-			cumulativeChange |= scanDirection(pos, 8, opponent, p => p <= 63);
-
-			// down
-			cumulativeChange |= scanDirection(pos, -8, opponent, p => p >= 0);
-
-			// left
-			cumulativeChange |= scanDirection(pos, 1, opponent, p => p <= 63 && (p % 8) != 0);
-
-			// right
-			cumulativeChange |= scanDirection(pos, -1, opponent, p => p >= 0 && ((p + 1) % 8) != 0);
-
-			// up-left
-			cumulativeChange |= scanDirection(pos, 9, opponent, p => p <= 63 && (p % 8) != 0);
-
-			// up-right
-			cumulativeChange |= scanDirection(pos, 7, opponent, p => p <= 63 && ((p + 1) % 8 != 0));
-
-			// down-right
-			cumulativeChange |= scanDirection(pos, -9, opponent, p => p >= 0 && ((p + 1) % 8) != 0);
-
-			// down-left
-			cumulativeChange |= scanDirection(pos, -7, opponent, p => p >= 0 && (p % 8) != 0);
-
-			if (cumulativeChange == 0)
-			{
-				throw new ArgumentException("Invalid move", "move");
-			}
-
-			long newEmpty = Empty ^ (1L << move.Pos);
-			long mover = opponent ^ cumulativeChange;
-
-			return new Board(newEmpty.ToUInt64(), mover.ToUInt64(), this.Color.Opponent());
 		}
 
 		/// <summary>
@@ -134,6 +88,15 @@
 		/// Gets or sets the player to move.
 		/// </summary>
 		public virtual Color Color
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Gets the ply of this position.
+		/// </summary>
+		public virtual int Ply
 		{
 			get;
 			private set;
@@ -237,6 +200,53 @@
 			}
 
 			return result;
+		}
+
+		/// <summary>
+		/// Play a move.
+		/// </summary>
+		/// <param name="move">Move to play.</param>
+		/// <returns>Board result after move has been played.</returns>
+		/// <exception cref="ArgumentException">If move is invalid.</exception>
+		public virtual Board Play(Move move)
+		{
+			int pos = move.Pos;
+			long opponent = ~(Empty | Mover);
+			long cumulativeChange = 0;
+
+			// up
+			cumulativeChange |= scanDirection(pos, 8, opponent, p => p <= 63);
+
+			// down
+			cumulativeChange |= scanDirection(pos, -8, opponent, p => p >= 0);
+
+			// left
+			cumulativeChange |= scanDirection(pos, 1, opponent, p => p <= 63 && (p % 8) != 0);
+
+			// right
+			cumulativeChange |= scanDirection(pos, -1, opponent, p => p >= 0 && ((p + 1) % 8) != 0);
+
+			// up-left
+			cumulativeChange |= scanDirection(pos, 9, opponent, p => p <= 63 && (p % 8) != 0);
+
+			// up-right
+			cumulativeChange |= scanDirection(pos, 7, opponent, p => p <= 63 && ((p + 1) % 8 != 0));
+
+			// down-right
+			cumulativeChange |= scanDirection(pos, -9, opponent, p => p >= 0 && ((p + 1) % 8) != 0);
+
+			// down-left
+			cumulativeChange |= scanDirection(pos, -7, opponent, p => p >= 0 && (p % 8) != 0);
+
+			if (cumulativeChange == 0)
+			{
+				throw new ArgumentException("Invalid move", "move");
+			}
+
+			long newEmpty = Empty ^ (1L << move.Pos);
+			long mover = opponent ^ cumulativeChange;
+
+			return new Board(newEmpty.ToUInt64(), mover.ToUInt64(), this.Color.Opponent());
 		}
 
 		/// <summary>

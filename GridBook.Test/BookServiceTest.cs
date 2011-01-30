@@ -14,9 +14,7 @@
 		public void CanSaveSinglePosition()
 		{
 			// Arrange
-			//var pos = Board.Start;
 			var pos = Board.Start.Play(Move.D3);
-			//var pos = new Board(-17695667912705L, 134217728, Color.White);
 
 			using (var session = SessionFactory.OpenSession())
 			using (var tx = session.BeginTransaction())

@@ -16,6 +16,7 @@
 				new PersistenceSpecification<Board>(session)
 					.CheckProperty(b => b.Empty, 10L)
 					.CheckProperty(b => b.Mover, 20L)
+					.CheckProperty(b => b.Ply, 24)
 					.CheckList(b => b.Successors,
 						new HashSet<Board>() { Board.Start.Play(Move.D3) },
 						(board, successor) => board.AddSuccessor(successor))

@@ -9,6 +9,7 @@
 		{
 			Id(x => x.Id);
 			NaturalId().Property(x => x.Empty).Property(x => x.Mover);
+			Map(x => x.Ply).Not.Nullable();
 			HasManyToMany(x => x.Successors)
 				.Access.ReadOnlyPropertyThroughLowerCaseField()
 				.ParentKeyColumn("ParentId")
