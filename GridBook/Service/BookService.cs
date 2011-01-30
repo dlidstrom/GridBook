@@ -33,63 +33,6 @@
 		}
 
 		/// <summary>
-		/// Add a range of positions to the store. This will also add all successors,
-		/// if they have not already been added. It will also create parent-child relationships.
-		/// </summary>
-		/// <param name="importer">Importer with new positions.</param>
-		public void AddRange(IImporter importer, int take)
-		{
-			int currentPosition = 0;
-			log.Info("Reading positions");
-			var list = (from kvp in importer.Import()
-						select kvp.Key).ToList();
-			log.Info("Adding positions");
-			for (int i = 0; i < list.Count; i += take)
-			{
-					Transact(() =>
-					{
-						for (int j = 0; j < take && i + j < list.Count; j++)
-						{
-							// only flush session when we commit, this will improve performance
-							// for this to work we need to keep track of entities manually, using a C5.HashSet.
-							// this is to avoid trying to insert the same entity twice, resulting in a constraint violation
-							session.FlushMode = FlushMode.Commit;
-							var set = new C5.HashSet<Board>();
-
-							var parent = list[i + j].MinimalReflection();
-							if (Find(parent) == null)
-							{
-								// could be in session, check cache
-								set.FindOrAdd(ref parent);
-
-								// for each successor...
-								foreach (var successor in parent.CalculateSuccessors())
-								{
-									var minimalSuccessor = successor.MinimalReflection();
-									if (!set.Find(ref minimalSuccessor))
-									{
-										// not in cache, check store
-										minimalSuccessor = Find(minimalSuccessor) ?? minimalSuccessor;
-										set.Add(minimalSuccessor);
-									}
-
-									parent.AddSuccessor(minimalSuccessor);
-									minimalSuccessor.AddParent(parent);
-								}
-
-								session.Save(parent);
-							}
-
-							currentPosition++;
-						}
-					});
-
-					double done = 100.0 * currentPosition / importer.Positions;
-					log.InfoFormat(CultureInfo.InvariantCulture.NumberFormat, "{0,5:F1}% done ({1}/{2})", done, currentPosition, importer.Positions);
-			}
-		}
-
-		/// <summary>
 		/// Adds a parent position to the store. This will also add all successors, if
 		/// they have not already been added. It will also create parent-child relationship.
 		/// </summary>

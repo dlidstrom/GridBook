@@ -75,8 +75,6 @@
 				var bookService = new BookService(session);
 				var importer = new NtestImporter(file);
 				log.DebugFormat("Importing {0} positions", importer.Positions);
-				bookService.AddRange(importer, 1000);
-				Console.WriteLine();
 			}
 		}
 

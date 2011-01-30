@@ -3,7 +3,6 @@
 	using System;
 	using System.Linq;
 	using GridBook.Domain;
-	using GridBook.Domain.Importers;
 	using GridBook.Service;
 	using NHibernate.Linq;
 	using NUnit.Framework;
@@ -302,69 +301,5 @@
 				Assert.AreEqual(Board.Start, found);
 			}
 		}
-
-		[Test]
-		public void CanImportFromAnImporter()
-		{
-			// Arrange
-			using (var session = SessionFactory.OpenSession())
-			{
-				var book = new BookService(session);
-				book.AddRange(new NtestImporter("Data/JA_s12.book"), 10);
-			}
-
-			// Act
-
-			// Assert
-		}
-
-		//[Test]
-		//public void AddingGameShouldAddAllParentsAndChildren()
-		//{
-		//    // Arrange
-		//    var game = "D3C3C4";
-
-		//    // Act
-		//    using (var session = SessionFactory.OpenSession())
-		//    {
-		//        var book = new BookService(session);
-		//        var positions = new List<Board>();
-		//        var currentPosition = new Board();
-		//        for (int i = 0; i < game.Length - 1; i += 2)
-		//        {
-		//            book.Add(currentPosition);
-		//            positions.Add(currentPosition);
-		//            var move = new Move(game.Substring(i, 2));
-		//            currentPosition = currentPosition.Play(move);
-		//        }
-		//    }
-
-		//    // Assert
-		//    foreach (var position in positions)
-		//    {
-		//        Assert.That(book.Contains(position));
-		//        var storedPosition = book.Find(position);
-		//    }
-		//}
-
-		//[Test]
-		//public void BookStoresMinimalReflection()
-		//{
-		//    // Arrange
-		//    var book = new BookService(CurrentSession());
-		//    var pos = Board.Start.Play(new Move("D3"));
-
-		//    // Act
-		//    book.Add(pos);
-		//    pos = pos.Play(new Move("C3"));
-		//    book.Add(pos);
-
-		//    // Assert
-		//    // book should now contain all successors of pos
-		//    foreach (var successor in pos.Successors)
-		//    {
-		//        Assert.That(book.Contains(successor));
-		//    }
-		//}
 	}
 }
