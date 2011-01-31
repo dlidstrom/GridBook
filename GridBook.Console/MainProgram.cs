@@ -21,12 +21,12 @@
 					container.Install(FromAssembly.This());
 					if (args[0] == "help")
 					{
-						var program = container.Resolve<IProgram>(args[1]);
-						program.Help();
+						var program = container.Resolve<ProgramBase>(args[1]);
+						program.Usage();
 					}
 					else
 					{
-						var program = container.Resolve<IProgram>(args[0]);
+						var program = container.Resolve<ProgramBase>(args[0]);
 						var subArgs = new List<string>(args);
 						subArgs.RemoveAt(0);
 						program.Run(subArgs.ToArray());
@@ -45,7 +45,7 @@
 
 		void Usage(IWindsorContainer container, Exception ex)
 		{
-			var programs = container.ResolveAll<IProgram>();
+			var programs = container.ResolveAll<ProgramBase>();
 			var q = from p in programs
 					select p.GetType().Name;
 			Console.WriteLine("Usage: GridBook.Console {0}", string.Join("|", q));

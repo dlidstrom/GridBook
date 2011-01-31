@@ -2,9 +2,9 @@
 {
 	using System;
 
-	public class CreateSchema : IProgram
+	public class CreateSchema : ProgramBase
 	{
-		public void Run(string[] args)
+		public override void Run(string[] args)
 		{
 			Console.WriteLine("This will drop schema! Are you sure (Y/[n])?");
 			char c = (char)Console.Read();
@@ -18,12 +18,12 @@
 			}
 		}
 
-		public void Help()
+		public override string HelpMessage()
 		{
-			Console.WriteLine("Generates schema. This will drop data!");
+			return "Generates schema. This will drop data!";
 		}
 
-		public string Description()
+		public override string Description()
 		{
 			return "Schema generator.";
 		}

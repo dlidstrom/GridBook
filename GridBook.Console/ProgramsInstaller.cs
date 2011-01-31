@@ -10,7 +10,7 @@
 		{
 			container.Register(AllTypes
 				.FromThisAssembly()
-				.BasedOn<IProgram>()
+				.BasedOn<ProgramBase>()
 				.Configure(c => c.LifeStyle.Transient.Named(c.Implementation.Name))
 				.WithService.Base());
 		}
