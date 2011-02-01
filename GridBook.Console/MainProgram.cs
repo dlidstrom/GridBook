@@ -19,6 +19,7 @@
 				try
 				{
 					container.Install(FromAssembly.This());
+					var programs = container.ResolveAll<ProgramBase>();
 					if (args[0] == "help")
 					{
 						var program = container.Resolve<ProgramBase>(args[1]);
@@ -26,10 +27,22 @@
 					}
 					else
 					{
-						var program = container.Resolve<ProgramBase>(args[0]);
-						var subArgs = new List<string>(args);
-						subArgs.RemoveAt(0);
-						program.Run(subArgs.ToArray());
+						var programList = (from program in programs
+										   where program.GetType().Name.StartsWith(args[0])
+										   select program).ToList();
+						if (programList.Count > 1)
+						{
+							Console.WriteLine("Command '{0}' is ambiguous:", args[0]);
+							Console.WriteLine("    {0}", string.Join(" ", from p in programList
+																		  select p.GetType().Name));
+						}
+						else
+						{
+							var subArgs = new List<string>(args);
+							subArgs.RemoveAt(0);
+							var program = programList.First();
+							program.Run(subArgs.ToArray());
+						}
 					}
 				}
 				catch (ComponentNotFoundException ex)
@@ -63,30 +76,6 @@
 			try
 			{
 				new MainProgram().Run(args);
-				//    // begin
-				//    string file = string.Empty;
-				//    bool createSchema = false;
-				//    var p = new OptionSet()
-				//    {
-				//        { "i=|import=", "Imports a book file into GridBook database.", v => file = v },
-				//        { "create-schema", "Create database schema. This will drop any existing data!", v => createSchema = true }
-				//    };
-				//    p.Parse(args);
-				//    if (string.IsNullOrWhiteSpace(file))
-				//    {
-				//        throw new OptionSetException(p);
-				//    }
-
-				//    new MainProgram().Run(file, createSchema);
-				//}
-				//catch (OptionSetException ex)
-				//{
-				//    var writer = new StringWriter();
-				//    ex.OptionSet.WriteOptionDescriptions(writer);
-				//    Console.WriteLine("Usage: GridBook.Console.exe <option>");
-				//    Console.WriteLine("Options:");
-				//    Console.WriteLine(writer);
-				//}
 			}
 			catch (Exception ex)
 			{
