@@ -1,7 +1,7 @@
 *.user
 *.suo
-GridBook.Console/bin
-GridBook.Console/obj
+GridBook.CommandLine/bin
+GridBook.CommandLine/obj
 GridBook/bin
 GridBook/obj
 GridBook.Test/GridBook.TestResult.xml

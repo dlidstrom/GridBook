@@ -1,4 +1,4 @@
-﻿namespace GridBook.Console
+﻿namespace GridBook.CommandLine
 {
 	using System;
 	using NDesk.Options;

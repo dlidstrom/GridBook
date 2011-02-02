@@ -1,4 +1,4 @@
-﻿namespace GridBook.Console
+﻿namespace GridBook.CommandLine
 {
 	using System.IO;
 	using Common.Logging;
@@ -11,6 +11,20 @@
 	public static class NHibernateHelper
 	{
 		private static ILog log = LogManager.GetCurrentClassLogger();
+		private static ISessionFactory sessionFactory;
+
+		public static ISessionFactory SessionFactory
+		{
+			get
+			{
+				if (sessionFactory == null)
+				{
+					sessionFactory = CreateSessionFactory("DbConnection", false);
+				}
+
+				return sessionFactory;
+			}
+		}
 
 		public static ISessionFactory CreateSessionFactory(string connectionString, bool createSchema)
 		{

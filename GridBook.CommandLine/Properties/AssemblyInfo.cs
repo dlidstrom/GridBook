@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GridBook.Console")]
+[assembly: AssemblyTitle("GridBook.CommandLine")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("GridBook.Console")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
+[assembly: AssemblyCompany("Daniel Lidström")]
+[assembly: AssemblyProduct("GridBook.CommandLine")]
+[assembly: AssemblyCopyright("Copyright © Daniel Lidström 2010,2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

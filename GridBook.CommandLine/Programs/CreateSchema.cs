@@ -1,4 +1,4 @@
-﻿namespace GridBook.Console.Programs
+﻿namespace GridBook.CommandLine.Programs
 {
 	using System;
 

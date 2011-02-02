@@ -1,4 +1,4 @@
-﻿namespace GridBook.Console
+﻿namespace GridBook.CommandLine
 {
 	using Castle.MicroKernel.Registration;
 	using Castle.MicroKernel.SubSystems.Configuration;

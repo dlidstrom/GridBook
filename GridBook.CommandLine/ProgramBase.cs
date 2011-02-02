@@ -1,4 +1,4 @@
-﻿namespace GridBook.Console
+﻿namespace GridBook.CommandLine
 {
 	using System;
 	using System.IO;
@@ -21,7 +21,7 @@
 		{
 			if (Options != null)
 			{
-				Console.WriteLine("Usage: GridBook.Console.exe {0} <options>", GetType().Name);
+				Console.WriteLine("Usage: GridBook.CommandLine.exe {0} <options>", GetType().Name);
 				Console.WriteLine("Options:");
 				var writer = new StringWriter();
 				Options.WriteOptionDescriptions(writer);
@@ -29,7 +29,7 @@
 			}
 			else
 			{
-				Console.WriteLine("Usage: GridBook.Console.exe {0}", GetType().Name);
+				Console.WriteLine("Usage: GridBook.CommandLine.exe {0}", GetType().Name);
 			}
 		}
 

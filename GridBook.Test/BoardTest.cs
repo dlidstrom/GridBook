@@ -192,5 +192,19 @@
 			// Assert
 			Assert.AreEqual(0, successors.Count);
 		}
+
+		[Test]
+		public void PlyIsZeroAtStart()
+		{
+			// Assert
+			Assert.AreEqual(0, Board.Start.Ply);
+		}
+
+		[Test]
+		public void PlyAfterMove()
+		{
+			// Assert
+			Assert.AreEqual(1, Board.Start.Play(Move.C4).Ply);
+		}
 	}
 }

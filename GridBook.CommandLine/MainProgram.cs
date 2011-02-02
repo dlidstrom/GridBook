@@ -1,4 +1,4 @@
-﻿namespace GridBook.Console
+﻿namespace GridBook.CommandLine
 {
 	using System;
 	using System.Collections.Generic;
@@ -45,6 +45,10 @@
 						}
 					}
 				}
+				catch (OptionSetException ex)
+				{
+					Usage(container, ex);
+				}
 				catch (ComponentNotFoundException ex)
 				{
 					Usage(container, ex);
@@ -61,8 +65,8 @@
 			var programs = container.ResolveAll<ProgramBase>();
 			var q = from p in programs
 					select p.GetType().Name;
-			Console.WriteLine("Usage: GridBook.Console {0}", string.Join("|", q));
-			Console.WriteLine("For more help, try GridBook.Console help <program>");
+			Console.WriteLine("Usage: GridBook.CommandLine {0}", string.Join("|", q));
+			Console.WriteLine("For more help, try GridBook.CommandLine help <program>");
 			Console.WriteLine();
 			Console.WriteLine("Descriptions:");
 			foreach (var program in programs)
