@@ -1,7 +1,6 @@
 ﻿namespace GridBook.Domain
 {
 	using System;
-	using System.Globalization;
 
 	public static class Extensions
 	{
@@ -12,8 +11,7 @@
 		/// <returns>64-bit long.</returns>
 		public static long ToInt64(this ulong l)
 		{
-			var s = l.ToString("x");
-			return long.Parse(s, NumberStyles.AllowHexSpecifier);
+			return BitConverter.ToInt64(BitConverter.GetBytes(l), 0);
 		}
 
 		/// <summary>
@@ -23,8 +21,7 @@
 		/// <returns>64-bit unsigned long.</returns>
 		public static ulong ToUInt64(this long l)
 		{
-			var s = l.ToString("x");
-			return ulong.Parse(s, NumberStyles.AllowHexSpecifier);
+			return BitConverter.ToUInt64(BitConverter.GetBytes(l), 0);
 		}
 
 		/// <summary>
