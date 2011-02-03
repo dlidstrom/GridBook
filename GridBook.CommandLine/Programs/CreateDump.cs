@@ -6,6 +6,7 @@
 	using GridBook.Domain.Importers;
 	using NDesk.Options;
 	using GridBook.Domain;
+	using GridBook.Service;
 
 	public class CreateDump : ProgramBase
 	{
@@ -25,41 +26,11 @@
 			}
 
 			var importer = new NtestImporter(filename);
-			// for each ply
-			for (int ply = 0; ply < 60; ply++)
-			{
-				// for each position, add its successors to set
-				var set = new HashSet<Guid>();
-				var q = from kvp in importer.Import()
-						where kvp.Key.Ply == ply
-						select kvp.Key;
-				foreach (var pos in q)
-				{
-					var bytes = new List<Byte>(BitConverter.GetBytes(pos.Empty));
-					bytes.AddRange(BitConverter.GetBytes(pos.Mover));
-					set.Add(new Guid(bytes.ToArray()));
-				}
-
-				// print sql-create statements
-				if (set.Count > 0)
-				{
-					Console.WriteLine("INSERT INTO `board` VALUES ");
-					int count = set.Count;
-					foreach (var item in set)
-					{
-						var bytes = item.ToByteArray();
-						var empty = BitConverter.ToInt64(bytes, 0);
-						var mover = BitConverter.ToInt64(bytes, 8);
-						Console.Write("('{0}',{1},{2},{3})", item, empty, mover, ply);
-						if (--count > 0)
-						{
-							Console.WriteLine(",");
-						}
-					}
-
-					Console.WriteLine(";");
-				}
-			}
+			var dumper = new Dumper(string.Empty);
+			dumper.WriteHeading(Console.OpenStandardOutput());
+			dumper.WriteBoardTable(Console.OpenStandardOutput());
+			dumper.WritePositions(Console.OpenStandardOutput(), importer);
+			dumper.WriteFooter(Console.OpenStandardOutput());
 		}
 
 		public override string HelpMessage()
