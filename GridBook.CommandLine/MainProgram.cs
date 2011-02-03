@@ -65,13 +65,13 @@
 			var programs = container.ResolveAll<ProgramBase>();
 			var q = from p in programs
 					select p.GetType().Name;
-			Console.WriteLine("Usage: GridBook.CommandLine {0}", string.Join("|", q));
-			Console.WriteLine("For more help, try GridBook.CommandLine help <program>");
-			Console.WriteLine();
-			Console.WriteLine("Descriptions:");
+			Console.Error.WriteLine("Usage: GridBook.CommandLine {0}", string.Join("|", q));
+			Console.Error.WriteLine("For more help, try GridBook.CommandLine help <program>");
+			Console.Error.WriteLine();
+			Console.Error.WriteLine("Descriptions:");
 			foreach (var program in programs)
 			{
-				Console.WriteLine("   {0,-30} {1}", program.GetType().Name, program.Description());
+				Console.Error.WriteLine("   {0,-30} {1}", program.GetType().Name, program.Description());
 			}
 		}
 
@@ -84,6 +84,7 @@
 			catch (Exception ex)
 			{
 				log.Error(ex.Message);
+				Console.Error.WriteLine(ex);
 			}
 		}
 	}
