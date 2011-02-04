@@ -7,6 +7,7 @@
 	public abstract class ProgramBase
 	{
 		public abstract void Run(string[] args);
+		public abstract string Description();
 		public abstract string HelpMessage();
 
 		public virtual OptionSet Options
@@ -32,7 +33,5 @@
 				Console.WriteLine("Usage: GridBook.CommandLine.exe {0}", GetType().Name);
 			}
 		}
-
-		public abstract string Description();
 	}
 }
