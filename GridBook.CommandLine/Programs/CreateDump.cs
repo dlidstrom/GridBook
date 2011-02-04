@@ -1,12 +1,9 @@
 ﻿namespace GridBook.CommandLine.Programs
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
 	using GridBook.Domain.Importers;
-	using NDesk.Options;
-	using GridBook.Domain;
 	using GridBook.Service;
+	using NDesk.Options;
 
 	public class CreateDump : ProgramBase
 	{
