@@ -129,6 +129,7 @@
     <Compile Include="Programs\CreateDump.cs" />
     <Compile Include="Programs\CreateSchema.cs" />
     <Compile Include="Programs\ImportBook.cs" />
+    <Compile Include="Programs\MergeSplits.cs" />
     <Compile Include="Programs\SplitBook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
