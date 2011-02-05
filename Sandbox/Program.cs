@@ -3,17 +3,23 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using GridBook.Domain;
+	using System.Diagnostics;
 
-	public class Comparer : IEqualityComparer<Guid>
+	class BoardComparer : Comparer<Board>
 	{
-		public bool Equals(Guid x, Guid y)
+		public override int Compare(Board x, Board y)
 		{
-			return x.Equals(y);
-		}
-
-		public int GetHashCode(Guid obj)
-		{
-			return obj.GetHashCode();
+			if (x < y)
+			{
+				return -1;
+			}
+			else if (x == y)
+			{
+				return 0;
+			}
+			else
+				return 1;
 		}
 	}
 
@@ -21,30 +27,31 @@
 	{
 		static void Main(string[] args)
 		{
+			// Arrange
+			var random = new Random();
+			var guids = new List<Guid>(Enumerable.Range(0, 6).Select(i =>
 			{
-				//int n_positions = 1 << num;
-				Console.ReadKey();
-				int n_positions = 29 * 1000 * 1000;
-				Console.WriteLine("Creating {0} positions...", n_positions);
-				var set = new C5.HashSet<Guid>(n_positions, new Comparer());
-				foreach (var i in Enumerable.Range(0, n_positions))
-				{
-					set.Add(Guid.NewGuid());
-				}
+				var bytes = new byte[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
+				random.NextBytes(bytes);
+				var empty = BitConverter.ToUInt64(bytes, 0);
+				var mover = 0xFFFFFFFFFFFFFFFF ^ empty;
+				var list = new List<byte>(bytes);
+				list.AddRange(BitConverter.GetBytes(mover));
+				return new Guid(list.ToArray());
+			}));
+			var boards = new List<Board>(guids.Select(g => Board.FromGuid(g)));
 
-				Console.WriteLine("Creation complete. Count = {0}", set.Count);
-				Console.WriteLine("Moving to list...");
-				var list = new List<Guid>();
-				while (set.Count > 0)
-				{
-					var first = set.First();
-					set.Remove(first);
-					list.Add(first);
-				}
-				Console.WriteLine("Done. Sorting...");
-				list.Sort();
-				Console.WriteLine("Sorting done.");
-				Console.ReadKey();
+			// Act
+			guids.Sort();
+			boards.Sort(new BoardComparer());
+
+			// Assert
+			for (int i = 0; i < guids.Count; i++)
+			{
+				var g = guids[i];
+				var b = boards[i];
+				if (b.ToGuid() != g)
+					throw new InvalidOperationException("Not same");
 			}
 		}
 	}
