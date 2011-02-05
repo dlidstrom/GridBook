@@ -23,7 +23,7 @@
 			var importer = new NtestImporter(filename);
 			// find first available split file
 			int splitId = 0;
-			FileStream stream = findFirstSplitFile(ref splitId);
+			FileStream stream = Utils.FindFirstSplitFile("split", ref splitId);
 			Console.WriteLine("Creating {0}", stream.Name);
 
 			var list = new List<Guid>();
@@ -48,7 +48,7 @@
 					list.Sort();
 					list.ForEach(g => stream.Write(g.ToByteArray(), 0, 16));
 					stream.Close();
-					stream = findFirstSplitFile(ref splitId);
+					stream = Utils.FindFirstSplitFile("split", ref splitId);
 					Console.WriteLine("Creating {0}", stream.Name);
 					list = new List<Guid>();
 				}
@@ -77,23 +77,6 @@
 			{
 				return new OptionSet() { { "f=|file=", "Creates split files from specified book.", f => { } } };
 			}
-		}
-
-		private FileStream findFirstSplitFile(ref int splitId)
-		{
-			// try 1000 at most
-			for (int i = 0; i < 1000; i++)
-			{
-				try
-				{
-					return File.Open(string.Format("split_{0}.bin", splitId++), FileMode.CreateNew, FileAccess.Write);
-				}
-				catch (IOException)
-				{
-				}
-			}
-
-			throw new Exception("Could not find any available split file slot.");
 		}
 	}
 }
