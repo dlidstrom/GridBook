@@ -17,6 +17,7 @@
 				throw new OptionSetException(options);
 			}
 
+			var written = 0;
 			using (var stream = File.Open(filename, FileMode.Open, FileAccess.Read))
 			using (var reader = new BinaryReader(stream))
 			{
@@ -27,6 +28,10 @@
 					var board = Board.FromGuid(g);
 					Console.WriteLine("'{0}',{1},{2},{3}", g, board.Empty, board.Mover, board.Ply);
 					bytes = reader.ReadBytes(16);
+					if (++written % 1000000 == 0)
+					{
+						Console.Error.WriteLine("Written {0} lines", written);
+					}
 				}
 			}
 		}
