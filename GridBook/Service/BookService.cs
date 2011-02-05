@@ -1,14 +1,11 @@
 ﻿namespace GridBook.Service
 {
 	using System;
-	using System.Globalization;
 	using System.Linq;
 	using Common.Logging;
 	using GridBook.Domain;
-	using GridBook.Domain.Importers;
 	using NHibernate;
 	using NHibernate.Linq;
-	using System.Collections.Generic;
 
 	public class BookService
 	{

@@ -39,9 +39,6 @@
 					int written = 0;
 					foreach (var item in multiQueue.Merge())
 					{
-						var bytes = new List<byte>(BitConverter.GetBytes(item.Empty));
-						bytes.AddRange(BitConverter.GetBytes(item.Mover));
-						var id = new Guid(bytes.ToArray());
 						stream.Write(item.ToGuid().ToByteArray(), 0, 16);
 						if (++written % 1000000 == 0)
 						{

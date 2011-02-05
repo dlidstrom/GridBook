@@ -1,10 +1,9 @@
 ﻿namespace GridBook.Test
 {
-	using System;
 	using System.IO;
+	using System.Text;
 	using GridBook.Service;
 	using NUnit.Framework;
-	using System.Text;
 
 	[TestFixture]
 	public class DumperTest

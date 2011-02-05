@@ -2,11 +2,10 @@
 {
 	using System;
 	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using NDesk.Options;
-	using GridBook.Domain.Importers;
 	using System.IO;
+	using System.Linq;
+	using GridBook.Domain.Importers;
+	using NDesk.Options;
 
 	public class SplitBook : ProgramBase
 	{
