@@ -1,6 +1,7 @@
 ﻿namespace GridBook.Test
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Linq;
 	using GridBook.Domain;
 	using NUnit.Framework;
@@ -205,6 +206,58 @@
 		{
 			// Assert
 			Assert.AreEqual(1, Board.Start.Play(Move.C4).Ply);
+		}
+
+		class BoardComparer : Comparer<Board>
+		{
+			public override int Compare(Board x, Board y)
+			{
+				if (x < y)
+				{
+					return -1;
+				}
+				else if (x == y)
+				{
+					return 0;
+				}
+				else
+					return 1;
+			}
+		}
+
+		[Test]
+		public void ShouldSortLikeGuid()
+		{
+			// Arrange
+			var random = new Random();
+			var guids = new List<Guid>(Enumerable.Range(0, 6).Select(i =>
+			{
+				var bytes = new byte[8] { 0,0,0,0,0,0,0,0 };
+				random.NextBytes(bytes);
+				var empty = BitConverter.ToUInt64(bytes, 0);
+				var mover = 0xFFFFFFFFFFFFFFFF ^ empty;
+				var list = new List<byte>(bytes);
+				list.AddRange(BitConverter.GetBytes(mover));
+				return new Guid(list.ToArray());
+			}));
+			var boards = new List<Board>(guids.Select(g =>
+			{
+				var bytes = g.ToByteArray();
+				var empty = BitConverter.ToInt64(bytes, 0);
+				var mover = BitConverter.ToInt64(bytes, 8);
+				return new Board(empty, mover, Color.Black);
+			}));
+
+			// Act
+			guids.Sort();
+			boards.Sort(new BoardComparer());
+
+			// Assert
+			for (int i = 0; i < guids.Count; i++)
+			{
+				var board = Board.FromGuid(guids[i]);
+				Assert.AreEqual(board, boards[i]);
+			}
 		}
 	}
 }

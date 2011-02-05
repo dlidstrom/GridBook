@@ -297,12 +297,7 @@
 		/// <returns>True if left &lt; right, otherwise false.</returns>
 		public static bool operator <(Board left, Board right)
 		{
-			if (left.Mover == right.Mover)
-			{
-				return left.Empty < right.Empty;
-			}
-
-			return left.Mover < right.Mover;
+			return left.ToGuid().CompareTo(right.ToGuid()) < 0;
 		}
 
 		/// <summary>
@@ -313,12 +308,7 @@
 		/// <returns>True if left &gt; right, otherwise false.</returns>
 		public static bool operator >(Board left, Board right)
 		{
-			if (left.Mover == right.Mover)
-			{
-				return left.Empty > right.Empty;
-			}
-
-			return left.Mover > right.Mover;
+			return left.ToGuid().CompareTo(right.ToGuid()) > 0;
 		}
 
 		/// <summary>
@@ -385,6 +375,30 @@
 		}
 
 		/// <summary>
+		/// Convert into Guid.
+		/// </summary>
+		/// <returns>Guid instance.</returns>
+		public Guid ToGuid()
+		{
+			var bytes = new System.Collections.Generic.List<byte>(BitConverter.GetBytes(Empty));
+			bytes.AddRange(BitConverter.GetBytes(Mover));
+			return new Guid(bytes.ToArray());
+		}
+
+		/// <summary>
+		/// Create Board from Guid.
+		/// </summary>
+		/// <param name="guid">Guid representing board.</param>
+		/// <returns>Board instance.</returns>
+		public static Board FromGuid(Guid guid)
+		{
+			var bytes = guid.ToByteArray();
+			var empty = BitConverter.ToInt64(bytes, 0);
+			var mover = BitConverter.ToInt64(bytes, 8);
+			return new Board(empty, mover, Color.Black);
+		}
+
+		/// <summary>
 		/// Calculate a hash code for the board. This allows boards to be put inside hashtable-based dictionaries.
 		/// </summary>
 		/// <returns>Board hash code.</returns>
@@ -404,7 +418,16 @@
 		/// <returns>True if boards are equal, false otherwise.</returns>
 		public override bool Equals(object obj)
 		{
-			var board = obj as Board;
+			return Equals(obj as Board);
+		}
+
+		/// <summary>
+		/// Determines whether this board is equal to another board.
+		/// </summary>
+		/// <param name="obj">Other board.</param>
+		/// <returns>True if boards are equal, false otherwise.</returns>
+		public bool Equals(Board board)
+		{
 			if (board == null)
 			{
 				return false;
