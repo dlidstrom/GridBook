@@ -57,6 +57,10 @@
 				{
 					Usage(container, ex);
 				}
+				catch (InvalidOperationException ex)
+				{
+					Usage(container, ex);
+				}
 			}
 		}
 
