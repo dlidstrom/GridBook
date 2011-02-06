@@ -1,0 +1,14 @@
+MySQL:
+
+alter table board drop index EmptyMover;
+load data infile 'c:/users/daniel/programming/gridbook/merged.csv' into table board fields terminated by ',';
+#alter table board add constraint unique EmptyMover (Empty, Mover);
+alter table board add index Empty (Empty ASC);
+
+PostgreSQL:
+
+\copy "Board" from 'C:\Users\Daniel\Programming\GridBook\merged.csv' DELIMITERS ',' CSV;
+
+SQLite:
+
+.import merged.csv Board
