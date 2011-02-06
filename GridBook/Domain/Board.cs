@@ -378,7 +378,7 @@
 		/// Convert into Guid.
 		/// </summary>
 		/// <returns>Guid instance.</returns>
-		public Guid ToGuid()
+		public virtual Guid ToGuid()
 		{
 			var bytes = new System.Collections.Generic.List<byte>(BitConverter.GetBytes(Empty));
 			bytes.AddRange(BitConverter.GetBytes(Mover));
@@ -426,7 +426,7 @@
 		/// </summary>
 		/// <param name="obj">Other board.</param>
 		/// <returns>True if boards are equal, false otherwise.</returns>
-		public bool Equals(Board board)
+		public virtual bool Equals(Board board)
 		{
 			if (board == null)
 			{
