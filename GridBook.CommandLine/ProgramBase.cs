@@ -8,7 +8,10 @@
 	{
 		public abstract void Run(string[] args);
 		public abstract string Description();
-		public abstract string HelpMessage();
+		public virtual string HelpMessage()
+		{
+			return Description();
+		}
 
 		public virtual OptionSet Options
 		{
