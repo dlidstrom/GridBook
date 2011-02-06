@@ -26,13 +26,15 @@
 				{
 					var g = new Guid(bytes);
 					var board = Board.FromGuid(g);
-					Console.WriteLine("'{0}',{1},{2},{3}", g, board.Empty, board.Mover, board.Ply);
+					Console.WriteLine("{0},{1},{2},{3}", g, board.Empty, board.Mover, board.Ply);
 					bytes = reader.ReadBytes(16);
 					if (++written % 1000000 == 0)
 					{
 						Console.Error.WriteLine("Written {0} lines", written);
 					}
 				}
+
+				Console.Error.WriteLine("Wrote {0} lines", written);
 			}
 		}
 
