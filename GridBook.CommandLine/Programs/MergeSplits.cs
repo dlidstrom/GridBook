@@ -27,16 +27,16 @@
 			bool firstRun = true;
 			var createdFiles = new HashSet<string>();
 
-			while (workFiles.Count > 1)
+			while (workFiles.Count > 1 || firstRun)
 			{
+				int written = 0;
+				var multiQueue = new MultiQueue(workFiles);
 				using (var stream = Utils.FindFirstSplitFile("merge", ref splitId))
 				{
 					createdFiles.Add(stream.Name);
 					Console.WriteLine("Merging {0} into {1}", string.Join(",", from f in workFiles
 																			   select Path.GetFileName(f)),
 																			   Path.GetFileName(stream.Name));
-					var multiQueue = new MultiQueue(workFiles);
-					int written = 0;
 					foreach (var item in multiQueue.Merge())
 					{
 						stream.Write(item.ToGuid().ToByteArray(), 0, 16);
@@ -45,24 +45,24 @@
 							Console.WriteLine("Written {0} lines", written);
 						}
 					}
+				}
 
-					Console.WriteLine("Written {0} lines", written);
-					Console.WriteLine("Excluded {0} duplicates.", multiQueue.Duplicates);
-					if (!firstRun)
-					{
-						workFiles.ForEach(f => File.Delete(f));
-					}
+				Console.WriteLine("Written {0} lines", written);
+				Console.WriteLine("Excluded {0} duplicates.", multiQueue.Duplicates);
+				if (!firstRun)
+				{
+					workFiles.ForEach(f => File.Delete(f));
+				}
 
-					workFiles = new List<string>(splitFiles.Take(splitFiles.Count - Take >= Take ? Take : splitFiles.Count));
+				workFiles = new List<string>(splitFiles.Take(splitFiles.Count - Take >= Take ? Take : splitFiles.Count));
+				splitFiles.RemoveWhere(s => workFiles.Contains(s));
+				if (workFiles.Count < Take)
+				{
+					splitFiles = createdFiles;
+					createdFiles = new HashSet<string>();
+					workFiles = new List<string>(splitFiles.Take(Take));
 					splitFiles.RemoveWhere(s => workFiles.Contains(s));
-					if (workFiles.Count < Take)
-					{
-						splitFiles = createdFiles;
-						createdFiles = new HashSet<string>();
-						workFiles = new List<string>(splitFiles.Take(Take));
-						splitFiles.RemoveWhere(s => workFiles.Contains(s));
-						firstRun = false;
-					}
+					firstRun = false;
 				}
 			}
 		}
