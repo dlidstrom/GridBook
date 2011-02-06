@@ -107,6 +107,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Tools\Logging\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\Tools\Npgsql2.0.11-bin-ms.net4.0\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
