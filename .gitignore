@@ -1,5 +1,7 @@
 *.user
 *.suo
+*.book
+*.bin
 GridBook.CommandLine/bin
 GridBook.CommandLine/obj
 GridBook/bin
@@ -12,3 +14,5 @@ GridBook.Test/bin
 GridBook.Test/obj
 Sandbox/bin
 Sandbox/obj
+SplitFiles/
+logs/
