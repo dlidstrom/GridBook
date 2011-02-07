@@ -9,7 +9,7 @@
 	/// <summary>
 	/// Represents a file as a queue.
 	/// </summary>
-	public class FileQueue
+	public class QueuedFile
 	{
 		private const int QueueCapacity = 1000;
 		private BinaryReader reader;
@@ -19,7 +19,7 @@
 		/// Initializes a new instance of the FileQueue class.
 		/// </summary>
 		/// <param name="stream">Stream to read from.</param>
-		public FileQueue(Stream stream)
+		public QueuedFile(Stream stream)
 		{
 			reader = new BinaryReader(stream);
 			loadQueue();
@@ -90,13 +90,13 @@
 
 	public class MultiQueue
 	{
-		List<FileQueue> queues;
+		List<QueuedFile> queues;
 
 		public MultiQueue(IEnumerable<string> files)
 		{
 			var q = from file in files
-					select new FileQueue(new FileStream(file, FileMode.Open, FileAccess.Read));
-			queues = new List<FileQueue>(q.ToArray());
+					select new QueuedFile(new FileStream(file, FileMode.Open, FileAccess.Read));
+			queues = new List<QueuedFile>(q.ToArray());
 		}
 
 		public int Duplicates

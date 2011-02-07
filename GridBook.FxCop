@@ -1,0 +1,1197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.35" Name="My FxCop Project">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">http://www.gotdotnet.com/team/fxcop//xsl/1.35/FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="en-us" />
+  <VersionAware>False</VersionAware>
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+ </ProjectOptions>
+ <Targets>
+  <Target Name="$(ProjectDir)/GridBook.CommandLine/bin/Release/GridBook.CommandLine.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/GridBook.CommandLine/bin/Release/GridBook.dll" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.35">
+  <Namespaces>
+   <Namespace Name="GridBook.Domain.Importers">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2011-02-07 10:42:52Z">
+      <Issue>
+       <Item>GridBook.Domain.Importers</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="GridBook.Domain.Mapping">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2011-02-07 10:42:52Z">
+      <Issue>
+       <Item>GridBook.Domain.Mapping</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="GridBook.Mapping">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2011-02-07 10:42:52Z">
+      <Issue>
+       <Item>GridBook.Mapping</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+  </Namespaces>
+  <Targets>
+   <Target Name="$(ProjectDir)/GridBook.CommandLine/bin/Release/GridBook.CommandLine.exe">
+    <Modules>
+     <Module Name="gridbook.commandline.exe">
+      <Messages>
+       <Message TypeName="AssembliesShouldDeclareMinimumSecurity" Category="Microsoft.Usage" CheckId="CA2209" Created="2011-02-07 10:42:52Z">
+        <Issue>
+         <Item>GridBook.CommandLine</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2011-02-07 10:42:52Z">
+        <Issue Name="NoStrongName">
+         <Item>GridBook.CommandLine</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2011-02-07 10:42:52Z">
+        <Issue Name="NoAttr">
+         <Item>GridBook.CommandLine</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="GridBook.CommandLine">
+        <Types>
+         <Type Name="MainProgram">
+          <Members>
+           <Member Name="Usage(Castle.Windsor.IWindsorContainer,System.Exception):System.Void">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2011-02-07 10:42:52Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>MainProgram.Usage(IWindsorContainer, Exception):Void</Item>
+              </Issue>
+             </Message>
+             <Message Id="ex" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2011-02-07 10:42:52Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>ex</Item>
+               <Item>MainProgram.Usage(IWindsorContainer, Exception):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="OptionSetException">
+          <Messages>
+           <Message TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032" Created="2011-02-07 10:42:52Z">
+            <Issue>
+             <Item>GridBook.CommandLine.OptionSetException</Item>
+             <Item>protected OptionSetException(SerializationInfo, StreamingContext)</Item>
+            </Issue>
+            <Issue>
+             <Item>GridBook.CommandLine.OptionSetException</Item>
+             <Item>public OptionSetException()</Item>
+            </Issue>
+            <Issue>
+             <Item>GridBook.CommandLine.OptionSetException</Item>
+             <Item>public OptionSetException(String)</Item>
+            </Issue>
+            <Issue>
+             <Item>GridBook.CommandLine.OptionSetException</Item>
+             <Item>public OptionSetException(String, Exception)</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Created="2011-02-07 10:42:52Z">
+            <Issue Level="Error">
+             <Item>OptionSetException</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="OptionSet">
+            <Messages>
+             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>OptionSet</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ProgramBase">
+          <Members>
+           <Member Name="Usage():System.Void">
+            <Messages>
+             <Message Id="System.IO.StringWriter.#ctor" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>ProgramBase.Usage():Void</Item>
+               <Item>System.IO.StringWriter.#ctor</Item>
+               <Item>System.IO.StringWriter.#ctor(System.IFormatProvider)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="GridBook.CommandLine.Programs">
+        <Types>
+         <Type Name="FileQueue">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2011-02-07 10:42:52Z">
+            <Issue>
+             <Item>GridBook.CommandLine.Programs.FileQueue</Item>
+             <Item>Queue</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2011-02-07 10:42:52Z" FixCategory="Breaking">
+            <Issue>
+             <Item>GridBook.CommandLine.Programs.FileQueue</Item>
+             <Item>System.IO.BinaryReader</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MultiQueue">
+          <Messages>
+           <Message Id="Multi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+            <Issue Name="Type">
+             <Item>Multi</Item>
+             <Item>GridBook.CommandLine.Programs.MultiQueue</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2011-02-07 10:42:52Z">
+            <Issue>
+             <Item>GridBook.CommandLine.Programs.MultiQueue</Item>
+             <Item>Queue</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Utils">
+          <Members>
+           <Member Name="FindFirstSplitFile(System.String,System.Int32&amp;):System.IO.FileStream">
+            <Messages>
+             <Message Id="System.Exception.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Utils.FindFirstSplitFile(String, Int32&amp;):FileStream</Item>
+               <Item>1</Item>
+               <Item>Exception.Exception(String)</Item>
+               <Item>Could not find any available split file slot.</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2011-02-07 10:42:52Z">
+              <Issue Name="TooGeneric">
+               <Item>Utils.FindFirstSplitFile(String, Int32&amp;):FileStream</Item>
+               <Item>System.Exception</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Utils.FindFirstSplitFile(String, Int32&amp;):FileStream</Item>
+               <Item>System.String.Format(System.String,System.Object,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="NDesk.Options">
+        <Types>
+         <Type Name="Option">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2011-02-07 10:42:52Z">
+            <Issue Name="Type">
+             <Item>Option</Item>
+             <Item>Option</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name=".ctor(System.String,System.String,System.Int32)">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Option.Option(String, String, Int32)</Item>
+               <Item>System.String.Format(System.String,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="AddSeparators(System.String,System.Int32,System.Collections.Generic.ICollection`1&lt;System.String&gt;):System.Void">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Option.AddSeparators(String, Int32, ICollection`1&lt;System.String&gt;):Void</Item>
+               <Item>System.String.Format(System.String,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+              <Issue>
+               <Item>Option.AddSeparators(String, Int32, ICollection`1&lt;System.String&gt;):Void</Item>
+               <Item>System.String.Format(System.String,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+              <Issue>
+               <Item>Option.AddSeparators(String, Int32, ICollection`1&lt;System.String&gt;):Void</Item>
+               <Item>System.String.Format(System.String,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Invoke(NDesk.Options.OptionContext):System.Void">
+            <Messages>
+             <Message Id="0#c" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Option.Invoke(OptionContext):Void</Item>
+               <Item>c</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>'c'</Item>
+               <Item>Option.Invoke(OptionContext):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="OnParseComplete(NDesk.Options.OptionContext):System.Void">
+            <Messages>
+             <Message Id="0#c" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Option.OnParseComplete(OptionContext):Void</Item>
+               <Item>c</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Parse(System.String,NDesk.Options.OptionContext):T">
+            <Messages>
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Option.Parse(String, OptionContext):T</Item>
+               <Item>T</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#c" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Option.Parse(String, OptionContext):T</Item>
+               <Item>c</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Option.Parse(String, OptionContext):T</Item>
+               <Item>System.String.Format(System.String,System.Object,System.Object,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ParsePrototype():NDesk.Options.OptionValueType">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Option.ParsePrototype():OptionValueType</Item>
+               <Item>System.String.Format(System.String,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Option.ParsePrototype():OptionValueType</Item>
+               <Item>System.String.Format(System.String,System.Object,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="OptionException">
+          <Messages>
+           <Message TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032" Created="2011-02-07 10:42:52Z">
+            <Issue>
+             <Item>NDesk.Options.OptionException</Item>
+             <Item>public OptionException(String)</Item>
+            </Issue>
+            <Issue>
+             <Item>NDesk.Options.OptionException</Item>
+             <Item>public OptionException(String, Exception)</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name=".ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <Messages>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>'info'</Item>
+               <Item>OptionException.OptionException(SerializationInfo, StreamingContext)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext):System.Void">
+            <Messages>
+             <Message TypeName="OverrideLinkDemandsShouldBeIdenticalToBase" Category="Microsoft.Security" CheckId="CA2123" Created="2011-02-07 10:42:52Z">
+              <Issue Name="OverrideOnly">
+               <Item>OptionException.GetObjectData(SerializationInfo, StreamingContext):Void</Item>
+               <Item>Exception.GetObjectData(SerializationInfo, StreamingContext):Void</Item>
+               <Item>[SecurityPermission(SecurityAction.LinkDemand, SerializationFormatter = true)]</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>'info'</Item>
+               <Item>OptionException.GetObjectData(SerializationInfo, StreamingContext):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="OptionSet">
+          <Messages>
+           <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Created="2011-02-07 10:42:52Z">
+            <Issue>
+             <Item>NDesk.Options.OptionSet</Item>
+             <Item>Collection</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="GetDescription(System.String):System.String">
+            <Messages>
+             <Message Id="System.InvalidOperationException.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>OptionSet.GetDescription(String):String</Item>
+               <Item>1</Item>
+               <Item>InvalidOperationException.InvalidOperationException(String)</Item>
+               <Item>Invalid option description: __</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetKeyForItem(NDesk.Options.Option):System.String">
+            <Messages>
+             <Message Id="System.InvalidOperationException.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>OptionSet.GetKeyForItem(Option):String</Item>
+               <Item>1</Item>
+               <Item>InvalidOperationException.InvalidOperationException(String)</Item>
+               <Item>Option has no names!</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2011-02-07 10:42:52Z">
+              <Issue Name="OneArgumentShouldBeParameterName">
+               <Item>System.ArgumentNullException</Item>
+               <Item>ArgumentNullException.ArgumentNullException(String)</Item>
+               <Item>option</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetOptionParts(System.String,System.String&amp;,System.String&amp;,System.String&amp;,System.String&amp;):System.Boolean">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>flag</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>name</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>sep</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>value</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Parse(System.Collections.Generic.IEnumerable`1&lt;System.String&gt;):System.Collections.Generic.List`1&lt;System.String&gt;">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>System.Collections.Generic.List`1&lt;System.String&gt;</Item>
+               <Item>OptionSet.Parse(IEnumerable`1&lt;System.String&gt;):List`1&lt;System.String&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Parse(System.String,NDesk.Options.OptionContext):System.Boolean">
+            <Messages>
+             <Message Id="1#c" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>OptionSet.Parse(String, OptionContext):Boolean</Item>
+               <Item>c</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ParseBundledValue(System.String,System.String,NDesk.Options.OptionContext):System.Boolean">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>OptionSet.ParseBundledValue(String, String, OptionContext):Boolean</Item>
+               <Item>System.String.Format(System.String,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ParseValue(System.String,NDesk.Options.OptionContext):System.Void">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>OptionSet.ParseValue(String, OptionContext):Void</Item>
+               <Item>System.String.Format(System.String,System.Object,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WriteOptionDescriptions(System.IO.TextWriter):System.Void">
+            <Messages>
+             <Message Id="0#o" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>OptionSet.WriteOptionDescriptions(TextWriter):Void</Item>
+               <Item>o</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="OptionValueCollection">
+          <Members>
+           <Member Name="AssertValid(System.Int32):System.Void">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>OptionValueCollection.AssertValid(Int32):Void</Item>
+               <Item>System.String.Format(System.String,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="System.Collections.ICollection.IsSynchronized">
+            <Accessors>
+             <Accessor Name="System.Collections.ICollection.get_IsSynchronized():System.Boolean">
+              <Messages>
+               <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2011-02-07 10:42:52Z">
+                <Issue>
+                 <Item>OptionValueCollection</Item>
+                 <Item>ICollection.get_IsSynchronized():Boolean</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="System.Collections.ICollection.SyncRoot">
+            <Accessors>
+             <Accessor Name="System.Collections.ICollection.get_SyncRoot():System.Object">
+              <Messages>
+               <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2011-02-07 10:42:52Z">
+                <Issue>
+                 <Item>OptionValueCollection</Item>
+                 <Item>ICollection.get_SyncRoot():Object</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="System.Collections.IList.IsFixedSize">
+            <Accessors>
+             <Accessor Name="System.Collections.IList.get_IsFixedSize():System.Boolean">
+              <Messages>
+               <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2011-02-07 10:42:52Z">
+                <Issue>
+                 <Item>OptionValueCollection</Item>
+                 <Item>IList.get_IsFixedSize():Boolean</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="ToList():System.Collections.Generic.List`1&lt;System.String&gt;">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>System.Collections.Generic.List`1&lt;System.String&gt;</Item>
+               <Item>OptionValueCollection.ToList():List`1&lt;System.String&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/GridBook.CommandLine/bin/Release/GridBook.dll">
+    <Modules>
+     <Module Name="gridbook.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldDeclareMinimumSecurity" Category="Microsoft.Usage" CheckId="CA2209" Created="2011-02-07 10:42:52Z">
+        <Issue>
+         <Item>GridBook</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2011-02-07 10:42:52Z">
+        <Issue Name="NoStrongName">
+         <Item>GridBook</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2011-02-07 10:42:52Z">
+        <Issue Name="NoAttr">
+         <Item>GridBook</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="GridBook.Domain">
+        <Types>
+         <Type Name="Bits">
+          <Members>
+           <Member Name=".cctor()">
+            <Messages>
+             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>GridBook.Domain.Bits</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Count(System.Int64):System.Int32">
+            <Messages>
+             <Message Id="0#l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Bits.Count(Int64):Int32</Item>
+               <Item>l</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FlipDiagonal(System.UInt64):System.UInt64">
+            <Messages>
+             <Message Id="0#x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Bits.FlipDiagonal(UInt64):UInt64</Item>
+               <Item>x</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FlipHorizontal(System.UInt64):System.UInt64">
+            <Messages>
+             <Message Id="0#x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Bits.FlipHorizontal(UInt64):UInt64</Item>
+               <Item>x</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FlipVertical(System.UInt64):System.UInt64">
+            <Messages>
+             <Message Id="0#x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Bits.FlipVertical(UInt64):UInt64</Item>
+               <Item>x</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="LSB(System.UInt64):System.Int32">
+            <Messages>
+             <Message Id="System.InvalidOperationException.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Bits.LSB(UInt64):Int32</Item>
+               <Item>1</Item>
+               <Item>InvalidOperationException.InvalidOperationException(String)</Item>
+               <Item>Can not compute LSB with 0</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Bits.LSB(UInt64):Int32</Item>
+               <Item>x</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2011-02-07 10:42:52Z">
+              <Issue Name="Member">
+               <Item>Bits.LSB(UInt64):Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Board">
+          <Members>
+           <Member Name=".ctor(System.UInt64,System.UInt64,GridBook.Domain.Color)">
+            <Messages>
+             <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Board.Board(UInt64, UInt64, Color)</Item>
+               <Item>&#xD;&#xA;&#xD;&#xA;Board.Board(UInt64, UInt64, Color)&#xD;&#xA;Board.get_Empty():Int64</Item>
+              </Issue>
+              <Issue>
+               <Item>Board.Board(UInt64, UInt64, Color)</Item>
+               <Item>&#xD;&#xA;&#xD;&#xA;Board.Board(UInt64, UInt64, Color)&#xD;&#xA;Board.get_Mover():Int64</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Board.Board(UInt64, UInt64, Color)</Item>
+               <Item>System.String.Format(System.String,System.Object,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromString(System.String):GridBook.Domain.Board">
+            <Messages>
+             <Message Id="System.ArgumentException.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Board.FromString(String):Board</Item>
+               <Item>1</Item>
+               <Item>ArgumentException.ArgumentException(String)</Item>
+               <Item>Invalid board</Item>
+              </Issue>
+              <Issue>
+               <Item>Board.FromString(String):Board</Item>
+               <Item>1</Item>
+               <Item>ArgumentException.ArgumentException(String)</Item>
+               <Item>Invalid board</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#s" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Board.FromString(String):Board</Item>
+               <Item>s</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>'s'</Item>
+               <Item>Board.FromString(String):Board</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="GetEmpties():System.Int32">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2011-02-07 10:42:52Z">
+              <Issue Certainty="50">
+               <Item>GetEmpties</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="op_GreaterThan(GridBook.Domain.Board,GridBook.Domain.Board):System.Boolean">
+            <Messages>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Compare</Item>
+               <Item>Board.op_GreaterThan(Board, Board):Boolean</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>'left'</Item>
+               <Item>Board.op_GreaterThan(Board, Board):Boolean</Item>
+              </Issue>
+              <Issue>
+               <Item>'right'</Item>
+               <Item>Board.op_GreaterThan(Board, Board):Boolean</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="op_LessThan(GridBook.Domain.Board,GridBook.Domain.Board):System.Boolean">
+            <Messages>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Compare</Item>
+               <Item>Board.op_LessThan(Board, Board):Boolean</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>'left'</Item>
+               <Item>Board.op_LessThan(Board, Board):Boolean</Item>
+              </Issue>
+              <Issue>
+               <Item>'right'</Item>
+               <Item>Board.op_LessThan(Board, Board):Boolean</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="BookData">
+          <Members>
+           <Member Name="Games">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>BookData.Games:Int32[]</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WLD">
+            <Messages>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2011-02-07 10:42:52Z">
+              <Issue Name="Member">
+               <Item>BookData.WLD:Boolean</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Extensions">
+          <Members>
+           <Member Name="FlipDiagonal(System.UInt64):System.UInt64">
+            <Messages>
+             <Message Id="0#x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Extensions.FlipDiagonal(UInt64):UInt64</Item>
+               <Item>x</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FlipHorizontal(System.UInt64):System.UInt64">
+            <Messages>
+             <Message Id="0#x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Extensions.FlipHorizontal(UInt64):UInt64</Item>
+               <Item>x</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FlipVertical(System.UInt64):System.UInt64">
+            <Messages>
+             <Message Id="0#x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Extensions.FlipVertical(UInt64):UInt64</Item>
+               <Item>x</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="LSB(System.UInt64):System.Int32">
+            <Messages>
+             <Message Id="0#x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Extensions.LSB(UInt64):Int32</Item>
+               <Item>x</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2011-02-07 10:42:52Z">
+              <Issue Name="Member">
+               <Item>Extensions.LSB(UInt64):Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ToInt64(System.UInt64):System.Int64">
+            <Messages>
+             <Message Id="0#l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Extensions.ToInt64(UInt64):Int64</Item>
+               <Item>l</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ToUInt64(System.Int64):System.UInt64">
+            <Messages>
+             <Message Id="0#l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Extensions.ToUInt64(Int64):UInt64</Item>
+               <Item>l</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Move">
+          <Members>
+           <Member Name=".ctor(System.String)">
+            <Messages>
+             <Message Id="System.ArgumentException.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Move.Move(String)</Item>
+               <Item>1</Item>
+               <Item>ArgumentException.ArgumentException(String)</Item>
+               <Item>Invalid move</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>'move'</Item>
+               <Item>Move.Move(String)</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="C4">
+            <Messages>
+             <Message TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Move.C4</Item>
+               <Item>GridBook.Domain.Move</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="D3">
+            <Messages>
+             <Message TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Move.D3</Item>
+               <Item>GridBook.Domain.Move</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="E6">
+            <Messages>
+             <Message TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Move.E6</Item>
+               <Item>GridBook.Domain.Move</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="F5">
+            <Messages>
+             <Message TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Move.F5</Item>
+               <Item>GridBook.Domain.Move</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="FromPos(System.Int32):GridBook.Domain.Move">
+            <Messages>
+             <Message Id="System.ArgumentException.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Move.FromPos(Int32):Move</Item>
+               <Item>1</Item>
+               <Item>ArgumentException.ArgumentException(String)</Item>
+               <Item>Invalid move</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Move.FromPos(Int32):Move</Item>
+               <Item>System.String.Format(System.String,System.Object,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ToString():System.String">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Move.ToString():String</Item>
+               <Item>System.String.Format(System.String,System.Object,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="GridBook.Domain.Importers">
+        <Types>
+         <Type Name="IImporter">
+          <Members>
+           <Member Name="Import():System.Collections.Generic.IEnumerable`1&lt;System.Collections.Generic.KeyValuePair`2&lt;GridBook.Domain.Board,GridBook.Domain.BookData&gt;&gt;">
+            <Messages>
+             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>IImporter.Import():IEnumerable`1&lt;System.Collections.Generic.KeyValuePair`2&lt;GridBook.Domain.Board,GridBook.Domain.BookData&gt;&gt;</Item>
+               <Item>System.Collections.Generic.IEnumerable`1&lt;System.Collections.Generic.KeyValuePair`2&lt;GridBook.Domain.Board,GridBook.Domain.BookData&gt;&gt;</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="GridBook.Service">
+        <Types>
+         <Type Name="BookService">
+          <Members>
+           <Member Name="log">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>BookService.log</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Dumper">
+          <Members>
+           <Member Name=".ctor(System.String)">
+            <Messages>
+             <Message Id="0#p" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-02-07 10:42:52Z">
+              <Issue Name="ParameterOneLetter">
+               <Item>Dumper.Dumper(String)</Item>
+               <Item>p</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="p">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>Dumper.p</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WriteBoardTable(System.IO.Stream):System.Void">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2011-02-07 10:42:52Z" FixCategory="Breaking">
+              <Issue>
+               <Item>Dumper.WriteBoardTable(Stream):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WriteFooter(System.IO.Stream):System.Void">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2011-02-07 10:42:52Z" FixCategory="Breaking">
+              <Issue>
+               <Item>Dumper.WriteFooter(Stream):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WriteHeading(System.IO.Stream):System.Void">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2011-02-07 10:42:52Z" FixCategory="Breaking">
+              <Issue>
+               <Item>Dumper.WriteHeading(Stream):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WritePositions(System.IO.Stream,GridBook.Domain.Importers.IImporter):System.Void">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2011-02-07 10:42:52Z" FixCategory="Breaking">
+              <Issue>
+               <Item>Dumper.WritePositions(Stream, IImporter):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ProgressBar">
+          <Members>
+           <Member Name="Show(System.String):System.Void">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2011-02-07 10:42:52Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>ProgressBar.Show(String):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="Update(System.Double,System.String):System.Void">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2011-02-07 10:42:52Z">
+              <Issue>
+               <Item>ProgressBar.Update(Double, String):Void</Item>
+               <Item>System.String.Format(System.String,System.Object,System.Object,System.Object)</Item>
+               <Item>System.String.Format(System.IFormatProvider,System.String,System.Object[])</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Rules>
+   <Rule TypeName="AssembliesShouldDeclareMinimumSecurity" Category="Microsoft.Usage" CheckId="CA2209">
+    <Resolution Name="Default">No valid permission requests were found for assembly '{0}'. You should always specify the minimum security permissions using SecurityAction.RequestMinimum.</Resolution>
+   </Rule>
+   <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
+    <Resolution Name="NoStrongName">Sign '{0}' with a strong name key.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
+    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
+    <Resolution Name="Default">Consider a design that does not require that '{0}' be an out parameter.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+    <Resolution Name="Default">It appears that field '{0}' is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   </Rule>
+   <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
+    <Resolution Name="Default">Change '{0}' to be read-only by removing the property setter.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214">
+    <Resolution Name="Default">'{0}' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: {1}</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotDeclareReadOnlyMutableReferenceTypes" Category="Microsoft.Security" CheckId="CA2104">
+    <Resolution Name="Default">Remove the readonly declaration from '{0}' or change the field to one that is an immutable reference type. If the reference type '{1}' is, in fact, immutable, exclude this message.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
+    <Resolution Name="Default">Change '{0}' in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
+    <Resolution Name="Default">Consider a design where {0} doesn't nest generic type '{1}'.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303">
+    <Resolution Name="Default">{0} passes a literal as parameter {1} of a call to {2}. Retrieve the following string argument from a resource table instead: '{3}'</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201">
+    <Resolution Name="TooGeneric">{0} creates an exception of type '{1}', an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Resolution>
+   </Rule>
+   <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
+    <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter '{1}' in any call to it.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+    <Resolution Name="ParameterOneLetter">In method {0}, consider providing a more meaningful name than the one-letter parameter name '{1}'.</Resolution>
+    <Resolution Name="Type">Correct the spelling of the unrecognized token '{0}' in type name '{1}'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710">
+    <Resolution Name="Default">Rename '{0}' to end in '{1}'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711">
+    <Resolution Name="Default">Rename '{0}' so that it does not end in '{1}'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
+    <Resolution Name="Type">Change type name '{0}' so that it does not conflict with reserved keyword:'{1}'.</Resolution>
+   </Rule>
+   <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
+    <Resolution Name="Default">Add the following constructor to {0}: {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810">
+    <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>
+   </Rule>
+   <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
+    <Resolution Name="OneArgumentShouldBeParameterName">Calls to {0}'s constructor '{1}' should contain one of the method's parameter names instead of '{2}'. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
+   </Rule>
+   <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
+    <Resolution Name="Default">Make '{0}' sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of '{1}' and is visible to derived classes.</Resolution>
+   </Rule>
+   <Rule TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705">
+    <Resolution Name="Member">Correct the capitalization of member name '{0}'.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
+    <Resolution Name="NoAttr">'{0}' should be marked with CLSCompliantAttribute and its value should be true.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237">
+    <Resolution Name="Default">Add [Serializable] to '{0}' as this type implements ISerializable.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in VB) of {0} is never used. Mark the member as static (or Shared in VB) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   </Rule>
+   <Rule TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225">
+    <Resolution Name="Default">Provide a method named '{0}' as a friendly alternate for operator {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="OverrideLinkDemandsShouldBeIdenticalToBase" Category="Microsoft.Security" CheckId="CA2123">
+    <Resolution Name="OverrideOnly">Override {0} has the following LinkDemand that is not present on base method {1}: {2}. If possible, apply the same LinkDemand to the base method. Otherwise, replace it with a full Demand or remove it entirely.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
+    <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter '{0}' of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Resolution Name="Default">{0} makes a call to {1} that does not explicitly provide an IFormatProvider. This should be replaced with a call to {2}.</Resolution>
+   </Rule>
+   <Rule TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001">
+    <Resolution Name="Default">Implement IDisposable on '{0}' as it instantiates members of the following IDisposable types: {1}</Resolution>
+   </Rule>
+   <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
+    <Resolution Name="Default">Change '{0}' to a property if appropriate.</Resolution>
+   </Rule>
+   <Rule TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062">
+    <Resolution Name="Default">Validate parameter {0} passed to externally visible method {1}.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

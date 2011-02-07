@@ -1,6 +1,7 @@
 ﻿namespace GridBook.CommandLine
 {
 	using System;
+	using System.Globalization;
 	using System.IO;
 	using NDesk.Options;
 
@@ -27,7 +28,7 @@
 			{
 				Console.WriteLine("Usage: GridBook.CommandLine.exe {0} <options>", GetType().Name);
 				Console.WriteLine("Options:");
-				var writer = new StringWriter();
+				var writer = new StringWriter(CultureInfo.InvariantCulture);
 				Options.WriteOptionDescriptions(writer);
 				Console.WriteLine(writer);
 			}

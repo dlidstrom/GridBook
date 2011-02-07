@@ -45,26 +45,26 @@
 						}
 					}
 				}
-				catch (OptionSetException ex)
+				catch (OptionSetException)
 				{
-					Usage(container, ex);
+					Usage(container);
 				}
-				catch (ComponentNotFoundException ex)
+				catch (ComponentNotFoundException)
 				{
-					Usage(container, ex);
+					Usage(container);
 				}
-				catch (IndexOutOfRangeException ex)
+				catch (IndexOutOfRangeException)
 				{
-					Usage(container, ex);
+					Usage(container);
 				}
-				catch (InvalidOperationException ex)
+				catch (InvalidOperationException)
 				{
-					Usage(container, ex);
+					Usage(container);
 				}
 			}
 		}
 
-		void Usage(IWindsorContainer container, Exception ex)
+		private static void Usage(IWindsorContainer container)
 		{
 			var programs = container.ResolveAll<ProgramBase>();
 			var q = from p in programs

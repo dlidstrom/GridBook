@@ -13,7 +13,7 @@
 		public OptionSet OptionSet
 		{
 			get;
-			set;
+			private set;
 		}
 	}
 }
