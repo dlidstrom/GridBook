@@ -318,24 +318,56 @@
 		private System.Collections.Generic.IList<Board> calculateSuccessors()
 		{
 			var successors = new System.Collections.Generic.List<Board>();
-			for (int i = 0; successors.Count == 0 && i < 2; i++)
+			ulong empty = moves();
+			while (empty != 0)
 			{
-				ulong empty = this.Empty.ToUInt64();
-				while (empty != 0)
+				try
 				{
-					try
-					{
-						successors.Add(Play(Move.FromPos(empty.LSB())));
-					}
-					catch (ArgumentException)
-					{
-					}
-
-					empty = empty & (empty - 1);
+					successors.Add(Play(Move.FromPos(empty.LSB())));
 				}
+				catch (ArgumentException)
+				{
+				}
+
+				empty = empty & (empty - 1);
 			}
 
 			return successors;
+		}
+
+		/// <summary>
+		/// Get legal moves.
+		/// </summary>
+		/// <returns>Legal moves.</returns>
+		private ulong moves()
+		{
+			ulong P = Mover.ToUInt64();
+			ulong O = ~(Mover | Empty).ToUInt64();
+			return (get_some_moves(P, O & 0x7E7E7E7E7E7E7E7E, 1) // horizontal
+				| get_some_moves(P, O & 0x00FFFFFFFFFFFF00, 8)   // vertical
+				| get_some_moves(P, O & 0x007E7E7E7E7E7E00, 7)   // diagonals
+				| get_some_moves(P, O & 0x007E7E7E7E7E7E00, 9))
+				& ~(P|O); // mask with empties
+		}
+
+		/// <summary>
+		/// Get moves along a direction.
+		/// </summary>
+		/// <param name="P">Player.</param>
+		/// <param name="mask">Bitmask.</param>
+		/// <param name="dir">Direction.</param>
+		/// <returns>Moves along direction.</returns>
+		private static ulong get_some_moves(ulong P, ulong mask, int dir)
+		{
+			// sequential algorithm
+			// 7 << + 7 >> + 6 & + 12 |
+			ulong flip = (((P << dir) | (P >> dir)) & mask);
+			flip |= (((flip << dir) | (flip >> dir)) & mask);
+			flip |= (((flip << dir) | (flip >> dir)) & mask);
+			flip |= (((flip << dir) | (flip >> dir)) & mask);
+			flip |= (((flip << dir) | (flip >> dir)) & mask);
+			flip |= (((flip << dir) | (flip >> dir)) & mask);
+			return (flip << dir) | (flip >> dir);
 		}
 
 		/// <summary>
