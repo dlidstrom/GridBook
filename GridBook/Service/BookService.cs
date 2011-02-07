@@ -74,7 +74,7 @@
 		public Board Find(Board item)
 		{
 			return Transact(() => from b in session.Query<Board>()
-								  where b.Empty == item.Empty && b.Mover == item.Mover
+								  where b.Id == item.MinimalReflection().ToGuid()
 								  select b).SingleOrDefault();
 		}
 

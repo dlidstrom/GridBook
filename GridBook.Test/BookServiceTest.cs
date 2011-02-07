@@ -296,7 +296,7 @@
 
 				// Assert
 				Assert.IsNotNull(found);
-				Assert.AreEqual(Board.Start, found);
+				Assert.AreEqual(Board.Start.MinimalReflection(), found);
 			}
 		}
 	}
