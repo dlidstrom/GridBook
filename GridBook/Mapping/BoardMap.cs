@@ -9,8 +9,8 @@
 		{
 			Id(x => x.Id).GeneratedBy.Custom<CustomGuidGenerator>();
 			//NaturalId().Property(x => x.Empty).Property(x => x.Mover);
-			Map(x => x.Empty);
-			Map(x => x.Mover);
+			Map(x => x.Empty).Not.Nullable();
+			Map(x => x.Mover).Not.Nullable();
 			Map(x => x.Ply).Not.Nullable();
 			HasManyToMany(x => x.Successors)
 				.Access.ReadOnlyPropertyThroughLowerCaseField()
