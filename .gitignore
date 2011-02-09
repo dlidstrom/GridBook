@@ -2,6 +2,7 @@
 *.suo
 *.book
 *.bin
+*.json
 GridBook.CommandLine/bin
 GridBook.CommandLine/obj
 GridBook/bin
