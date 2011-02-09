@@ -96,3 +96,10 @@ PostgreSQL
 SQLite:
 
 .import merged.csv Board
+
+MongoDB
+=======
+
+GridBook.CommandLine.exe JsonDump -f JA_s26.backup.book > JA_s26.backup.book.json
+mongoimport.exe -d gridbook -c json --file JA_s26.backup.book.json --drop
+> db.json.ensureIndex( { successors : 1 } );
