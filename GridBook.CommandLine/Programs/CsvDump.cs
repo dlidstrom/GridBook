@@ -10,7 +10,7 @@
 		public override void Run(string[] args)
 		{
 			var filename = string.Empty;
-			var options = new OptionSet() { { "f=|file=", "Creates split files from specified book.", f => filename = f } };
+			var options = new OptionSet() { { "f=|file=", "Creates CSV dump from merge file.", f => filename = f } };
 			options.Parse(args);
 			if (string.IsNullOrWhiteSpace(filename))
 			{
@@ -40,7 +40,7 @@
 
 		public override string Description()
 		{
-			return "Creates CSV dump from split file.";
+			return "Creates CSV dump from merge file.";
 		}
 
 		public override string HelpMessage()

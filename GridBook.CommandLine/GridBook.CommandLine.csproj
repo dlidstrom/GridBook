@@ -129,10 +129,9 @@
     <Compile Include="MainProgram.cs" />
     <Compile Include="OptionSetException.cs" />
     <Compile Include="ProgramsInstaller.cs" />
-    <Compile Include="Programs\CreateDump.cs" />
     <Compile Include="Programs\CreateSchema.cs" />
     <Compile Include="Programs\CsvDump.cs" />
-    <Compile Include="Programs\ImportBook.cs" />
+    <Compile Include="Programs\JsonDump.cs" />
     <Compile Include="Programs\MergeSplits.cs" />
     <Compile Include="Programs\MultiQueue.cs" />
     <Compile Include="Programs\ParentChild.cs" />

@@ -166,10 +166,10 @@
 		/// Calculates the minimal successors of this position.
 		/// </summary>
 		/// <returns>Minimal successors of this position.</returns>
-		public virtual System.Collections.Generic.IEnumerable<Board> CalculateMinimalSuccessors()
+		public virtual System.Collections.Generic.IList<Board> CalculateMinimalSuccessors()
 		{
 			return new System.Collections.Generic.HashSet<Board>(from b in CalculateSuccessors()
-																 select b.MinimalReflection());
+																 select b.MinimalReflection()).ToList();
 		}
 
 		/// <summary>
