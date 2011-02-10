@@ -17,8 +17,8 @@
 			var options = new OptionSet()
 			{
 				{ "f=|file=", "Extracts parent/child relationship from book.", f => filename = f },
-				{ "p|parent", "Writes parent relationship.", f => parent = true },
-				{ "c|child", "Writes successor relationship.", f => child = true }
+				{ "p|parent", "Writes parent relationship.", f => parent = f != null },
+				{ "c|child", "Writes successor relationship.", f => child = f != null }
 			};
 
 			options.Parse(args);
