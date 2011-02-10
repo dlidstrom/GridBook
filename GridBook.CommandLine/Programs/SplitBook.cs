@@ -60,12 +60,12 @@
 
 		public override string Description()
 		{
-			return "Splits book into smaller, sorted pieces, ready for CreateDump.";
+			return "Splits book into smaller, sorted pieces, ready for MergeSplits.";
 		}
 
 		public override string HelpMessage()
 		{
-			return "Use this command to split a book before you run CreateDump.\n"
+			return "Use this command to split a book before you run MergeSplits.\n"
 				+ "This will create a number of split files with sorted subsets of\n"
 				+ "the positions, and their successors, found in the input.";
 		}

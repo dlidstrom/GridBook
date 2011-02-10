@@ -74,7 +74,8 @@
 
 		public override string HelpMessage()
 		{
-			return "Will output csv from split files.";
+			return "The split files will be merged into a merge file. This file can be used with CsvDump\n"
+				+ "to create a CSV file for database import.";
 		}
 
 		public override OptionSet Options

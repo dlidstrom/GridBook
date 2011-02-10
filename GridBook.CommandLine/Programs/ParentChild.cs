@@ -59,6 +59,11 @@
 			return "Creates parent/child relationships.";
 		}
 
+		public override string HelpMessage()
+		{
+			return "Parent/child relationships are written in CSV format.";
+		}
+
 		public override OptionSet Options
 		{
 			get

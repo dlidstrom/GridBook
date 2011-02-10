@@ -25,6 +25,7 @@
 			if (Options != null)
 			{
 				Console.WriteLine("Usage: GridBook.CommandLine.exe {0} <options>", GetType().Name);
+				Console.WriteLine(HelpMessage());
 				Console.WriteLine("Options:");
 				Options.WriteOptionDescriptions(Console.Out);
 			}
