@@ -9,9 +9,9 @@
 		{
 			Id(x => x.Id).GeneratedBy.Custom<CustomGuidGenerator>();
 			//NaturalId().Property(x => x.Empty).Property(x => x.Mover);
-			Map(x => x.Empty).Not.Nullable();
-			Map(x => x.Mover).Not.Nullable();
-			Map(x => x.Ply).Not.Nullable();
+			Map(x => x.Empty).Not.Nullable().Access.ReadOnlyPropertyThroughLowerCaseField();
+			Map(x => x.Mover).Not.Nullable().Access.ReadOnlyPropertyThroughLowerCaseField();
+			Map(x => x.Ply).Not.Nullable().Access.ReadOnlyPropertyThroughLowerCaseField();
 			HasManyToMany(x => x.Successors)
 				.Access.ReadOnlyPropertyThroughLowerCaseField()
 				.ParentKeyColumn("ParentId")

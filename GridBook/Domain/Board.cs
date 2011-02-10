@@ -9,6 +9,10 @@
 	{
 		private readonly ISet<Board> successors = new HashedSet<Board>();
 		private readonly ISet<Board> parents = new HashedSet<Board>();
+		private readonly long empty;
+		private readonly long mover;
+		private readonly int ply;
+		private readonly Color color;
 
 		/// <summary>
 		/// Gets a board representing the starting position.
@@ -37,13 +41,13 @@
 		/// <param name="color">Color of the player to move.</param>
 		public Board(ulong empty, ulong mover, Color color)
 		{
-			this.Empty = empty.ToInt64();
-			this.Mover = mover.ToInt64();
-			this.Color = color;
-			this.Ply = 60 - Bits.Count(this.Empty);
-			if (((Empty | Mover) ^ Mover) != Empty)
+			this.empty = empty.ToInt64();
+			this.mover = mover.ToInt64();
+			this.color = color;
+			this.ply = 60 - Bits.Count(this.empty);
+			if (((this.empty | this.mover) ^ this.mover) != this.empty)
 			{
-				throw new ArgumentException(string.Format("Empty and Mover overlap. Empty: 0x{0:X} Mover: 0x{1:X}", Empty, Mover));
+				throw new ArgumentException(string.Format("Empty and Mover overlap. Empty: 0x{0:X} Mover: 0x{1:X}", this.empty, this.mover));
 			}
 		}
 
@@ -63,7 +67,7 @@
 		/// </summary>
 		public virtual int GetEmpties()
 		{
-			return Bits.Count(Empty);
+			return Bits.Count(this.empty);
 		}
 
 		/// <summary>
@@ -71,8 +75,10 @@
 		/// </summary>
 		public virtual long Empty
 		{
-			get;
-			private set;
+			get
+			{
+				return empty;
+			}
 		}
 
 		/// <summary>
@@ -80,17 +86,21 @@
 		/// </summary>
 		public virtual long Mover
 		{
-			get;
-			private set;
+			get
+			{
+				return mover;
+			}
 		}
 
 		/// <summary>
-		/// Gets or sets the player to move.
+		/// Gets the player to move.
 		/// </summary>
 		public virtual Color Color
 		{
-			get;
-			private set;
+			get
+			{
+				return color;
+			}
 		}
 
 		/// <summary>
@@ -98,8 +108,10 @@
 		/// </summary>
 		public virtual int Ply
 		{
-			get;
-			private set;
+			get
+			{
+				return ply;
+			}
 		}
 
 		/// <summary>
@@ -178,8 +190,8 @@
 		/// <returns>Minimal reflection of this board state.</returns>
 		public virtual Board MinimalReflection()
 		{
-			Board temp = new Board(this.Empty.ToUInt64(), this.Mover.ToUInt64(), this.Color);
-			Board result = new Board(this.Empty.ToUInt64(), this.Mover.ToUInt64(), this.Color);
+			Board temp = new Board(this.empty.ToUInt64(), this.mover.ToUInt64(), this.color);
+			Board result = new Board(this.empty.ToUInt64(), this.mover.ToUInt64(), this.color);
 
 			for (int i = 0; i < 2; i++)
 			{
@@ -211,7 +223,7 @@
 		public virtual Board Play(Move move)
 		{
 			int pos = move.Pos;
-			long opponent = ~(Empty | Mover);
+			long opponent = ~(this.empty | this.mover);
 			long cumulativeChange = 0;
 
 			// up
@@ -243,10 +255,10 @@
 				throw new ArgumentException("Invalid move", "move");
 			}
 
-			long newEmpty = Empty ^ (1L << move.Pos);
+			long newEmpty = this.empty ^ (1L << move.Pos);
 			long mover = opponent ^ cumulativeChange;
 
-			return new Board(newEmpty.ToUInt64(), mover.ToUInt64(), this.Color.Opponent());
+			return new Board(newEmpty.ToUInt64(), mover.ToUInt64(), this.color.Opponent());
 		}
 
 		/// <summary>
@@ -341,8 +353,8 @@
 		/// <returns>Legal moves.</returns>
 		private ulong moves()
 		{
-			ulong P = Mover.ToUInt64();
-			ulong O = ~(Mover | Empty).ToUInt64();
+			ulong P = this.mover.ToUInt64();
+			ulong O = ~(this.mover | this.empty).ToUInt64();
 			return (get_some_moves(P, O & 0x7E7E7E7E7E7E7E7E, 1) // horizontal
 				| get_some_moves(P, O & 0x00FFFFFFFFFFFF00, 8)   // vertical
 				| get_some_moves(P, O & 0x007E7E7E7E7E7E00, 7)   // diagonals
@@ -375,8 +387,8 @@
 		/// </summary>
 		private Board pass()
 		{
-			long opponent = ~(Empty | Mover);
-			return new Board(Empty, opponent, Color.Opponent());
+			long opponent = ~(this.empty | this.mover);
+			return new Board(this.empty, opponent, this.color.Opponent());
 		}
 
 		/// <summary>
@@ -385,7 +397,7 @@
 		/// <returns>Flipped board.</returns>
 		private Board FlipDiagonal()
 		{
-			return new Board(this.Empty.ToUInt64().FlipDiagonal(), this.Mover.ToUInt64().FlipDiagonal(), this.Color);
+			return new Board(this.empty.ToUInt64().FlipDiagonal(), this.mover.ToUInt64().FlipDiagonal(), this.color);
 		}
 
 		/// <summary>
@@ -394,7 +406,7 @@
 		/// <returns>Flipped board.</returns>
 		private Board FlipHorizontal()
 		{
-			return new Board(this.Empty.ToUInt64().FlipHorizontal(), this.Mover.ToUInt64().FlipHorizontal(), this.Color);
+			return new Board(this.empty.ToUInt64().FlipHorizontal(), this.mover.ToUInt64().FlipHorizontal(), this.color);
 		}
 
 		/// <summary>
@@ -403,7 +415,7 @@
 		/// <returns>Flipped board.</returns>
 		private Board FlipVertical()
 		{
-			return new Board(this.Empty.ToUInt64().FlipVertical(), this.Mover.ToUInt64().FlipVertical(), this.Color);
+			return new Board(this.empty.ToUInt64().FlipVertical(), this.mover.ToUInt64().FlipVertical(), this.color);
 		}
 
 		/// <summary>
@@ -412,8 +424,8 @@
 		/// <returns>Guid instance.</returns>
 		public virtual Guid ToGuid()
 		{
-			var bytes = new System.Collections.Generic.List<byte>(BitConverter.GetBytes(Empty));
-			bytes.AddRange(BitConverter.GetBytes(Mover));
+			var bytes = new System.Collections.Generic.List<byte>(BitConverter.GetBytes(this.empty));
+			bytes.AddRange(BitConverter.GetBytes(this.mover));
 			return new Guid(bytes.ToArray());
 		}
 
@@ -436,10 +448,10 @@
 		/// <returns>Board hash code.</returns>
 		public override int GetHashCode()
 		{
-			int seed = (int)(Empty >> 32);
-			seed ^= (int)Empty + (seed << 6) + (seed >> 2);
-			seed ^= (int)(Mover >> 32) + (seed << 6) + (seed >> 2);
-			seed ^= (int)Mover + (seed << 6) + (seed >> 2);
+			int seed = (int)(this.empty >> 32);
+			seed ^= (int)this.empty + (seed << 6) + (seed >> 2);
+			seed ^= (int)(this.mover >> 32) + (seed << 6) + (seed >> 2);
+			seed ^= (int)this.mover + (seed << 6) + (seed >> 2);
 			return seed;
 		}
 
@@ -465,7 +477,7 @@
 				return false;
 			}
 
-			return board.Empty == Empty && board.Mover == Mover;
+			return board.Empty == this.empty && board.Mover == this.mover;
 		}
 
 		/// <summary>
@@ -478,21 +490,21 @@
 			for (int i = 63; i >= 0; i--)
 			{
 				long mask = (1L << i);
-				if ((Empty & mask) != 0)
+				if ((this.empty & mask) != 0)
 				{
 					builder.Append("-");
 				}
-				else if ((Mover & mask) != 0)
+				else if ((this.mover & mask) != 0)
 				{
-					builder.Append(Color.Char());
+					builder.Append(this.color.Char());
 				}
 				else
 				{
-					builder.Append(Color.Opponent().Char());
+					builder.Append(this.color.Opponent().Char());
 				}
 			}
 
-			builder.Append(" " + Color.Char());
+			builder.Append(" " + this.color.Char());
 
 			return builder.ToString();
 		}
@@ -514,7 +526,7 @@
 				change |= 1L << pos;
 			}
 
-			if (cond(pos) && (1L << pos & Mover) != 0)
+			if (cond(pos) && (1L << pos & this.mover) != 0)
 			{
 				cumulativeChange = change;
 			}
