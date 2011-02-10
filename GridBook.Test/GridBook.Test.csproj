@@ -110,7 +110,6 @@
     <Compile Include="BoardTest.cs" />
     <Compile Include="BookServiceTest.cs" />
     <Compile Include="DatabaseTest.cs" />
-    <Compile Include="DumperTest.cs" />
     <Compile Include="MappingsTest.cs" />
     <Compile Include="MinimalReflectionTest.cs" />
     <Compile Include="NHConfigurator.cs" />
