@@ -100,6 +100,7 @@ SQLite:
 MongoDB
 =======
 
-GridBook.CommandLine.exe JsonDump -f JA_s26.backup.book > JA_s26.backup.book.json
-mongoimport.exe -d gridbook -c json --file JA_s26.backup.book.json --drop
-> db.json.ensureIndex( { successors : 1 } );
+GridBook.CommandLine.exe JsonDump -f JA_s26.book > JA_s26.json
+mongoimport.exe -d gridbook -c positions --drop --file JA_s26.json
+> use gridbook;
+> db.positions.ensureIndex( { successors : 1 } );
