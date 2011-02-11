@@ -31,8 +31,8 @@
 			log.DebugFormat("Creating session");
 
 			var builder = Fluently.Configure()
-				.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
-				//.Database(PostgreSQLConfiguration.PostgreSQL82.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
+				//.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
+				.Database(PostgreSQLConfiguration.PostgreSQL82.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
 				//.Database(SQLiteConfiguration.Standard.UsingFile("positions.db"))
 				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<BoardMap>())
 				.ExposeConfiguration(c =>
