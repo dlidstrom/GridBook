@@ -5,24 +5,12 @@ Creation
 --------
 
 alter table Successors  drop foreign key FKC8FD6E3D23245EF1
-
-
-
 alter table Successors  drop foreign key FKC8FD6E3D4BD25B3
-
-
-
 alter table Parents  drop foreign key FKF45BDCA34BD25B3
-
-
-
 alter table Parents  drop foreign key FKF45BDCA323245EF1
 
-
     drop table if exists `Board`
-
     drop table if exists Successors
-
     drop table if exists Parents
 
     create table `Board` (
@@ -91,8 +79,77 @@ alter table Parents
 PostgreSQL
 ==========
 
-\copy "Board" from 'C:\Users\Daniel\Programming\GridBook\merged.csv' DELIMITERS ',' CSV;
+Creation
+--------
 
+    drop table if exists "Board" cascade
+    drop table if exists Successors cascade
+    drop table if exists Parents cascade
+
+    create table "Board" (
+        Id uuid not null,
+       Empty int8 not null,
+       Mover int8 not null,
+       Ply int4 not null,
+       primary key (Id)
+    )
+
+    create table Successors (
+        ParentId uuid not null,
+       ChildId uuid not null,
+       primary key (ParentId, ChildId)
+    )
+
+    create table Parents (
+        ChildId uuid not null,
+       ParentId uuid not null,
+       primary key (ChildId, ParentId)
+    )
+
+    alter table Successors
+        add constraint FKC8FD6E3D23245EF1
+        foreign key (ChildId)
+        references "Board"
+
+    alter table Successors
+        add constraint FKC8FD6E3D4BD25B3
+        foreign key (ParentId)
+        references "Board"
+
+    alter table Parents
+        add constraint FKF45BDCA34BD25B3
+        foreign key (ParentId)
+        references "Board"
+
+    alter table Parents
+        add constraint FKF45BDCA323245EF1
+        foreign key (ChildId)
+        references "Board"
+		
+Batch Import
+============
+
+C:\Users\Daniel\Programming\GridBook>"c:\Program Files\PostgreSQL\9.0\bin\psql.exe" -U postgres GridBook
+
+\copy "Board" from 'C:\Users\Daniel\Programming\GridBook\board.csv' DELIMITERS ',' CSV;
+    create table Parents (
+       ChildId uuid not null,
+       ParentId uuid not null,
+       primary key (ChildId, ParentId)
+    )
+
+\copy "Parents" from 'C:\Users\Daniel\Programming\GridBook\parents.csv' DELIMITERS ',' CSV;
+
+    alter table Parents
+        add constraint FKF45BDCA34BD25B3
+        foreign key (ParentId)
+        references "Board"
+
+    alter table Parents
+        add constraint FKF45BDCA323245EF1
+        foreign key (ChildId)
+        references "Board"
+	
 SQLite:
 
 .import merged.csv Board
