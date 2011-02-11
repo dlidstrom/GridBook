@@ -12,18 +12,14 @@
 		public override void Run(string[] args)
 		{
 			var filename = string.Empty;
-			bool parent = false;
-			bool child = false;
 			var options = new OptionSet()
 			{
-				{ "f=|file=", "Extracts parent/child relationship from book.", f => filename = f },
-				{ "p|parent", "Writes parent relationship.", f => parent = f != null },
-				{ "c|child", "Writes successor relationship.", f => child = f != null }
+				{ "f=|file=", "Extracts parent/child relationship from book.", f => filename = f }
 			};
 
 			options.Parse(args);
 
-			if (string.IsNullOrWhiteSpace(filename) || parent == child)
+			if (string.IsNullOrWhiteSpace(filename))
 			{
 				throw new OptionSetException(options);
 			}
@@ -31,20 +27,13 @@
 			int written = 0;
 			var importer = new NtestImporter(filename);
 			foreach (var pos in from kvp in importer.Import()
-								select kvp.Key)
+								select kvp.Key.MinimalReflection())
 			{
 				foreach (var successor in pos.CalculateMinimalSuccessors())
 				{
-					if (child)
-					{
-						Console.WriteLine("{0},{1}", pos.ToGuid(), successor.ToGuid());
-					}
-					else
-					{
-						Console.WriteLine("{0},{1}", successor.ToGuid(), pos.ToGuid());
-					}
+					Console.WriteLine("{0},{1}", successor.ToGuid(), pos.ToGuid());
 
-					if (++written % 100000 == 0)
+					if (++written % 1000000 == 0)
 					{
 						Console.Error.WriteLine("Written {0} lines", written);
 					}
