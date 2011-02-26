@@ -1,9 +1,9 @@
 ﻿<NUnitProject>
-  <Settings activeconfig="Debug|x86" />
-  <Config name="Debug|x86" binpathtype="Auto" runtimeFramework="any">
+  <Settings activeconfig="Debug" />
+  <Config name="Debug" binpathtype="Auto" runtimeFramework="any">
     <assembly path="bin\Debug\GridBook.Test.dll" />
   </Config>
-  <Config name="Release|x86" binpathtype="Auto">
+  <Config name="Release" binpathtype="Auto">
     <assembly path="bin\Release\GridBook.Test.dll" />
   </Config>
 </NUnitProject>
