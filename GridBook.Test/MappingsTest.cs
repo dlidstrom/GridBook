@@ -1,6 +1,7 @@
 ﻿namespace GridBook.Test
 {
 	using System.Collections.Generic;
+	using System.Reflection;
 	using FluentNHibernate.Testing;
 	using GridBook.Domain;
 	using NUnit.Framework;
@@ -23,6 +24,19 @@
 					.CheckList(b => b.Parents,
 						new HashSet<Board>() { Board.Start }, // can only check one, the order is random it seems
 						(board, parent) => board.AddParent(parent))
+					.VerifyTheMappings();
+			}
+		}
+
+		[Test]
+		public void VerifyEntryMappings()
+		{
+			using (var session = SessionFactory.OpenSession())
+			{
+				new PersistenceSpecification<Entry>(session)
+					.CheckProperty(e => e.Board, Board.Start, (e, b) => typeof(Entry).GetField("board", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(e, b))
+					.CheckProperty(e => e.Depth, 38, (e, d) => typeof(Entry).GetField("depth", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(e, d))
+					.CheckProperty(e => e.Percent, 72, (e, p) => typeof(Entry).GetField("percent", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(e, p))
 					.VerifyTheMappings();
 			}
 		}
