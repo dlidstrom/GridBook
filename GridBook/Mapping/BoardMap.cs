@@ -8,7 +8,6 @@
 		public BoardMap()
 		{
 			Id(x => x.Id).GeneratedBy.Custom<CustomGuidGenerator>();
-			//NaturalId().Property(x => x.Empty).Property(x => x.Mover);
 			Map(x => x.Empty).Not.Nullable().Access.ReadOnlyPropertyThroughLowerCaseField();
 			Map(x => x.Mover).Not.Nullable().Access.ReadOnlyPropertyThroughLowerCaseField();
 			Map(x => x.Ply).Not.Nullable().Access.ReadOnlyPropertyThroughLowerCaseField();

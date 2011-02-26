@@ -14,9 +14,9 @@
 			using (var session = SessionFactory.OpenSession())
 			{
 				new PersistenceSpecification<Board>(session)
-					//.CheckProperty(b => b.Empty, 10L)
-					//.CheckProperty(b => b.Mover, 20L)
-					//.CheckProperty(b => b.Ply, 24)
+					.CheckProperty(b => b.Empty, 10L, (b, e) => typeof(Board).GetField("empty", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(b, e))
+					.CheckProperty(b => b.Mover, 20L, (b, m) => typeof(Board).GetField("mover", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(b, m))
+					.CheckProperty(b => b.Ply, 24, (b, p) => typeof(Board).GetField("ply", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(b, p))
 					.CheckList(b => b.Successors,
 						new HashSet<Board>() { Board.Start.Play(Move.D3) },
 						(board, successor) => board.AddSuccessor(successor))
