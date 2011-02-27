@@ -1,5 +1,6 @@
 R: Gendarme.Rules.Performance.AvoidConcatenatingCharsRule
 M: System.String NDesk.Options.OptionSet::GetArgumentName(System.Int32,System.Int32,System.String)
+M: System.Boolean NDesk.Options.OptionSet::ParseBundledValue(System.String,System.String,NDesk.Options.OptionContext)
 
 R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
 M: System.Boolean NDesk.Options.OptionSet::GetOptionParts(System.String,System.String&,System.String&,System.String&,System.String&)
