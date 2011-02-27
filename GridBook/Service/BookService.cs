@@ -7,7 +7,7 @@
 	using NHibernate;
 	using NHibernate.Linq;
 
-	public class BookService
+	public class BookService : IDisposable
 	{
 		/// <summary>
 		/// Class logger.
@@ -112,6 +112,11 @@
 				action.Invoke();
 				return false;
 			});
+		}
+
+		public void Dispose()
+		{
+			session.Dispose();
 		}
 	}
 }
