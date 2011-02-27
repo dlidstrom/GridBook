@@ -14,3 +14,7 @@ M: System.Void GridBook.CommandLine.ProgramsInstaller::Install(Castle.Windsor.IW
 R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
 M: System.Void GridBook.CommandLine.MainProgram::Run(System.String[])
 M: System.Void GridBook.CommandLine.ProgramsInstaller::Install(Castle.Windsor.IWindsorContainer,Castle.MicroKernel.SubSystems.Configuration.IConfigurationStore)
+
+R: Gendarme.Rules.Exceptions.InstantiateArgumentExceptionCorrectlyRule
+M: System.String NDesk.Options.OptionSet::GetKeyForItem(NDesk.Options.Option)
+M: System.Void NDesk.Options.Option::AddSeparators(System.String,System.Int32,System.Collections.Generic.ICollection`1<System.String>)
