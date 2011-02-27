@@ -7,3 +7,10 @@ M: System.Boolean NDesk.Options.OptionSet::GetOptionParts(System.String,System.S
 
 R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
 M: System.Collections.Generic.List`1<System.String> NDesk.Options.OptionSet::Parse(System.Collections.Generic.IEnumerable`1<System.String>)
+
+R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
+M: System.Void GridBook.CommandLine.ProgramsInstaller::Install(Castle.Windsor.IWindsorContainer,Castle.MicroKernel.SubSystems.Configuration.IConfigurationStore)
+
+R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
+M: System.Void GridBook.CommandLine.MainProgram::Run(System.String[])
+M: System.Void GridBook.CommandLine.ProgramsInstaller::Install(Castle.Windsor.IWindsorContainer,Castle.MicroKernel.SubSystems.Configuration.IConfigurationStore)
