@@ -9,16 +9,18 @@
 	{
 		private readonly Board board;
 		private readonly int depth;
+		private readonly int score;
 		private readonly int percent;
 
 		protected Entry()
 		{
 		}
 
-		public Entry(Board board, int depth, int percent)
+		public Entry(Board board, int depth, int score, int percent)
 		{
 			this.board = board;
 			this.depth = depth;
+			this.score = score;
 			this.percent = percent;
 		}
 
@@ -35,6 +37,14 @@
 			get
 			{
 				return depth;
+			}
+		}
+
+		public virtual int Score
+		{
+			get
+			{
+				return score;
 			}
 		}
 

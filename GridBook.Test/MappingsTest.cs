@@ -37,6 +37,7 @@
 					.CheckProperty(e => e.Board, Board.Start, (e, b) => typeof(Entry).GetField("board", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(e, b))
 					.CheckProperty(e => e.Depth, 38, (e, d) => typeof(Entry).GetField("depth", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(e, d))
 					.CheckProperty(e => e.Percent, 72, (e, p) => typeof(Entry).GetField("percent", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(e, p))
+					.CheckProperty(e => e.Score, 10200, (e, s) => typeof(Entry).GetField("score", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(e, s))
 					.VerifyTheMappings();
 			}
 		}

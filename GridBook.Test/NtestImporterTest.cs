@@ -48,7 +48,7 @@
 			//Assert.IsFalse(entry.WLD);
 			//Assert.IsFalse(entry.KnownSolve);
 			//Assert.AreEqual(-354, entry.Cutoff);
-			//Assert.AreEqual(-39, entry.HeuristicValue);
+			Assert.AreEqual(-39, entry.Score);
 			//Assert.AreEqual(-39, entry.BlackValue);
 			//Assert.AreEqual(-39, entry.WhiteValue);
 			//Assert.AreEqual(1, entry.Games[0]);

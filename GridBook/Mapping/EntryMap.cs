@@ -16,6 +16,9 @@
 			Map(e => e.Depth)
 				.Not.Nullable()
 				.Access.ReadOnlyPropertyThroughLowerCaseField();
+			Map(e => e.Score)
+				.Not.Nullable()
+				.Access.ReadOnlyPropertyThroughLowerCaseField();
 			Map(e => e.Percent)
 				.Not.Nullable()
 				.Access.ReadOnlyPropertyThroughLowerCaseField();

@@ -65,7 +65,7 @@
 					var root = reader.ReadBoolean();
 					// 52
 					var fill3 = reader.ReadBytes(3);
-					yield return new Entry(board, height, 72/*new BookData()
+					yield return new Entry(board, height, heuristic, 72/*new BookData()
 					{
 						Height = height,
 						Prune = prune,
