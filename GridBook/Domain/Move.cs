@@ -16,13 +16,19 @@
 		/// Initializes a new instance of the Move class.
 		/// </summary>
 		/// <param name="move">Move as a string format.</param>
+		/// <exception cref="ArgumentNullException">If move is null.</exception>
 		/// <exception cref="ArgumentException">Invalid move string.</exception>
 		public Move(string move)
 		{
+			if (move == null)
+			{
+				throw new ArgumentNullException("move");
+			}
+
 			Pos = (7 - (move[0] - 'A')) + (7 - (move[1] - '1')) * 8;
 			if (Pos < 0 || Pos > 63)
 			{
-				throw new ArgumentException("Invalid move");
+				throw new ArgumentException("Invalid move", "move");
 			}
 		}
 

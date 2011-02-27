@@ -39,6 +39,7 @@
 		/// <param name="empty">Bits representing the empty squares.</param>
 		/// <param name="mover">Bits representing the squares of the mover.</param>
 		/// <param name="color">Color of the player to move.</param>
+		/// <exception cref="ArgumentException">If empty and mover bitboards overlap.</exception>
 		public Board(ulong empty, ulong mover, Color color)
 		{
 			this.empty = empty.ToInt64();
@@ -219,9 +220,15 @@
 		/// </summary>
 		/// <param name="move">Move to play.</param>
 		/// <returns>Board result after move has been played.</returns>
+		/// <exception cref="ArgumentNullException">If move is null.</exception>
 		/// <exception cref="ArgumentException">If move is invalid.</exception>
 		public virtual Board Play(Move move)
 		{
+			if (move == null)
+			{
+				throw new ArgumentNullException("move");
+			}
+
 			int pos = move.Pos;
 			long opponent = ~(this.empty | this.mover);
 			long cumulativeChange = 0;
@@ -266,12 +273,18 @@
 		/// </summary>
 		/// <param name="s">String representation.</param>
 		/// <returns>Board instance.</returns>
+		/// <exception cref="ArgumentNullException">If s is null.</exception>
 		/// <exception cref="ArgumentException">If string content is invalid.</exception>
 		public static Board FromString(string s)
 		{
+			if (s == null)
+			{
+				throw new ArgumentNullException("s");
+			}
+
 			if (s.Length != 66 || (s[65] != '*' && s[65] != 'O'))
 			{
-				throw new ArgumentException("Invalid board");
+				throw new ArgumentException("invalid content", "s");
 			}
 
 			ulong empty = 0;
@@ -307,8 +320,19 @@
 		/// <param name="left">Left side.</param>
 		/// <param name="right">Right side.</param>
 		/// <returns>True if left &lt; right, otherwise false.</returns>
+		/// <exception cref="ArgumentNullException">If left is null.</exception>
+		/// <exception cref="ArgumentNullException">If right is null.</exception>
 		public static bool operator <(Board left, Board right)
 		{
+			if (left == null)
+			{
+				throw new ArgumentNullException("left");
+			}
+			if (right == null)
+			{
+				throw new ArgumentNullException("right");
+			}
+
 			return left.ToGuid().CompareTo(right.ToGuid()) < 0;
 		}
 
@@ -318,8 +342,19 @@
 		/// <param name="left">Left side.</param>
 		/// <param name="right">Right side.</param>
 		/// <returns>True if left &gt; right, otherwise false.</returns>
+		/// <exception cref="ArgumentNullException">If left is null.</exception>
+		/// <exception cref="ArgumentNullException">If right is null.</exception>
 		public static bool operator >(Board left, Board right)
 		{
+			if (left == null)
+			{
+				throw new ArgumentNullException("left");
+			}
+			if (right == null)
+			{
+				throw new ArgumentNullException("right");
+			}
+
 			return left.ToGuid().CompareTo(right.ToGuid()) > 0;
 		}
 
@@ -359,7 +394,7 @@
 				| get_some_moves(P, O & 0x00FFFFFFFFFFFF00, 8)   // vertical
 				| get_some_moves(P, O & 0x007E7E7E7E7E7E00, 7)   // diagonals
 				| get_some_moves(P, O & 0x007E7E7E7E7E7E00, 9))
-				& ~(P|O); // mask with empties
+				& ~(P | O); // mask with empties
 		}
 
 		/// <summary>

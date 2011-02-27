@@ -62,9 +62,9 @@
 		public string HumanString()
 		{
 			var builder = new StringBuilder();
-			builder.Append("Height: " + Height);
-			builder.Append("Prune: " + Prune);
-			builder.Append("WLD?: " + (WLD ? "Yes" : "No"));
+			builder.AppendFormat("Height: {0}", Height);
+			builder.AppendFormat("Prune: {0}", Prune);
+			builder.AppendFormat("WLD?: {0}", WLD ? "Yes" : "No");
 			return builder.ToString();
 		}
 	}
