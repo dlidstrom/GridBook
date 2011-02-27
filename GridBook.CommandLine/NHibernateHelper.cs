@@ -1,5 +1,7 @@
 ﻿namespace GridBook.CommandLine
 {
+	using System;
+	using System.Configuration;
 	using System.IO;
 	using Common.Logging;
 	using FluentNHibernate.Cfg;
@@ -19,16 +21,17 @@
 			{
 				if (sessionFactory == null)
 				{
-					sessionFactory = CreateSessionFactory("DbConnection", false);
+					throw new InvalidOperationException("Session factory has not been created. Call CreateSessionFactory.");
 				}
 
 				return sessionFactory;
 			}
 		}
 
-		public static ISessionFactory CreateSessionFactory(string connectionString, bool createSchema)
+		public static void CreateSessionFactory(string password, bool createSchema)
 		{
-			log.DebugFormat("Creating session");
+			var connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+			log.DebugFormat("Creating session [{0}]", string.Format(connectionString, new string('*', 8)));
 
 			var builder = Fluently.Configure()
 				//.Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey(connectionString)))
@@ -45,7 +48,7 @@
 					}
 				});
 
-			return builder.BuildSessionFactory();
+			sessionFactory = builder.BuildSessionFactory();
 		}
 	}
 }
