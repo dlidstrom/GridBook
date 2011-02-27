@@ -135,6 +135,7 @@
     <Compile Include="Programs\MergeSplits.cs" />
     <Compile Include="Programs\MultiQueue.cs" />
     <Compile Include="Programs\ParentChild.cs" />
+    <Compile Include="Programs\QueuedFile.cs" />
     <Compile Include="Programs\SplitBook.cs" />
     <Compile Include="Programs\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
