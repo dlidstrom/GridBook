@@ -4,7 +4,7 @@
 
 	public interface IImporter
 	{
-		IEnumerable<KeyValuePair<Board, BookData>> Import();
+		IEnumerable<Entry> Import();
 
 		int Version
 		{

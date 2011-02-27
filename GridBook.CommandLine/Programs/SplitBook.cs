@@ -27,7 +27,7 @@
 
 			var list = new List<Guid>();
 			foreach (var pos in from kvp in importer.Import()
-								select kvp.Key.MinimalReflection())
+								select kvp.Board.MinimalReflection())
 			{
 				// add position
 				var bytes = new List<Byte>(BitConverter.GetBytes(pos.Empty));

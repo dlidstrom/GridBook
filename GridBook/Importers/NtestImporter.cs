@@ -21,7 +21,7 @@
 			}
 		}
 
-		public IEnumerable<KeyValuePair<Board, BookData>> Import()
+		public IEnumerable<Entry> Import()
 		{
 			using (var reader = new BinaryReader(File.OpenRead(filename)))
 			{
@@ -65,7 +65,7 @@
 					var root = reader.ReadBoolean();
 					// 52
 					var fill3 = reader.ReadBytes(3);
-					yield return new KeyValuePair<Board, BookData>(board, new BookData()
+					yield return new Entry(board, height, 72/*new BookData()
 					{
 						Height = height,
 						Prune = prune,
@@ -76,7 +76,7 @@
 						BlackValue = black,
 						WhiteValue = white,
 						Games = games
-					});
+					}*/);
 				}
 			}
 		}

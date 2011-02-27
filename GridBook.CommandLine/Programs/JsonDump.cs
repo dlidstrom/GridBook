@@ -22,7 +22,7 @@
 			var importer = new NtestImporter(filename);
 			var written = 0;
 			foreach (var pos in from kvp in importer.Import()
-								select kvp.Key.MinimalReflection())
+								select kvp.Board.MinimalReflection())
 			{
 				Console.Write("{{ _id : \"{0}\", \"successors\" : [ ", pos.ToGuid());
 				var successors = pos.CalculateMinimalSuccessors();
