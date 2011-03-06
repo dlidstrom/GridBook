@@ -18,6 +18,7 @@ The code is being developed in a [Domain-Driven Design](http://en.wikipedia.org/
 * GridBook - This is the main assembly. It contains the Domain classes and service classes,
 as well as mappings for [FluentNHibernate](http://fluentnhibernate.org/).
 * GridBook.Test - Tests for the domain classes. Uses in-memory [SQLite](http://www.sqlite.org/) to run database tests quickly.
+All tests are using AAA (Arrange/Act/Assert), Behaviour-Driven Development style. This works particularly nice with DDD.
 * GridBook.CommandLine - kind of service program that contains many subprograms for different tasks,
 such as conversion functions (book file to csv), etc. Uses [Castle Windsor](http://docs.castleproject.org/Windsor.MainPage.ashx) DI container for easy
 extensibility.
