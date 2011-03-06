@@ -1,4 +1,5 @@
-﻿# GridBook, Large Scale Othello
+﻿GridBook, Large Scale Othello
+=============================
 
 # Introduction
 
