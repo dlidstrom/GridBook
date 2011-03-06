@@ -1,4 +1,4 @@
-# GridBook - Large Scale Othello
+﻿# GridBook - Large Scale Othello
 
 # Introduction
 
@@ -24,7 +24,7 @@ extensibility.
 # Contact
 
 If you are interested in any part of this project, don't hesitate to contact me directly.
-My name is Daniel Lidstr�m and you can reach me by email: dlidstrom@gmail.com
+My name is Daniel Lidström and you can reach me by email: dlidstrom@gmail.com
 
 # License
 
